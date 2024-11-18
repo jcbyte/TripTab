@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+	Button,
+	FlatList,
+	Modal,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	TouchableWithoutFeedback,
+	View,
+} from "react-native";
 
 // Define the type for a milage record
 interface Record {
@@ -17,39 +27,93 @@ export default function App() {
 		{ milage: 4, cost: 4, time: new Date("01/01/2004") },
 	]);
 
+	const [modalVisible, setModalVisible] = useState(false);
+	const [newRecord, setNewRecord] = useState<Record>({ milage: 0, cost: 0, time: new Date() });
+
 	// Handle new record button press
 	const handleNewRecordPress = (): void => {
 		// todo dialog to enter details
-		setEntities((entities) => {
-			let newEntity: Record = { milage: 99, cost: 99, time: new Date("01/01/2099") };
-			return [...entities, newEntity];
-		});
+		// setEntities((entities) => {
+		// 	let newEntity: Record = { milage: 99, cost: 99, time: new Date("01/01/2099") };
+		// 	return [...entities, newEntity];
+		// });
+		setModalVisible(true);
 	};
 
 	return (
-		<View style={styles.container}>
-			{/* Box with milage cost and new button */}
-			<View style={styles.box}>
-				<Text style={styles.boxText}>Milage Cost</Text>
-				<TouchableOpacity style={styles.button} onPress={handleNewRecordPress}>
-					<Text style={styles.buttonText}>New Record</Text>
-				</TouchableOpacity>
+		<>
+			<View style={styles.container}>
+				{/* Box with milage cost and new button */}
+				<View style={styles.box}>
+					<Text style={styles.boxText}>Milage Cost</Text>
+					<TouchableOpacity style={styles.button} onPress={handleNewRecordPress}>
+						<Text style={styles.buttonText}>New Record</Text>
+					</TouchableOpacity>
+				</View>
+
+				{/* List of records */}
+				<FlatList
+					data={entities}
+					renderItem={({ item }: { item: Record }) => (
+						<View style={styles.itemContainer}>
+							{/* // todo show other information */}
+							{/* // todo on click enable editing/deleting */}
+							<Text>{item.milage}</Text>
+						</View>
+					)}
+					keyExtractor={(item, index) => index.toString()}
+					style={styles.list}
+				/>
 			</View>
 
-			{/* List of records */}
-			<FlatList
-				data={entities}
-				renderItem={({ item }: { item: Record }) => (
-					<View style={styles.itemContainer}>
-						{/* // todo show other information */}
-						{/* // todo on click enable editing/deleting */}
-						<Text>{item.milage}</Text>
+			{/* Modal for new record */}
+			<Modal visible={modalVisible} animationType="slide" transparent={true}>
+				{/* TouchableWithoutFeedback to dismiss modal */}
+				<TouchableWithoutFeedback
+					onPress={() => {
+						setModalVisible(false);
+					}}
+				>
+					<View style={styles.modalBackground}>
+						{/* Modal content */}
+						<View style={styles.modalContainer}>
+							<Text style={styles.modalTitle}>Add New Record</Text>
+
+							<TextInput
+								style={styles.input}
+								placeholder="Mileage"
+								keyboardType="numeric"
+								value={newRecord.milage.toString()}
+								onChangeText={(text) => setNewRecord({ ...newRecord, milage: parseFloat(text) })}
+							/>
+							<TextInput
+								style={styles.input}
+								placeholder="Cost"
+								keyboardType="numeric"
+								value={newRecord.cost.toString()}
+								onChangeText={(text) => setNewRecord({ ...newRecord, cost: parseFloat(text) })}
+							/>
+							<TextInput
+								style={styles.input}
+								placeholder="Date"
+								value={newRecord.time.toLocaleDateString()}
+								onChangeText={(text) => setNewRecord({ ...newRecord, time: new Date(text) })}
+							/>
+
+							<View style={styles.modalButtons}>
+								<Button title="Cancel" onPress={() => setModalVisible(false)} />
+								<Button
+									title="Add Record"
+									onPress={() => {
+										console.log("Add record");
+									}}
+								/>
+							</View>
+						</View>
 					</View>
-				)}
-				keyExtractor={(item, index) => index.toString()}
-				style={styles.list}
-			/>
-		</View>
+				</TouchableWithoutFeedback>
+			</Modal>
+		</>
 	);
 }
 
@@ -88,5 +152,38 @@ const styles = StyleSheet.create({
 		backgroundColor: "#ecf0f1",
 		marginBottom: 10,
 		borderRadius: 8,
+	},
+	modalBackground: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent background
+	},
+	modalContainer: {
+		backgroundColor: "#fff",
+		borderRadius: 10,
+		padding: 20,
+		margin: 20,
+		alignItems: "center",
+	},
+	modalTitle: {
+		fontSize: 24,
+		marginBottom: 20,
+		color: "#333",
+	},
+	input: {
+		width: 250,
+		height: 40,
+		borderColor: "#ccc",
+		borderWidth: 1,
+		borderRadius: 5,
+		paddingHorizontal: 10,
+		marginBottom: 15,
+		backgroundColor: "#fff",
+	},
+	modalButtons: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		width: "100%",
 	},
 });
