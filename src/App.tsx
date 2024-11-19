@@ -1,17 +1,8 @@
-import React, { useState } from "react";
-import {
-	FlatList,
-	Modal,
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	TouchableWithoutFeedback,
-	View,
-} from "react-native";
+import React, { useRef, useState } from "react";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { BlurView } from "expo-blur";
 import ListItem from "./components/ListItem";
+import RecordModal, { RecordModalHandles } from "./components/RecordModal";
 import { styles as globalStyles } from "./styles";
 import { Record } from "./types/Record";
 
@@ -23,28 +14,20 @@ export default function App() {
 		{ id: "3", milage: 3, cost: 3, date: new Date(2024, 1, 2) },
 		{ id: "4", milage: 4, cost: 4, date: new Date(2024, 1, 3) },
 	]);
+	const recordModalRef = useRef<RecordModalHandles>();
 
-	// Modal visibility
-	const [modalVisible, setModalVisible] = useState(false);
-	// Current modal record data
-	const [newRecord, setNewRecord] = useState<Record>({ id: "todo-calculate", milage: 0, cost: 0, date: new Date() });
-
-	// Handle new record button press
-	const handleNewRecordPress = (): void => {
-		setRecords((records: Record[]) => [...records, newRecord]);
-		closeModal();
-	};
+	// Add or update a record
+	function updateRecords(record: Record): void {
+		// if id === null then create new record
+		// else update where id === id
+		//
+		// setRecords((records: Record[]) => [...records, newRecord]);
+	}
 
 	function openModal(ref: "new" | number): void {
-		if (ref === "new") {
-			setNewRecord({ id: "todo-calculate", milage: 0, cost: 0, date: new Date() });
-		} else {
-			setNewRecord({ ...records[ref] });
-		}
-
-		setModalVisible(true);
+		let record: Record = ref === "new" ? { id: null, milage: 0, cost: 0, date: new Date() } : { ...records[ref] };
+		recordModalRef.current!.openModal(record);
 	}
-	const closeModal = (): void => setModalVisible(false);
 
 	return (
 		<>
@@ -67,48 +50,13 @@ export default function App() {
 						renderItem={({ item, index }: { item: Record; index: number }) => (
 							<ListItem item={item} index={index} openModal={openModal} />
 						)}
-						keyExtractor={(item: Record) => item.id}
+						keyExtractor={(item: Record) => item.id!}
 						ListEmptyComponent={undefined}
 					/>
 				</View>
 			</View>
 
-			<Modal visible={modalVisible} animationType="fade" transparent={true}>
-				<TouchableWithoutFeedback onPress={closeModal}>
-					<BlurView intensity={60} style={globalStyles.modalBackground}>
-						<View style={{ ...globalStyles.modalContent, minWidth: 300 }}>
-							<Text style={{ fontSize: 20, fontWeight: "semibold" }}>Add New Record</Text>
-
-							<View style={{ marginVertical: 20, display: "flex", flexDirection: "column", gap: 10 }}>
-								<TextInput
-									style={globalStyles.input}
-									placeholder="Mileage"
-									keyboardType="numeric"
-									value={newRecord.milage.toString()}
-									onChangeText={(text) => setNewRecord({ ...newRecord, milage: parseFloat(text) })}
-								/>
-								<TextInput
-									style={globalStyles.input}
-									placeholder="Cost"
-									keyboardType="numeric"
-									value={newRecord.cost.toString()}
-									onChangeText={(text) => setNewRecord({ ...newRecord, cost: parseFloat(text) })}
-								/>
-								<TextInput
-									style={globalStyles.input}
-									placeholder="Date"
-									value={newRecord.date.toLocaleDateString()}
-									onChangeText={(text) => setNewRecord({ ...newRecord, date: new Date(text) })}
-								/>
-							</View>
-
-							<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={handleNewRecordPress}>
-								<Text style={globalStyles.buttonText}>Save</Text>
-							</TouchableOpacity>
-						</View>
-					</BlurView>
-				</TouchableWithoutFeedback>
-			</Modal>
+			<RecordModal updateRecords={updateRecords} ref={recordModalRef} />
 		</>
 	);
 }
