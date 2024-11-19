@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import { BlurView } from "expo-blur";
-import { styles as globalStyles } from "../constants/styles";
+import { styles as globalStyles } from "./styles";
 
 // Define the type for a milage record
 interface Record {
