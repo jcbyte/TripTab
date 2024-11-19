@@ -11,15 +11,9 @@ import {
 } from "react-native";
 
 import { BlurView } from "expo-blur";
+import ListItem from "./components/ListItem";
 import { styles as globalStyles } from "./styles";
-
-// Define the type for a milage record
-interface Record {
-	id: string;
-	milage: number;
-	cost: number;
-	date: Date;
-}
+import { Record } from "./types/Record";
 
 export default function App() {
 	// List of records
@@ -61,20 +55,7 @@ export default function App() {
 					<FlatList
 						style={undefined}
 						data={records}
-						renderItem={({ item }: { item: Record }) => (
-							<TouchableOpacity style={styles.listItem} onPress={toggleModal}>
-								<View style={{ display: "flex", flexDirection: "column" }}>
-									<View style={{ display: "flex", flexDirection: "row" }}>
-										<Text style={{ ...styles.listText, flex: 1 }}>{item.milage} Miles</Text>
-										<Text style={styles.listText}>£{item.cost}</Text>
-									</View>
-									<View style={{ display: "flex", flexDirection: "row" }}>
-										<Text style={{ ...styles.listSecondaryText, flex: 1 }}>{item.date.toUTCString()}</Text>
-										<Text style={styles.listSecondaryText}>£0.23/mi</Text>
-									</View>
-								</View>
-							</TouchableOpacity>
-						)}
+						renderItem={({ item }: { item: Record }) => <ListItem item={item} />}
 						keyExtractor={(item: Record) => item.id}
 						ListEmptyComponent={undefined}
 					/>
@@ -142,18 +123,5 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		color: "#333",
 		textAlign: "left",
-	},
-	listItem: {
-		padding: 16,
-		backgroundColor: "#F9F9F9",
-		borderRadius: 8,
-		marginBottom: 10,
-	},
-	listText: {
-		fontSize: 18,
-	},
-	listSecondaryText: {
-		fontSize: 12,
-		color: "#777",
 	},
 });
