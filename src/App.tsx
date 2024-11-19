@@ -27,11 +27,6 @@ export default function App() {
 		console.log(record);
 	}
 
-	function showModal(ref: "new" | number): void {
-		let record: Record = ref === "new" ? { ...DEFAULT_RECORD } : { ...records[ref] };
-		openModal(record);
-	}
-
 	return (
 		<>
 			<View style={globalStyles.body}>
@@ -40,7 +35,11 @@ export default function App() {
 						<Text style={styles.mileageTitleText}>Cost per Mile</Text>
 						<View style={{ display: "flex", flexDirection: "row" }}>
 							<Text style={{ ...styles.mileageText, flex: 1 }}>£0.16</Text>
-							<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={() => showModal("new")}>
+							<TouchableOpacity
+								activeOpacity={0.6}
+								style={globalStyles.button}
+								onPress={() => openModal(DEFAULT_RECORD)}
+							>
 								<Text style={globalStyles.buttonText}>New Record</Text>
 							</TouchableOpacity>
 						</View>
@@ -51,7 +50,7 @@ export default function App() {
 						style={undefined}
 						data={records}
 						renderItem={({ item, index }: { item: Record; index: number }) => (
-							<ListItem item={item} index={index} openModal={showModal} />
+							<ListItem item={item} openModal={() => openModal(item)} />
 						)}
 						keyExtractor={(item: Record) => item.id!}
 						ListEmptyComponent={undefined}

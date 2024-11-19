@@ -2,17 +2,9 @@ import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import Record from "../types/Record";
 
-export default function ListItem({
-	item,
-	index,
-	openModal,
-}: {
-	item: Record;
-	index: number;
-	openModal: (ref: "new" | number) => void;
-}) {
+export default function ListItem({ item, openModal }: { item: Record; openModal: () => void }) {
 	return (
-		<TouchableOpacity style={styles.listItem} onPress={() => openModal(index)}>
+		<TouchableOpacity style={styles.listItem} onPress={openModal}>
 			<View style={{ display: "flex", flexDirection: "column" }}>
 				<View style={{ display: "flex", flexDirection: "row" }}>
 					<Text style={{ ...styles.listText, flex: 1 }}>{item.milage} Miles</Text>

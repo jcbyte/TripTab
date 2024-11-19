@@ -6,7 +6,7 @@ export default function useRecordModal() {
 	const [record, setRecord] = useState<Record>(DEFAULT_RECORD);
 
 	const openModal = (record: Record) => {
-		setRecord(record);
+		setRecord({ ...record });
 		setModalOpen(true);
 	};
 
