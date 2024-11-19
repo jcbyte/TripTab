@@ -1,13 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { styles as globalStyles } from "../styles";
+import { formatCost } from "../utils";
 
 export default function MileageBox({ openModal }: { openModal: () => void }) {
 	return (
 		<View style={styles.box}>
 			<Text style={styles.titleText}>Cost per Mile</Text>
 			<View style={{ display: "flex", flexDirection: "row" }}>
-				<Text style={{ ...styles.mileageText, flex: 1 }}>£0.16</Text>
+				<Text style={{ ...styles.mileageText, flex: 1 }}>{formatCost(0.16)}</Text>
 				<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={openModal}>
 					<Text style={globalStyles.buttonText}>New Record</Text>
 				</TouchableOpacity>

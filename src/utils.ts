@@ -7,5 +7,9 @@ export function mileageCost(endMilage: number, startMilage: number, cost: number
 }
 
 export function formatMileageCost(mileageCost: number): string {
-	return mileageCost.toFixed(3);
+	return mileageCost.toFixed(3) + "/mi";
+}
+
+export function formatCost(cost: number): string {
+	return "£" + cost.toFixed(2);
 }
