@@ -46,7 +46,13 @@ export default function App() {
 					<FlatList
 						style={undefined}
 						data={records}
-						renderItem={({ item }: { item: Record }) => <ListItem item={item} openModal={() => openModal(item)} />}
+						renderItem={({ item, index }: { item: Record; index: number }) => (
+							<ListItem
+								item={item}
+								prevItemMileage={index + 1 < records.length ? records[index + 1].milage : 0}
+								openModal={() => openModal(item)}
+							/>
+						)}
 						keyExtractor={(item: Record) => item.id!}
 						ListEmptyComponent={undefined}
 					/>
