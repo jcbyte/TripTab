@@ -8,24 +8,32 @@ import useRecordModal from "./hooks/useRecordModal";
 import { styles as globalStyles } from "./styles";
 import Record from "./types/Record";
 
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
+
 export default function App() {
 	// List of records
 	const [records, setRecords] = useState<Record[]>([
-		{ id: "1", milage: 1, cost: 1, date: new Date(2024, 1, 1) },
-		{ id: "2", milage: 2, cost: 2, date: new Date(2024, 1, 2) },
-		{ id: "3", milage: 3, cost: 3, date: new Date(2024, 1, 2) },
-		{ id: "4", milage: 4, cost: 4, date: new Date(2024, 1, 3) },
+		{ id: uuidv4(), milage: 1, cost: 1, date: new Date(2024, 1, 1) },
+		{ id: uuidv4(), milage: 2, cost: 2, date: new Date(2024, 1, 2) },
+		{ id: uuidv4(), milage: 3, cost: 3, date: new Date(2024, 1, 2) },
+		{ id: uuidv4(), milage: 4, cost: 4, date: new Date(2024, 1, 3) },
 	]);
 
 	const { modalOpen, record: modalRecord, setRecord: setModalRecord, openModal, closeModal } = useRecordModal();
 
 	// Add or update a record
 	function updateRecords(record: Record): void {
-		// if id === null then create new record
-		// else update where id === id
-		//
-		// setRecords((records: Record[]) => [...records, newRecord]);
-		console.log(record);
+		if (record.id) {
+			// This record already exists so update it
+			setRecords((records: Record[]) =>
+				records.map((existingRecord) => (existingRecord.id === record.id ? record : existingRecord))
+			);
+		} else {
+			// This is a new record so add it to the list
+			record.id = uuidv4();
+			setRecords((records: Record[]) => [...records, record]);
+		}
 	}
 
 	return (
