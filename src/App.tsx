@@ -32,10 +32,19 @@ export default function App() {
 	// Handle new record button press
 	const handleNewRecordPress = (): void => {
 		setRecords((records: Record[]) => [...records, newRecord]);
-		toggleModal();
+		closeModal();
 	};
 
-	const toggleModal = (): void => setModalVisible((prev) => !prev);
+	function openModal(ref: "new" | number): void {
+		if (ref === "new") {
+			setNewRecord({ id: "todo-calculate", milage: 0, cost: 0, date: new Date() });
+		} else {
+			setNewRecord({ ...records[ref] });
+		}
+
+		setModalVisible(true);
+	}
+	const closeModal = (): void => setModalVisible(false);
 
 	return (
 		<>
@@ -45,7 +54,7 @@ export default function App() {
 						<Text style={styles.mileageTitleText}>Cost per Mile</Text>
 						<View style={{ display: "flex", flexDirection: "row" }}>
 							<Text style={{ ...styles.mileageText, flex: 1 }}>£0.16</Text>
-							<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={toggleModal}>
+							<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={() => openModal("new")}>
 								<Text style={globalStyles.buttonText}>New Record</Text>
 							</TouchableOpacity>
 						</View>
@@ -55,7 +64,9 @@ export default function App() {
 					<FlatList
 						style={undefined}
 						data={records}
-						renderItem={({ item }: { item: Record }) => <ListItem item={item} />}
+						renderItem={({ item, index }: { item: Record; index: number }) => (
+							<ListItem item={item} index={index} openModal={openModal} />
+						)}
 						keyExtractor={(item: Record) => item.id}
 						ListEmptyComponent={undefined}
 					/>
@@ -63,7 +74,7 @@ export default function App() {
 			</View>
 
 			<Modal visible={modalVisible} animationType="fade" transparent={true}>
-				<TouchableWithoutFeedback onPress={toggleModal}>
+				<TouchableWithoutFeedback onPress={closeModal}>
 					<BlurView intensity={60} style={globalStyles.modalBackground}>
 						<View style={{ ...globalStyles.modalContent, minWidth: 300 }}>
 							<Text style={{ fontSize: 20, fontWeight: "semibold" }}>Add New Record</Text>
