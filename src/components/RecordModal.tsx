@@ -1,6 +1,6 @@
 import { BlurView } from "expo-blur";
 import React from "react";
-import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { styles as globalStyles } from "../styles";
 import Record from "../types/Record";
 import { useStateSetter } from "../types/utils";
@@ -23,7 +23,7 @@ export default function RecordModal({
 			<TouchableWithoutFeedback onPress={closeModal}>
 				<BlurView intensity={60} style={globalStyles.modalBackground}>
 					<View style={{ ...globalStyles.modalContent, minWidth: 300 }}>
-						<Text style={{ fontSize: 20, fontWeight: "semibold" }}>Add New Record</Text>
+						<Text style={styles.titleText}>Add New Record</Text>
 
 						<View style={{ marginVertical: 20, display: "flex", flexDirection: "column", gap: 10 }}>
 							<TextInput
@@ -64,3 +64,11 @@ export default function RecordModal({
 		</Modal>
 	);
 }
+
+const styles = StyleSheet.create({
+	titleText: {
+		fontSize: 20,
+		fontWeight: "semibold",
+		textAlign: "left",
+	},
+});

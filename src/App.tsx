@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, View } from "react-native";
 
 import ListItem from "./components/ListItem";
+import MileageBox from "./components/MileageBox";
 import RecordModal from "./components/RecordModal";
 import useRecordModal from "./hooks/useRecordModal";
 import { styles as globalStyles } from "./styles";
-import Record, { DEFAULT as DEFAULT_RECORD } from "./types/Record";
+import Record from "./types/Record";
 
 export default function App() {
 	// List of records
@@ -31,27 +32,13 @@ export default function App() {
 		<>
 			<View style={globalStyles.body}>
 				<View style={{ display: "flex", flexDirection: "column", gap: 40 }}>
-					<View style={styles.mileageBox}>
-						<Text style={styles.mileageTitleText}>Cost per Mile</Text>
-						<View style={{ display: "flex", flexDirection: "row" }}>
-							<Text style={{ ...styles.mileageText, flex: 1 }}>£0.16</Text>
-							<TouchableOpacity
-								activeOpacity={0.6}
-								style={globalStyles.button}
-								onPress={() => openModal(DEFAULT_RECORD)}
-							>
-								<Text style={globalStyles.buttonText}>New Record</Text>
-							</TouchableOpacity>
-						</View>
-					</View>
+					<MileageBox openModal={() => openModal({ id: null, milage: 0, cost: 0, date: new Date() })} />
 
 					{/* List of records */}
 					<FlatList
 						style={undefined}
 						data={records}
-						renderItem={({ item, index }: { item: Record; index: number }) => (
-							<ListItem item={item} openModal={() => openModal(item)} />
-						)}
+						renderItem={({ item }: { item: Record }) => <ListItem item={item} openModal={() => openModal(item)} />}
 						keyExtractor={(item: Record) => item.id!}
 						ListEmptyComponent={undefined}
 					/>
@@ -68,27 +55,3 @@ export default function App() {
 		</>
 	);
 }
-
-const styles = StyleSheet.create({
-	mileageBox: {
-		padding: 16,
-		backgroundColor: "#F9F9F9",
-		borderRadius: 8,
-		shadowColor: "#000",
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.1,
-		shadowRadius: 4,
-		elevation: 3,
-	},
-	mileageTitleText: {
-		fontSize: 24,
-		fontWeight: "semibold",
-		textAlign: "left",
-	},
-	mileageText: {
-		fontSize: 28,
-		fontWeight: "bold",
-		color: "#333",
-		textAlign: "left",
-	},
-});

@@ -4,15 +4,15 @@ import Record from "../types/Record";
 
 export default function ListItem({ item, openModal }: { item: Record; openModal: () => void }) {
 	return (
-		<TouchableOpacity style={styles.listItem} onPress={openModal}>
+		<TouchableOpacity style={styles.item} onPress={openModal}>
 			<View style={{ display: "flex", flexDirection: "column" }}>
 				<View style={{ display: "flex", flexDirection: "row" }}>
-					<Text style={{ ...styles.listText, flex: 1 }}>{item.milage} Miles</Text>
-					<Text style={styles.listText}>£{item.cost}</Text>
+					<Text style={{ ...styles.text, flex: 1 }}>{item.milage} Miles</Text>
+					<Text style={styles.text}>£{item.cost}</Text>
 				</View>
 				<View style={{ display: "flex", flexDirection: "row" }}>
-					<Text style={{ ...styles.listSecondaryText, flex: 1 }}>{item.date.toUTCString()}</Text>
-					<Text style={styles.listSecondaryText}>£0.23/mi</Text>
+					<Text style={{ ...styles.secondaryText, flex: 1 }}>{item.date.toUTCString()}</Text>
+					<Text style={styles.secondaryText}>£0.23/mi</Text>
 				</View>
 			</View>
 		</TouchableOpacity>
@@ -20,16 +20,16 @@ export default function ListItem({ item, openModal }: { item: Record; openModal:
 }
 
 const styles = {
-	listItem: {
+	item: {
 		padding: 16,
 		backgroundColor: "#F9F9F9",
 		borderRadius: 8,
 		marginBottom: 10,
 	},
-	listText: {
+	text: {
 		fontSize: 18,
 	},
-	listSecondaryText: {
+	secondaryText: {
 		fontSize: 12,
 		color: "#777",
 	},
