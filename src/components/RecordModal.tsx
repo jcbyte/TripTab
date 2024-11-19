@@ -1,33 +1,9 @@
 import { BlurView } from "expo-blur";
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React from "react";
 import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { styles as globalStyles } from "../styles";
-import { Record } from "../types/Record";
 
-export interface RecordModalHandles {
-	openModal: (record: Record) => void;
-}
-
-export default forwardRef(RecordModal);
-
-function RecordModal({ updateRecords }: { updateRecords: (record: Record) => void }, ref: any) {
-	const [modalOpen, setModalOpen] = useState(false);
-	const [record, setRecord] = useState<Record>({ id: "", milage: 0, cost: 0, date: new Date() });
-
-	useImperativeHandle(
-		ref,
-		(): RecordModalHandles => ({
-			openModal: (record: Record) => {
-				setRecord(record);
-				setModalOpen(true);
-			},
-		})
-	);
-
-	function closeModal(): void {
-		setModalOpen(false);
-	}
-
+export default function RecordModal({ modalOpen, record, setRecord, closeModal, updateRecords }: any) {
 	return (
 		<Modal visible={modalOpen} animationType="fade" transparent={true}>
 			<TouchableWithoutFeedback onPress={closeModal}>

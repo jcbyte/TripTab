@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { Record } from "../types/Record";
+import Record from "../types/Record";
 
 export default function ListItem({
 	item,

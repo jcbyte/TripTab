@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import ListItem from "./components/ListItem";
-import RecordModal, { RecordModalHandles } from "./components/RecordModal";
+import RecordModal from "./components/RecordModal";
+import useModal from "./hooks/useModal";
 import { styles as globalStyles } from "./styles";
-import { Record } from "./types/Record";
+import Record, { DEFAULT as DEFAULT_RECORD } from "./types/Record";
 
 export default function App() {
 	// List of records
@@ -14,7 +15,8 @@ export default function App() {
 		{ id: "3", milage: 3, cost: 3, date: new Date(2024, 1, 2) },
 		{ id: "4", milage: 4, cost: 4, date: new Date(2024, 1, 3) },
 	]);
-	const recordModalRef = useRef<RecordModalHandles>();
+
+	const { modalOpen, record: modalRecord, setRecord: setModalRecord, openModal, closeModal } = useModal();
 
 	// Add or update a record
 	function updateRecords(record: Record): void {
@@ -22,11 +24,12 @@ export default function App() {
 		// else update where id === id
 		//
 		// setRecords((records: Record[]) => [...records, newRecord]);
+		console.log(record);
 	}
 
-	function openModal(ref: "new" | number): void {
-		let record: Record = ref === "new" ? { id: null, milage: 0, cost: 0, date: new Date() } : { ...records[ref] };
-		recordModalRef.current!.openModal(record);
+	function showModal(ref: "new" | number): void {
+		let record: Record = ref === "new" ? { ...DEFAULT_RECORD } : { ...records[ref] };
+		openModal(record);
 	}
 
 	return (
@@ -37,7 +40,7 @@ export default function App() {
 						<Text style={styles.mileageTitleText}>Cost per Mile</Text>
 						<View style={{ display: "flex", flexDirection: "row" }}>
 							<Text style={{ ...styles.mileageText, flex: 1 }}>£0.16</Text>
-							<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={() => openModal("new")}>
+							<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={() => showModal("new")}>
 								<Text style={globalStyles.buttonText}>New Record</Text>
 							</TouchableOpacity>
 						</View>
@@ -48,7 +51,7 @@ export default function App() {
 						style={undefined}
 						data={records}
 						renderItem={({ item, index }: { item: Record; index: number }) => (
-							<ListItem item={item} index={index} openModal={openModal} />
+							<ListItem item={item} index={index} openModal={showModal} />
 						)}
 						keyExtractor={(item: Record) => item.id!}
 						ListEmptyComponent={undefined}
@@ -56,7 +59,13 @@ export default function App() {
 				</View>
 			</View>
 
-			<RecordModal updateRecords={updateRecords} ref={recordModalRef} />
+			<RecordModal
+				modalOpen={modalOpen}
+				record={modalRecord}
+				setRecord={setModalRecord}
+				closeModal={closeModal}
+				updateRecords={updateRecords}
+			/>
 		</>
 	);
 }
