@@ -40,12 +40,6 @@ export default function RecordModal({
 								value={record.cost.toString()}
 								onChangeText={(text) => setRecord({ ...record, cost: parseFloat(text) })}
 							/>
-							<TextInput
-								style={globalStyles.input}
-								placeholder="Date"
-								value={record.date.toLocaleDateString()}
-								onChangeText={(text) => setRecord({ ...record, date: new Date(text) })}
-							/>
 						</View>
 
 						<TouchableOpacity
