@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native
 
 import ListItem from "./components/ListItem";
 import RecordModal from "./components/RecordModal";
-import useModal from "./hooks/useModal";
+import useRecordModal from "./hooks/useRecordModal";
 import { styles as globalStyles } from "./styles";
 import Record, { DEFAULT as DEFAULT_RECORD } from "./types/Record";
 
@@ -16,7 +16,7 @@ export default function App() {
 		{ id: "4", milage: 4, cost: 4, date: new Date(2024, 1, 3) },
 	]);
 
-	const { modalOpen, record: modalRecord, setRecord: setModalRecord, openModal, closeModal } = useModal();
+	const { modalOpen, record: modalRecord, setRecord: setModalRecord, openModal, closeModal } = useRecordModal();
 
 	// Add or update a record
 	function updateRecords(record: Record): void {

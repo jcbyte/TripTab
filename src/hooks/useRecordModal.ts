@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Record, { DEFAULT as DEFAULT_RECORD } from "../types/Record";
 
-export default function useModal() {
-	const [modalOpen, setModalOpen] = useState(false);
+export default function useRecordModal() {
+	const [modalOpen, setModalOpen] = useState<boolean>(false);
 	const [record, setRecord] = useState<Record>(DEFAULT_RECORD);
 
 	const openModal = (record: Record) => {

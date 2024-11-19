@@ -2,8 +2,22 @@ import { BlurView } from "expo-blur";
 import React from "react";
 import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { styles as globalStyles } from "../styles";
+import Record from "../types/Record";
+import { useStateSetter } from "../types/utils";
 
-export default function RecordModal({ modalOpen, record, setRecord, closeModal, updateRecords }: any) {
+export default function RecordModal({
+	modalOpen,
+	record,
+	setRecord,
+	closeModal,
+	updateRecords,
+}: {
+	modalOpen: boolean;
+	record: Record;
+	setRecord: useStateSetter<Record>;
+	closeModal: () => void;
+	updateRecords: (record: Record) => void;
+}) {
 	return (
 		<Modal visible={modalOpen} animationType="fade" transparent={true}>
 			<TouchableWithoutFeedback onPress={closeModal}>
