@@ -18,32 +18,6 @@ export const styles = StyleSheet.create({
 		fontSize: 14,
 	},
 
-	// boxText: {
-	// 	color: "#fff",
-	// 	fontSize: 18,
-	// 	marginBottom: 10,
-	// },
-	// button: {
-	// 	borderWidth: 1,
-	// 	borderRadius: 5,
-	// 	backgroundColor: "#ff0",
-	// 	// padding: 5,
-	// 	textAlign: "center",
-	// 	textAlignVertical: "center",
-	// },
-	// buttonText: {
-	// 	color: "#000",
-	// 	fontSize: 16,
-	// },
-	// list: {
-	// 	marginTop: 20,
-	// },
-	// itemContainer: {
-	// 	padding: 15,
-	// 	backgroundColor: "#ecf0f1",
-	// 	marginBottom: 10,
-	// 	borderRadius: 8,
-	// },
 	// modalBackground: {
 	// 	flex: 1,
 	// 	justifyContent: "center",

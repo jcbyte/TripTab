@@ -5,6 +5,7 @@ import { styles as globalStyles } from "../constants/styles";
 
 // Define the type for a milage record
 interface Record {
+	id: string;
 	milage: number;
 	cost: number;
 	date: Date;
@@ -12,15 +13,15 @@ interface Record {
 
 export default function App() {
 	// List of records
-	const [entities, setEntities] = useState<Record[]>([
-		{ milage: 1, cost: 1, date: new Date(2024, 1, 1) },
-		{ milage: 2, cost: 2, date: new Date(2024, 1, 2) },
-		{ milage: 3, cost: 3, date: new Date(2024, 1, 2) },
-		{ milage: 4, cost: 4, date: new Date(2024, 1, 3) },
+	const [records, setRecords] = useState<Record[]>([
+		{ id: "1", milage: 1, cost: 1, date: new Date(2024, 1, 1) },
+		{ id: "2", milage: 2, cost: 2, date: new Date(2024, 1, 2) },
+		{ id: "3", milage: 3, cost: 3, date: new Date(2024, 1, 2) },
+		{ id: "4", milage: 4, cost: 4, date: new Date(2024, 1, 3) },
 	]);
 
 	const [modalVisible, setModalVisible] = useState(false);
-	const [newRecord, setNewRecord] = useState<Record>({ milage: 0, cost: 0, date: new Date() });
+	const [newRecord, setNewRecord] = useState<Record>({ id: "null", milage: 0, cost: 0, date: new Date() });
 
 	// Handle new record button press
 	const handleNewRecordPress = (): void => {
@@ -35,11 +36,11 @@ export default function App() {
 	return (
 		<>
 			<View style={globalStyles.body}>
-				<View style={{ display: "flex", flexDirection: "column" }}>
+				<View style={{ display: "flex", flexDirection: "column", gap: 40 }}>
 					<View style={styles.mileageBox}>
 						<Text style={styles.mileageTitleText}>Cost per Mile</Text>
 						<View style={{ display: "flex", flexDirection: "row" }}>
-							<Text style={styles.mileageText}>£0.16</Text>
+							<Text style={{ ...styles.mileageText, flex: 1 }}>£0.16</Text>
 							<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={handleNewRecordPress}>
 								<Text style={globalStyles.buttonText}>New Record</Text>
 							</TouchableOpacity>
@@ -48,17 +49,25 @@ export default function App() {
 
 					{/* List of records */}
 					<FlatList
-						data={entities}
+						style={undefined}
+						data={records}
 						renderItem={({ item }: { item: Record }) => (
-							<View>
-								{/* // todo show other information */}
+							<TouchableOpacity style={styles.listItem}>
 								{/* // todo on click enable editing/deleting */}
-								<Text>{item.milage}</Text>
-								<Text>{item.cost}</Text>
-								<Text>{item.date.toUTCString()}</Text>
-							</View>
+								<View style={{ display: "flex", flexDirection: "column" }}>
+									<View style={{ display: "flex", flexDirection: "row" }}>
+										<Text style={{ ...styles.listText, flex: 1 }}>{item.milage} Miles</Text>
+										<Text style={styles.listText}>£{item.cost}</Text>
+									</View>
+									<View style={{ display: "flex", flexDirection: "row" }}>
+										<Text style={{ ...styles.listSecondaryText, flex: 1 }}>{item.date.toUTCString()}</Text>
+										<Text style={styles.listSecondaryText}>£0.23/mi</Text>
+									</View>
+								</View>
+							</TouchableOpacity>
 						)}
-						keyExtractor={(item, index) => index.toString()}
+						keyExtractor={(item: Record) => item.id}
+						ListEmptyComponent={undefined}
 					/>
 				</View>
 			</View>
@@ -132,6 +141,18 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		color: "#333",
 		textAlign: "left",
-		flex: 1,
+	},
+	listItem: {
+		padding: 16,
+		backgroundColor: "#F9F9F9",
+		borderRadius: 8,
+		marginBottom: 10,
+	},
+	listText: {
+		fontSize: 18,
+	},
+	listSecondaryText: {
+		fontSize: 12,
+		color: "#777",
 	},
 });
