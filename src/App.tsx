@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, SafeAreaView, View } from "react-native";
 
 import ListItem from "./components/ListItem";
 import MileageBox from "./components/MileageBox";
@@ -11,13 +11,22 @@ import Record from "./types/Record";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 
+// todo first element issues
+// todo sort by mileage
+// todo main mileage box
+// todo input boxes aren't so difficult
+// todo scroll
+// todo main box select past 10/100/all etc
+// todo settings page miles/km, currency
+// todo settings page export, import
+
 export default function App() {
 	// List of records
 	const [records, setRecords] = useState<Record[]>([
-		{ id: uuidv4(), milage: 90, cost: 1 },
-		{ id: uuidv4(), milage: 70, cost: 2 },
-		{ id: uuidv4(), milage: 10, cost: 3 },
-		{ id: uuidv4(), milage: 1, cost: 4 },
+		{ id: uuidv4(), milage: 65531, cost: 38.97 },
+		{ id: uuidv4(), milage: 65286, cost: 14.5 },
+		{ id: uuidv4(), milage: 65187, cost: 28.96 },
+		{ id: uuidv4(), milage: 65003, cost: 38.42 },
 	]);
 
 	// Add or update a record
@@ -38,7 +47,7 @@ export default function App() {
 
 	return (
 		<>
-			<View style={globalStyles.body}>
+			<SafeAreaView style={globalStyles.body}>
 				<View style={{ display: "flex", flexDirection: "column", gap: 40 }}>
 					<MileageBox openModal={() => openModal({ id: null, milage: 0, cost: 0 })} />
 
@@ -57,7 +66,7 @@ export default function App() {
 						ListEmptyComponent={undefined}
 					/>
 				</View>
-			</View>
+			</SafeAreaView>
 
 			<RecordModal
 				modalOpen={modalOpen}
