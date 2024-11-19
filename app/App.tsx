@@ -1,41 +1,32 @@
 import React, { useState } from "react";
-import {
-	Button,
-	FlatList,
-	Modal,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	TouchableWithoutFeedback,
-	View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { styles } from "../constants/styles";
+import { styles as globalStyles } from "../constants/styles";
 
 // Define the type for a milage record
 interface Record {
 	milage: number;
 	cost: number;
-	time: Date;
+	date: Date;
 }
 
 export default function App() {
 	// List of records
 	const [entities, setEntities] = useState<Record[]>([
-		{ milage: 1, cost: 1, time: new Date("01/01/2001") },
-		{ milage: 2, cost: 2, time: new Date("01/01/2002") },
-		{ milage: 3, cost: 3, time: new Date("01/01/2003") },
-		{ milage: 4, cost: 4, time: new Date("01/01/2004") },
+		{ milage: 1, cost: 1, date: new Date(2024, 1, 1) },
+		{ milage: 2, cost: 2, date: new Date(2024, 1, 2) },
+		{ milage: 3, cost: 3, date: new Date(2024, 1, 2) },
+		{ milage: 4, cost: 4, date: new Date(2024, 1, 3) },
 	]);
 
 	const [modalVisible, setModalVisible] = useState(false);
-	const [newRecord, setNewRecord] = useState<Record>({ milage: 0, cost: 0, time: new Date() });
+	const [newRecord, setNewRecord] = useState<Record>({ milage: 0, cost: 0, date: new Date() });
 
 	// Handle new record button press
 	const handleNewRecordPress = (): void => {
 		// todo dialog to enter details
 		// setEntities((entities) => {
-		// 	let newEntity: Record = { milage: 99, cost: 99, time: new Date("01/01/2099") };
+		// 	let newEntity: Record = { milage: 99, cost: 99, time: new Date(2024, 1, 9) };
 		// 	return [...entities, newEntity];
 		// });
 		setModalVisible(true);
@@ -43,40 +34,42 @@ export default function App() {
 
 	return (
 		<>
-			<View style={{ flex: 1, marginTop: 20, padding: 20 }}>
-				{/* Box with milage cost and new button */}
-				<View style={styles.box}>
-					<Text style={styles.boxText}>Milage Cost</Text>
-					<TouchableOpacity style={styles.button} onPress={handleNewRecordPress}>
-						<Text style={styles.buttonText}>New Record</Text>
-					</TouchableOpacity>
-				</View>
-
-				{/* List of records */}
-				<FlatList
-					data={entities}
-					renderItem={({ item }: { item: Record }) => (
-						<View style={styles.itemContainer}>
-							{/* // todo show other information */}
-							{/* // todo on click enable editing/deleting */}
-							<Text>{item.milage}</Text>
+			<View style={globalStyles.body}>
+				<View style={{ display: "flex", flexDirection: "column" }}>
+					<View style={styles.mileageBox}>
+						<Text style={styles.mileageTitleText}>Cost per Mile</Text>
+						<View style={{ display: "flex", flexDirection: "row" }}>
+							<Text style={styles.mileageText}>£0.16</Text>
+							<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={handleNewRecordPress}>
+								<Text style={globalStyles.buttonText}>New Record</Text>
+							</TouchableOpacity>
 						</View>
-					)}
-					keyExtractor={(item, index) => index.toString()}
-					style={styles.list}
-				/>
+					</View>
+
+					{/* List of records */}
+					<FlatList
+						data={entities}
+						renderItem={({ item }: { item: Record }) => (
+							<View>
+								{/* // todo show other information */}
+								{/* // todo on click enable editing/deleting */}
+								<Text>{item.milage}</Text>
+								<Text>{item.cost}</Text>
+								<Text>{item.date.toUTCString()}</Text>
+							</View>
+						)}
+						keyExtractor={(item, index) => index.toString()}
+					/>
+				</View>
 			</View>
 
-			{/* Modal for new record */}
-			<Modal visible={modalVisible} animationType="slide" transparent={true}>
-				{/* TouchableWithoutFeedback to dismiss modal */}
+			{/* <Modal visible={modalVisible} animationType="slide" transparent={true}>
 				<TouchableWithoutFeedback
 					onPress={() => {
 						setModalVisible(false);
 					}}
 				>
 					<View style={styles.modalBackground}>
-						{/* Modal content */}
 						<View style={styles.modalContainer}>
 							<Text style={styles.modalTitle}>Add New Record</Text>
 
@@ -97,8 +90,8 @@ export default function App() {
 							<TextInput
 								style={styles.input}
 								placeholder="Date"
-								value={newRecord.time.toLocaleDateString()}
-								onChangeText={(text) => setNewRecord({ ...newRecord, time: new Date(text) })}
+								value={newRecord.date.toLocaleDateString()}
+								onChangeText={(text) => setNewRecord({ ...newRecord, date: new Date(text) })}
 							/>
 
 							<View style={styles.modalButtons}>
@@ -113,7 +106,32 @@ export default function App() {
 						</View>
 					</View>
 				</TouchableWithoutFeedback>
-			</Modal>
+			</Modal> */}
 		</>
 	);
 }
+
+const styles = StyleSheet.create({
+	mileageBox: {
+		padding: 16,
+		backgroundColor: "#F9F9F9",
+		borderRadius: 8,
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.1,
+		shadowRadius: 4,
+		elevation: 3,
+	},
+	mileageTitleText: {
+		fontSize: 24,
+		fontWeight: "semibold",
+		textAlign: "left",
+	},
+	mileageText: {
+		fontSize: 28,
+		fontWeight: "bold",
+		color: "#333",
+		textAlign: "left",
+		flex: 1,
+	},
+});
