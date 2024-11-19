@@ -17,38 +17,21 @@ export const styles = StyleSheet.create({
 		color: "#fff",
 		fontSize: 14,
 	},
-
-	// modalBackground: {
-	// 	flex: 1,
-	// 	justifyContent: "center",
-	// 	alignItems: "center",
-	// 	backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent background
-	// },
-	// modalContainer: {
-	// 	backgroundColor: "#fff",
-	// 	borderRadius: 10,
-	// 	padding: 20,
-	// 	margin: 20,
-	// 	alignItems: "center",
-	// },
-	// modalTitle: {
-	// 	fontSize: 24,
-	// 	marginBottom: 20,
-	// 	color: "#333",
-	// },
-	// input: {
-	// 	width: 250,
-	// 	height: 40,
-	// 	borderColor: "#ccc",
-	// 	borderWidth: 1,
-	// 	borderRadius: 5,
-	// 	paddingHorizontal: 10,
-	// 	marginBottom: 15,
-	// 	backgroundColor: "#fff",
-	// },
-	// modalButtons: {
-	// 	flexDirection: "row",
-	// 	justifyContent: "space-between",
-	// 	width: "100%",
-	// },
+	input: {
+		borderColor: "#ccc",
+		borderWidth: 1,
+		borderRadius: 8,
+		paddingHorizontal: 12,
+	},
+	modalBackground: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "rgba(0, 0, 0, 0.5)",
+	},
+	modalContent: {
+		padding: 20,
+		backgroundColor: "white",
+		borderRadius: 8,
+	},
 });

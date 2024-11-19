@@ -1,6 +1,16 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+	FlatList,
+	Modal,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	TouchableWithoutFeedback,
+	View,
+} from "react-native";
 
+import { BlurView } from "expo-blur";
 import { styles as globalStyles } from "../constants/styles";
 
 // Define the type for a milage record
@@ -20,18 +30,18 @@ export default function App() {
 		{ id: "4", milage: 4, cost: 4, date: new Date(2024, 1, 3) },
 	]);
 
+	// Modal visibility
 	const [modalVisible, setModalVisible] = useState(false);
-	const [newRecord, setNewRecord] = useState<Record>({ id: "null", milage: 0, cost: 0, date: new Date() });
+	// Current modal record data
+	const [newRecord, setNewRecord] = useState<Record>({ id: "todo-calculate", milage: 0, cost: 0, date: new Date() });
 
 	// Handle new record button press
 	const handleNewRecordPress = (): void => {
-		// todo dialog to enter details
-		// setEntities((entities) => {
-		// 	let newEntity: Record = { milage: 99, cost: 99, time: new Date(2024, 1, 9) };
-		// 	return [...entities, newEntity];
-		// });
-		setModalVisible(true);
+		setRecords((records: Record[]) => [...records, newRecord]);
+		toggleModal();
 	};
+
+	const toggleModal = (): void => setModalVisible((prev) => !prev);
 
 	return (
 		<>
@@ -41,7 +51,7 @@ export default function App() {
 						<Text style={styles.mileageTitleText}>Cost per Mile</Text>
 						<View style={{ display: "flex", flexDirection: "row" }}>
 							<Text style={{ ...styles.mileageText, flex: 1 }}>£0.16</Text>
-							<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={handleNewRecordPress}>
+							<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={toggleModal}>
 								<Text style={globalStyles.buttonText}>New Record</Text>
 							</TouchableOpacity>
 						</View>
@@ -52,8 +62,7 @@ export default function App() {
 						style={undefined}
 						data={records}
 						renderItem={({ item }: { item: Record }) => (
-							<TouchableOpacity style={styles.listItem}>
-								{/* // todo on click enable editing/deleting */}
+							<TouchableOpacity style={styles.listItem} onPress={toggleModal}>
 								<View style={{ display: "flex", flexDirection: "column" }}>
 									<View style={{ display: "flex", flexDirection: "row" }}>
 										<Text style={{ ...styles.listText, flex: 1 }}>{item.milage} Miles</Text>
@@ -72,50 +81,42 @@ export default function App() {
 				</View>
 			</View>
 
-			{/* <Modal visible={modalVisible} animationType="slide" transparent={true}>
-				<TouchableWithoutFeedback
-					onPress={() => {
-						setModalVisible(false);
-					}}
-				>
-					<View style={styles.modalBackground}>
-						<View style={styles.modalContainer}>
-							<Text style={styles.modalTitle}>Add New Record</Text>
+			<Modal visible={modalVisible} animationType="fade" transparent={true}>
+				<TouchableWithoutFeedback onPress={toggleModal}>
+					<BlurView intensity={60} style={globalStyles.modalBackground}>
+						<View style={{ ...globalStyles.modalContent, minWidth: 300 }}>
+							<Text style={{ fontSize: 20, fontWeight: "semibold" }}>Add New Record</Text>
 
-							<TextInput
-								style={styles.input}
-								placeholder="Mileage"
-								keyboardType="numeric"
-								value={newRecord.milage.toString()}
-								onChangeText={(text) => setNewRecord({ ...newRecord, milage: parseFloat(text) })}
-							/>
-							<TextInput
-								style={styles.input}
-								placeholder="Cost"
-								keyboardType="numeric"
-								value={newRecord.cost.toString()}
-								onChangeText={(text) => setNewRecord({ ...newRecord, cost: parseFloat(text) })}
-							/>
-							<TextInput
-								style={styles.input}
-								placeholder="Date"
-								value={newRecord.date.toLocaleDateString()}
-								onChangeText={(text) => setNewRecord({ ...newRecord, date: new Date(text) })}
-							/>
-
-							<View style={styles.modalButtons}>
-								<Button title="Cancel" onPress={() => setModalVisible(false)} />
-								<Button
-									title="Add Record"
-									onPress={() => {
-										console.log("Add record");
-									}}
+							<View style={{ marginVertical: 20, display: "flex", flexDirection: "column", gap: 10 }}>
+								<TextInput
+									style={globalStyles.input}
+									placeholder="Mileage"
+									keyboardType="numeric"
+									value={newRecord.milage.toString()}
+									onChangeText={(text) => setNewRecord({ ...newRecord, milage: parseFloat(text) })}
+								/>
+								<TextInput
+									style={globalStyles.input}
+									placeholder="Cost"
+									keyboardType="numeric"
+									value={newRecord.cost.toString()}
+									onChangeText={(text) => setNewRecord({ ...newRecord, cost: parseFloat(text) })}
+								/>
+								<TextInput
+									style={globalStyles.input}
+									placeholder="Date"
+									value={newRecord.date.toLocaleDateString()}
+									onChangeText={(text) => setNewRecord({ ...newRecord, date: new Date(text) })}
 								/>
 							</View>
+
+							<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={handleNewRecordPress}>
+								<Text style={globalStyles.buttonText}>Save</Text>
+							</TouchableOpacity>
 						</View>
-					</View>
+					</BlurView>
 				</TouchableWithoutFeedback>
-			</Modal> */}
+			</Modal>
 		</>
 	);
 }
