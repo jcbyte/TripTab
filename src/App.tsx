@@ -10,11 +10,12 @@ import Record from "./types/Record";
 
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
+import { insertRecord } from "./utils";
 
 // todo first element issues
-// todo sort by mileage
 // todo main mileage box
 // todo input boxes aren't so difficult
+// todo edit incl delete
 // todo scroll
 // todo main box select past 10/100/all etc
 // todo settings page miles/km, currency
@@ -26,20 +27,33 @@ export default function App() {
 		{ id: uuidv4(), milage: 65531, cost: 38.97 },
 		{ id: uuidv4(), milage: 65286, cost: 14.5 },
 		{ id: uuidv4(), milage: 65187, cost: 28.96 },
-		{ id: uuidv4(), milage: 65003, cost: 38.42 },
+		{ id: uuidv4(), milage: 65003, cost: 0 },
 	]);
+
+	// useEffect(() => {
+	// 	setRecords((records: Record[]) => {
+	// 		sortRecords(records);
+	// 		return records;
+	// 	});
+	// });
 
 	// Add or update a record
 	function updateRecords(record: Record): void {
 		if (record.id) {
 			// This record already exists so update it
-			setRecords((records: Record[]) =>
-				records.map((existingRecord) => (existingRecord.id === record.id ? record : existingRecord))
-			);
+			setRecords((records: Record[]) => {
+				let newRecords = records.filter((existingRecord) => existingRecord.id !== record.id);
+				insertRecord(newRecords, record);
+				return newRecords;
+			});
 		} else {
 			// This is a new record so add it to the list
 			record.id = uuidv4();
-			setRecords((records: Record[]) => [...records, record]);
+			setRecords((records: Record[]) => {
+				let newRecords = [...records];
+				insertRecord(newRecords, record);
+				return newRecords;
+			});
 		}
 	}
 
