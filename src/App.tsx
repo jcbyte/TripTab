@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FlatList, SafeAreaView, View } from "react-native";
+import React from "react";
+import { FlatList, SafeAreaView, Text, View } from "react-native";
 
 import ListItem from "./components/ListItem";
 import MileageBox from "./components/MileageBox";
@@ -77,7 +77,7 @@ export default function App() {
 							/>
 						)}
 						keyExtractor={(item: Record) => item.id!}
-						ListEmptyComponent={undefined}
+						ListEmptyComponent={<Text style={{ textAlign: "center" }}>No Records Yet</Text>}
 					/>
 				</View>
 			</SafeAreaView>
