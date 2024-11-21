@@ -30,16 +30,18 @@ export default function RecordModal({
 								style={globalStyles.input}
 								placeholder="Mileage"
 								keyboardType="numeric"
-								value={record.milage.toString()}
-								onChangeText={(text) => setRecord({ ...record, milage: parseFloat(text) })}
+								value={record.mileage.toString()}
+								onChangeText={(text) => setRecord({ ...record, mileage: parseFloat(text) })}
 							/>
-							<TextInput
-								style={globalStyles.input}
-								placeholder="Cost"
-								keyboardType="numeric"
-								value={record.cost.toString()}
-								onChangeText={(text) => setRecord({ ...record, cost: parseFloat(text) })}
-							/>
+							{record.type === "record" && (
+								<TextInput
+									style={globalStyles.input}
+									placeholder="Cost"
+									keyboardType="numeric"
+									value={record.cost.toString()}
+									onChangeText={(text) => setRecord({ ...record, cost: parseFloat(text) })}
+								/>
+							)}
 						</View>
 
 						<TouchableOpacity

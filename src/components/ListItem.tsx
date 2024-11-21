@@ -10,19 +10,21 @@ export default function ListItem({
 	openModal,
 }: {
 	item: Record;
-	cachedTransition?: CachedRecordTransition;
+	cachedTransition: CachedRecordTransition;
 	openModal: () => void;
 }) {
 	return (
 		<TouchableOpacity style={styles.item} onPress={openModal}>
 			<View style={{ display: "flex", flexDirection: "column" }}>
 				<View style={{ display: "flex", flexDirection: "row" }}>
-					{cachedTransition && <Text style={{ ...styles.text, flex: 1 }}>{cachedTransition.miles} Miles</Text>}
-					{cachedTransition && <Text style={styles.text}>{formatCost(item.cost)}</Text>}
+					{item.type === "record" && <Text style={{ ...styles.text, flex: 1 }}>{cachedTransition.miles} Miles</Text>}
+					{item.type === "record" && <Text style={styles.text}>{formatCost(item.cost)}</Text>}
 				</View>
 				<View style={{ display: "flex", flexDirection: "row" }}>
-					<Text style={{ ...styles.secondaryText, flex: 1 }}>{item.milage}</Text>
-					{cachedTransition && <Text style={styles.secondaryText}>{formatMileageCost(cachedTransition.cost)}</Text>}
+					<Text style={{ ...styles.secondaryText, flex: 1 }}>{item.mileage}</Text>
+					{item.type === "record" && (
+						<Text style={styles.secondaryText}>{formatMileageCost(cachedTransition.cost)}</Text>
+					)}
 				</View>
 			</View>
 		</TouchableOpacity>

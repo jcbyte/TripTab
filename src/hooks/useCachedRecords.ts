@@ -17,12 +17,12 @@ export default function useCachedRecords(initialRecords: Record[]) {
 	);
 
 	function toSortedRecords(records: Record[]): Record[] {
-		return [...records].sort((a: Record, b: Record) => b.milage - a.milage);
+		return [...records].sort((a: Record, b: Record) => b.mileage - a.mileage);
 	}
 
 	function getCachedCosts(records: Record[]): CachedRecordTransition[] {
 		let recordTransitions: CachedRecordTransition[] = [];
-		for (let i = 0; i < records.length - 1; i++) {
+		for (let i = 0; i < records.length; i++) {
 			recordTransitions.push(DEFAULT_CACHED_RECORD_TRANSITION);
 			updateRecordTransition(records, recordTransitions, i);
 		}
@@ -32,11 +32,13 @@ export default function useCachedRecords(initialRecords: Record[]) {
 	function updateRecordTransition(records: Record[], recordTransitions: CachedRecordTransition[], index: number) {
 		// If this index is out of bounds or the last element then do not update
 		if (index < 0 || index + 1 >= records.length) return;
+		// Do not need cached data for purley mileage records
+		if (records[index].type === "mileage") return;
 
 		// Calculate the cached data based on this and the next record
 		let record = records[index];
 		let prevRecord = records[index + 1];
-		let miles = record.milage - prevRecord.milage;
+		let miles = record.mileage - prevRecord.mileage;
 		let cost = normalisedMileageCost(miles, record.cost);
 		// Update the transitions array in place
 		recordTransitions[index] = { miles: miles, cost: cost };
@@ -56,14 +58,11 @@ export default function useCachedRecords(initialRecords: Record[]) {
 		// Add the record
 		records.splice(index, 0, record);
 
-		// If this is the only record then there is no cached transition data to calculate
-		if (records.length > 1) {
-			// Create and calculate the transition data for this record
-			recordTransitions.splice(index, 0, DEFAULT_CACHED_RECORD_TRANSITION);
-			updateRecordTransition(records, recordTransitions, index);
-			// Update the cached data of item before as this will have changed
-			updateRecordTransition(records, recordTransitions, index - 1);
-		}
+		// Create and calculate the transition data for this record
+		recordTransitions.splice(index, 0, DEFAULT_CACHED_RECORD_TRANSITION);
+		updateRecordTransition(records, recordTransitions, index);
+		// Update the cached data of item before as this will have changed
+		updateRecordTransition(records, recordTransitions, index - 1);
 	}
 
 	// Add or update a record
@@ -84,7 +83,7 @@ export default function useCachedRecords(initialRecords: Record[]) {
 		}
 
 		// Add the record (back) into the array in the correct position
-		let newRecordIndex = newRecords.findIndex((existingRecord) => existingRecord.milage < record.milage);
+		let newRecordIndex = newRecords.findIndex((existingRecord) => existingRecord.mileage < record.mileage);
 		if (newRecordIndex === -1) {
 			// If no smaller milage is found, append at the end
 			newRecordIndex = newRecords.length;
