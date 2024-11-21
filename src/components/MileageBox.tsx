@@ -16,7 +16,9 @@ export default function MileageBox({
 	function calculateCost(): number {
 		let recordsNo = Math.min(calculateRecordsNo, cachedRecordTransitions.length);
 		return (
-			cachedRecordTransitions.slice(0, recordsNo).reduce((sum, cachedRecord) => sum + cachedRecord.cost, 0) / recordsNo
+			cachedRecordTransitions
+				.slice(0, recordsNo)
+				.reduce((sum, cachedRecord) => (cachedRecord ? sum + cachedRecord.cost : sum), 0) / recordsNo
 		);
 	}
 

@@ -3,10 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 import Record from "../types/Record";
 import { normalisedMileageCost } from "../utils";
 
-export interface CachedRecordTransition {
+export type CachedRecordTransition = null | {
 	miles: number;
 	cost: number;
-}
+};
 
 const DEFAULT_CACHED_RECORD_TRANSITION: CachedRecordTransition = { miles: 0, cost: 0 };
 
@@ -30,18 +30,23 @@ export default function useCachedRecords(initialRecords: Record[]) {
 	}
 
 	function updateRecordTransition(records: Record[], recordTransitions: CachedRecordTransition[], index: number) {
-		// If this index is out of bounds or the last element then do not update
-		if (index < 0 || index + 1 >= records.length) return;
-		// Do not need cached data for purley mileage records
-		if (records[index].type === "mileage") return;
+		// If this index is out of bounds then do not update
+		if (index < 0 || index >= records.length) return;
 
-		// Calculate the cached data based on this and the next record
-		let record = records[index];
-		let prevRecord = records[index + 1];
-		let miles = record.mileage - prevRecord.mileage;
-		let cost = normalisedMileageCost(miles, record.cost);
+		let transition: CachedRecordTransition = null;
+		// If this is a mileage record, then leave the transition as null
+
+		if (records[index].type === "record") {
+			// Calculate the cached data based on this and the next record
+			let record = records[index];
+			let prevRecord = records[index + 1];
+			let miles = record.mileage - prevRecord.mileage;
+			let cost = normalisedMileageCost(miles, record.cost);
+			transition = { miles: miles, cost: cost };
+		}
+
 		// Update the transitions array in place
-		recordTransitions[index] = { miles: miles, cost: cost };
+		recordTransitions[index] = transition;
 	}
 
 	function removeRecord(records: Record[], recordTransitions: CachedRecordTransition[], index: number) {
@@ -55,6 +60,11 @@ export default function useCachedRecords(initialRecords: Record[]) {
 	}
 
 	function addRecord(records: Record[], recordTransitions: CachedRecordTransition[], record: Record, index: number) {
+		// Check that if this is a first record it is a milage record
+		if (records.length === 0 && record.type !== "mileage") {
+			throw new Error("First record must be a mileage record");
+		}
+
 		// Add the record
 		records.splice(index, 0, record);
 
@@ -95,8 +105,6 @@ export default function useCachedRecords(initialRecords: Record[]) {
 		// Update the state variables
 		setRecords(newRecords);
 		setCachedRecordTransitions(newTransitions);
-
-		console.log(newTransitions);
 	}
 
 	return { records, cachedRecordTransitions, updateRecords };

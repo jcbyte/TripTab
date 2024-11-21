@@ -19,7 +19,6 @@ import useCachedRecords from "./hooks/useCachedRecords";
 // todo settings page miles/km, currency
 // todo settings page export, import
 // todo enable record type to be selelected
-// todo cost per mile average needs to not caluclte with "mileage" records
 
 export default function App() {
 	// List of records

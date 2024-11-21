@@ -1,7 +1,5 @@
 import { StatusBar, StyleSheet } from "react-native";
 
-console.log();
-
 export const styles = StyleSheet.create({
 	body: {
 		marginTop: StatusBar.currentHeight,
