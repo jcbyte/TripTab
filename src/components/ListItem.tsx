@@ -1,29 +1,28 @@
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { CachedRecordTransition } from "../hooks/useCachedRecords";
 import Record from "../types/Record";
-import { formatCost, formatMileageCost, mileageCost } from "../utils";
+import { formatCost, formatMileageCost } from "../utils";
 
 export default function ListItem({
 	item,
-	prevItemMileage,
+	cachedTransition,
 	openModal,
 }: {
 	item: Record;
-	prevItemMileage: number;
+	cachedTransition?: CachedRecordTransition;
 	openModal: () => void;
 }) {
 	return (
 		<TouchableOpacity style={styles.item} onPress={openModal}>
 			<View style={{ display: "flex", flexDirection: "column" }}>
 				<View style={{ display: "flex", flexDirection: "row" }}>
-					<Text style={{ ...styles.text, flex: 1 }}>{item.milage - prevItemMileage} Miles</Text>
+					<Text style={{ ...styles.text, flex: 1 }}>{cachedTransition?.miles ?? -1} Miles</Text>
 					<Text style={styles.text}>{formatCost(item.cost)}</Text>
 				</View>
 				<View style={{ display: "flex", flexDirection: "row" }}>
 					<Text style={{ ...styles.secondaryText, flex: 1 }}>{item.milage}</Text>
-					<Text style={styles.secondaryText}>
-						{formatMileageCost(mileageCost(item.milage, prevItemMileage, item.cost))}
-					</Text>
+					<Text style={styles.secondaryText}>{formatMileageCost(cachedTransition?.cost ?? -1)}</Text>
 				</View>
 			</View>
 		</TouchableOpacity>

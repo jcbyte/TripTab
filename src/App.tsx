@@ -40,12 +40,11 @@ export default function App() {
 
 					{/* List of records */}
 					<FlatList
-						style={undefined}
 						data={records}
 						renderItem={({ item, index }: { item: Record; index: number }) => (
 							<ListItem
 								item={item}
-								prevItemMileage={index + 1 < records.length ? records[index + 1].milage : 0}
+								cachedTransition={index + 1 < records.length ? cachedRecordTransitions[index] : undefined}
 								openModal={() => openModal(item)}
 							/>
 						)}
