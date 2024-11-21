@@ -13,7 +13,6 @@ import "react-native-get-random-values";
 import useCachedRecords from "./hooks/useCachedRecords";
 
 // todo first element issues
-// todo main mileage box
 // todo input boxes aren't so difficult
 // todo edit incl delete
 // todo scroll
@@ -36,7 +35,11 @@ export default function App() {
 		<>
 			<SafeAreaView style={globalStyles.body}>
 				<View style={{ display: "flex", flexDirection: "column", gap: 40 }}>
-					<MileageBox openModal={() => openModal({ id: null, milage: 0, cost: 0 })} />
+					<MileageBox
+						cachedRecordTransitions={cachedRecordTransitions}
+						calculateRecordsNo={100}
+						openModal={() => openModal({ id: null, milage: 0, cost: 0 })}
+					/>
 
 					{/* List of records */}
 					<FlatList

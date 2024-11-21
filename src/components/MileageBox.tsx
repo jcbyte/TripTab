@@ -1,14 +1,30 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { CachedRecordTransition } from "../hooks/useCachedRecords";
 import { styles as globalStyles } from "../styles";
-import { formatCost } from "../utils";
+import { formatMileageCost } from "../utils";
 
-export default function MileageBox({ openModal }: { openModal: () => void }) {
+export default function MileageBox({
+	cachedRecordTransitions,
+	calculateRecordsNo,
+	openModal,
+}: {
+	cachedRecordTransitions: CachedRecordTransition[];
+	calculateRecordsNo: number;
+	openModal: () => void;
+}) {
+	function calculateCost(): number {
+		let recordsNo = Math.min(calculateRecordsNo, cachedRecordTransitions.length);
+		return (
+			cachedRecordTransitions.slice(0, recordsNo).reduce((sum, cachedRecord) => sum + cachedRecord.cost, 0) / recordsNo
+		);
+	}
+
 	return (
 		<View style={styles.box}>
 			<Text style={styles.titleText}>Cost per Mile</Text>
 			<View style={{ display: "flex", flexDirection: "row" }}>
-				<Text style={{ ...styles.mileageText, flex: 1 }}>{formatCost(0.16)}</Text>
+				<Text style={{ ...styles.mileageText, flex: 1 }}>{formatMileageCost(calculateCost())}</Text>
 				<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={openModal}>
 					<Text style={globalStyles.buttonText}>New Record</Text>
 				</TouchableOpacity>
