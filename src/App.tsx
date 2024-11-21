@@ -17,7 +17,7 @@ import useCachedRecords from "./hooks/useCachedRecords";
 // todo main box select past 10/100/all etc
 // todo settings page miles/km, currency
 // todo settings page export, import
-// todo main box divides incorrectly
+// todo force first element to be a mileage type
 
 export default function App() {
 	// List of records

@@ -14,12 +14,27 @@ export default function MileageBox({
 	openModal: () => void;
 }) {
 	function calculateCost(): number {
-		let recordsNo = Math.min(calculateRecordsNo, cachedRecordTransitions.length);
-		return (
-			cachedRecordTransitions
-				.slice(0, recordsNo)
-				.reduce((sum, cachedRecord) => (cachedRecord ? sum + cachedRecord.cost : sum), 0) / recordsNo
-		);
+		// Get the number of records to scan through, making sure we don't go over the array
+		let recordsNo: number = Math.min(calculateRecordsNo, cachedRecordTransitions.length);
+
+		// If no records then return 0, else we will get zero division error
+		if (recordsNo === 0) {
+			return 0;
+		}
+
+		let sum: number = 0;
+		let recordCount: number = 0;
+
+		// Calculate the average of all non-null elements
+		for (let i = 0; i < recordsNo; i++) {
+			let transition: CachedRecordTransition = cachedRecordTransitions[i];
+			if (transition) {
+				sum += transition.cost;
+				recordCount += 1;
+			}
+		}
+
+		return sum / recordCount;
 	}
 
 	return (
