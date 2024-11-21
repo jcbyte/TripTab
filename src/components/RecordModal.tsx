@@ -30,7 +30,7 @@ export default function RecordModal({
 								style={globalStyles.input}
 								placeholder="Mileage"
 								keyboardType="numeric"
-								value={record.mileage.toString()}
+								value={record.mileage ? record.mileage.toString() : undefined}
 								onChangeText={(text) => setRecord({ ...record, mileage: parseFloat(text) })}
 							/>
 							{record.type === "record" && (
@@ -38,7 +38,7 @@ export default function RecordModal({
 									style={globalStyles.input}
 									placeholder="Cost"
 									keyboardType="numeric"
-									value={record.cost.toString()}
+									value={record.cost ? record.cost.toString() : undefined}
 									onChangeText={(text) => setRecord({ ...record, cost: parseFloat(text) })}
 								/>
 							)}
