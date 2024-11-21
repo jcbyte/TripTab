@@ -1,7 +1,16 @@
 import { BlurView } from "expo-blur";
 import React from "react";
-import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
-import { styles as globalStyles } from "../styles";
+import {
+	Modal,
+	StyleSheet,
+	Switch,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	TouchableWithoutFeedback,
+	View,
+} from "react-native";
+import { colours, styles as globalStyles } from "../styles";
 import Record from "../types/Record";
 import { useStateSetter } from "../types/utils";
 
@@ -42,6 +51,20 @@ export default function RecordModal({
 									onChangeText={(text) => setRecord({ ...record, cost: parseFloat(text) })}
 								/>
 							)}
+							<View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+								<Text style={{ flex: 1 }}>Mileage Record</Text>
+								<Switch
+									thumbColor={record.type === "mileage" ? colours.primary : undefined}
+									trackColor={{ true: colours.switchTrackPrimary }}
+									value={record.type === "mileage"}
+									onValueChange={(value) => {
+										setRecord({
+											...record,
+											...(value ? { type: "mileage" } : { type: "record", cost: 0 }),
+										});
+									}}
+								/>
+							</View>
 						</View>
 
 						<TouchableOpacity

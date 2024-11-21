@@ -1,12 +1,17 @@
 import { StatusBar, StyleSheet } from "react-native";
 
+export const colours = {
+	primary: "#7a6fe1",
+	switchTrackPrimary: "#e1d8f1",
+};
+
 export const styles = StyleSheet.create({
 	body: {
 		marginTop: StatusBar.currentHeight,
 		padding: 20,
 	},
 	button: {
-		backgroundColor: "#7A6FE1",
+		backgroundColor: colours.primary,
 		borderRadius: 8,
 		paddingVertical: 8,
 		paddingHorizontal: 12,
@@ -27,7 +32,7 @@ export const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "rgba(0, 0, 0, 0.5)",
+		backgroundColor: "#0000007f",
 	},
 	modalContent: {
 		padding: 20,

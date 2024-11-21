@@ -12,13 +12,12 @@ import Record from "./types/Record";
 import "react-native-get-random-values";
 import useCachedRecords from "./hooks/useCachedRecords";
 
-// todo input boxes aren't so difficult
 // todo edit incl delete
 // todo scroll
 // todo main box select past 10/100/all etc
 // todo settings page miles/km, currency
 // todo settings page export, import
-// todo enable record type to be selelected
+// todo main box divides incorrectly
 
 export default function App() {
 	// List of records
