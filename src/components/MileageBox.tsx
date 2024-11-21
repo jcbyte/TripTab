@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CachedRecordTransition } from "../hooks/useCachedRecords";
-import { styles as globalStyles } from "../styles";
+import { colours, styles as globalStyles } from "../styles";
 import { formatMileageCost } from "../utils";
 
 export default function MileageBox({
@@ -53,7 +53,7 @@ export default function MileageBox({
 const styles = StyleSheet.create({
 	box: {
 		padding: 16,
-		backgroundColor: "#F9F9F9",
+		backgroundColor: colours.shaded,
 		borderRadius: 8,
 		shadowColor: "#000",
 		shadowOffset: { width: 0, height: 2 },
@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
 	mileageText: {
 		fontSize: 28,
 		fontWeight: "bold",
-		color: "#333",
 		textAlign: "left",
 	},
 });

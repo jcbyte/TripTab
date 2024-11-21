@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { CachedRecordTransition } from "../hooks/useCachedRecords";
+import { colours } from "../styles";
 import Record from "../types/Record";
 import { formatCost, formatMileageCost } from "../utils";
 
@@ -34,7 +35,7 @@ export default function ListItem({
 const styles = {
 	item: {
 		padding: 16,
-		backgroundColor: "#F9F9F9",
+		backgroundColor: colours.shaded,
 		borderRadius: 8,
 		marginBottom: 10,
 	},
@@ -43,6 +44,6 @@ const styles = {
 	},
 	secondaryText: {
 		fontSize: 12,
-		color: "#777",
+		color: colours.shadedText,
 	},
 };

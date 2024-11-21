@@ -2,6 +2,12 @@ import { StatusBar, StyleSheet } from "react-native";
 
 export const colours = {
 	primary: "#7a6fe1",
+	light: "#fff",
+	shaded: "#f9f9f9",
+	dark: "#000",
+	textLight: "#fff",
+	shadedText: "#777",
+	textDark: "#000",
 	switchTrackPrimary: "#e1d8f1",
 };
 
@@ -18,6 +24,11 @@ const genericStyles = StyleSheet.create({
 	buttonText: {
 		fontSize: 14,
 	},
+	input: {
+		borderWidth: 1,
+		borderRadius: 8,
+		paddingHorizontal: 12,
+	},
 });
 
 export const styles = StyleSheet.create({
@@ -31,21 +42,19 @@ export const styles = StyleSheet.create({
 	},
 	primaryButtonText: {
 		...genericStyles.buttonText,
-		color: "#fff",
+		color: colours.textLight,
 	},
 	blankButton: {
 		...genericStyles.button,
-		backgroundColor: "#f4f4f4",
+		backgroundColor: colours.shaded,
 	},
 	blankButtonText: {
 		...genericStyles.buttonText,
-		color: "#000",
+		color: colours.textDark,
 	},
-	input: {
+	blankInput: {
+		...genericStyles.input,
 		borderColor: "#ccc",
-		borderWidth: 1,
-		borderRadius: 8,
-		paddingHorizontal: 12,
 	},
 	modalBackground: {
 		flex: 1,
@@ -55,7 +64,7 @@ export const styles = StyleSheet.create({
 	},
 	modalContent: {
 		padding: 20,
-		backgroundColor: "white",
+		backgroundColor: colours.light,
 		borderRadius: 8,
 	},
 });
