@@ -42,8 +42,8 @@ export default function MileageBox({
 			<Text style={styles.titleText}>Cost per Mile</Text>
 			<View style={{ display: "flex", flexDirection: "row" }}>
 				<Text style={{ ...styles.mileageText, flex: 1 }}>{formatMileageCost(calculateCost())}</Text>
-				<TouchableOpacity activeOpacity={0.6} style={globalStyles.button} onPress={openModal}>
-					<Text style={globalStyles.buttonText}>New Record</Text>
+				<TouchableOpacity activeOpacity={0.6} style={globalStyles.primaryButton} onPress={openModal}>
+					<Text style={globalStyles.primaryButtonText}>New Record</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

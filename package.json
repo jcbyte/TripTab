@@ -18,7 +18,8 @@
     "react-native": "0.76.2",
     "react-native-web": "~0.19.13",
     "uuid": "^11.0.3",
-    "react-native-get-random-values": "~1.11.0"
+    "react-native-get-random-values": "~1.11.0",
+    "@expo/vector-icons": "^14.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

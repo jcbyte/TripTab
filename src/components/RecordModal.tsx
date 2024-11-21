@@ -69,13 +69,13 @@ export default function RecordModal({
 
 						<TouchableOpacity
 							activeOpacity={0.6}
-							style={globalStyles.button}
+							style={globalStyles.primaryButton}
 							onPress={() => {
 								updateRecords(record);
 								closeModal();
 							}}
 						>
-							<Text style={globalStyles.buttonText}>Save</Text>
+							<Text style={globalStyles.primaryButtonText}>Save</Text>
 						</TouchableOpacity>
 					</View>
 				</BlurView>

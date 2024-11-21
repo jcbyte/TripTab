@@ -5,13 +5,10 @@ export const colours = {
 	switchTrackPrimary: "#e1d8f1",
 };
 
-export const styles = StyleSheet.create({
-	body: {
-		marginTop: StatusBar.currentHeight,
-		padding: 20,
-	},
+const genericStyles = StyleSheet.create({
 	button: {
-		backgroundColor: colours.primary,
+		display: "flex",
+		flexDirection: "row",
 		borderRadius: 8,
 		paddingVertical: 8,
 		paddingHorizontal: 12,
@@ -19,8 +16,30 @@ export const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	buttonText: {
-		color: "#fff",
 		fontSize: 14,
+	},
+});
+
+export const styles = StyleSheet.create({
+	body: {
+		marginTop: StatusBar.currentHeight,
+		padding: 20,
+	},
+	primaryButton: {
+		...genericStyles.button,
+		backgroundColor: colours.primary,
+	},
+	primaryButtonText: {
+		...genericStyles.buttonText,
+		color: "#fff",
+	},
+	blankButton: {
+		...genericStyles.button,
+		backgroundColor: "#f4f4f4",
+	},
+	blankButtonText: {
+		...genericStyles.buttonText,
+		color: "#000",
 	},
 	input: {
 		borderColor: "#ccc",

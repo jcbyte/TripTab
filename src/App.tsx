@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, SafeAreaView, Text, View } from "react-native";
+import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 
 import { v4 as uuidv4 } from "uuid";
 import ListItem from "./components/ListItem";
@@ -9,15 +9,16 @@ import useRecordModal from "./hooks/useRecordModal";
 import { styles as globalStyles } from "./styles";
 import Record from "./types/Record";
 
+import { Feather } from "@expo/vector-icons";
 import "react-native-get-random-values";
 import useCachedRecords from "./hooks/useCachedRecords";
 
-// todo edit incl delete
-// todo scroll
 // todo main box select past 10/100/all etc
+// todo edit incl delete
+// todo force first element to be a mileage type
+// todo scroll
 // todo settings page miles/km, currency
 // todo settings page export, import
-// todo force first element to be a mileage type
 
 export default function App() {
 	// List of records
@@ -33,7 +34,21 @@ export default function App() {
 	return (
 		<>
 			<SafeAreaView style={globalStyles.body}>
-				<View style={{ display: "flex", flexDirection: "column", gap: 40 }}>
+				<View style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+					<View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+						{/* Settings Button */}
+						<TouchableOpacity activeOpacity={0.6} style={globalStyles.blankButton}>
+							<Feather name="settings" color={globalStyles.blankButtonText.color} size={18} />
+						</TouchableOpacity>
+
+						{/* Calculated Records No */}
+						<TouchableOpacity activeOpacity={0.6} style={globalStyles.blankButton}>
+							<Feather name="chevron-down" color={globalStyles.blankButtonText.color} size={18} />
+							<Text style={globalStyles.blankButtonText}>100</Text>
+						</TouchableOpacity>
+					</View>
+
+					{/* Milage Box */}
 					<MileageBox
 						cachedRecordTransitions={cachedRecordTransitions}
 						calculateRecordsNo={100}
