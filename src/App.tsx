@@ -37,7 +37,9 @@ export default function App() {
 					<MileageBox
 						cachedRecordTransitions={cachedRecordTransitions}
 						calculateRecordsNo={100}
-						openModal={() => openModal({ id: null, type: "record", mileage: 0, cost: 0 })}
+						openModal={() =>
+							openModal({ id: null, type: "record", mileage: records.length > 0 ? records[0].mileage : 0, cost: 0 })
+						}
 					/>
 
 					{/* List of records */}
