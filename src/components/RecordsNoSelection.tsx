@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 
 import { Feather } from "@expo/vector-icons";
-import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import { RecordNo } from "../App";
-import { colours, styles as globalStyles } from "../styles";
+import { styles as globalStyles } from "../styles";
 import { useStateSetter } from "../types/utils";
+import SlideUpSelection, { Option } from "./SlideUpSelection";
 
-type Option = { label: string; value: RecordNo };
-const options: Option[] = [
-	{ label: "10", value: 10 },
-	{ label: "50", value: 50 },
-	{ label: "100", value: 100 },
-	{ label: "All", value: "all" },
+const options: Option<RecordNo>[] = [
+	{ label: "10", key: "10", value: 10 },
+	{ label: "50", key: "50", value: 50 },
+	{ label: "100", key: "100", value: 100 },
+	{ label: "All", key: "all", value: "all" },
 ];
 
 export default function RecordsNoSelection({
@@ -21,73 +21,33 @@ export default function RecordsNoSelection({
 	calculateRecordsNo: RecordNo;
 	setCalculateRecordsNo: useStateSetter<RecordNo>;
 }) {
-	const [modalOpen, setModalOpen] = useState(true);
+	const [slideOpen, setSlideOpen] = useState(true);
 
-	function openModal(): void {
-		setModalOpen(true);
+	function openSlide(): void {
+		setSlideOpen(true);
 	}
 
-	function closeModal(): void {
-		setModalOpen(false);
-	}
-
-	function updateRecordsNo(newRecordsNo: RecordNo): void {
-		setCalculateRecordsNo(newRecordsNo);
-		closeModal();
+	function closeSlide(): void {
+		setSlideOpen(false);
 	}
 
 	return (
 		<>
-			<TouchableOpacity activeOpacity={0.6} style={globalStyles.blankButton} onPress={openModal}>
+			<TouchableOpacity activeOpacity={0.6} style={globalStyles.blankButton} onPress={openSlide}>
 				<Feather name="chevron-down" color={globalStyles.blankButtonText.color} size={18} />
 				<Text style={globalStyles.blankButtonText}>
 					{calculateRecordsNo === "all" ? "All" : calculateRecordsNo.toString()}
 				</Text>
 			</TouchableOpacity>
 
-			<Modal visible={modalOpen} animationType="slide" transparent={true}>
-				<TouchableWithoutFeedback onPress={closeModal}>
-					<View style={globalStyles.bottomModalBackground}>
-						<View style={globalStyles.bottomModalContent}>
-							<Text style={styles.titleText}>Calculate from Previous Records</Text>
-							<FlatList
-								data={options}
-								renderItem={({ item }: { item: Option; index: number }) => (
-									<TouchableOpacity
-										style={styles.item}
-										onPress={() => {
-											updateRecordsNo(item.value);
-										}}
-									>
-										<Text style={styles.itemText}>{item.label}</Text>
-									</TouchableOpacity>
-								)}
-								keyExtractor={(item: Option) => item.value.toString()}
-								ListEmptyComponent={<Text style={{ textAlign: "center" }}>No Records Yet</Text>}
-							/>
-						</View>
-					</View>
-				</TouchableWithoutFeedback>
-			</Modal>
+			<SlideUpSelection
+				options={options}
+				isOpen={slideOpen}
+				close={closeSlide}
+				itemSelected={(selectedItem: RecordNo) => {
+					setCalculateRecordsNo(selectedItem);
+				}}
+			/>
 		</>
 	);
 }
-
-const styles = StyleSheet.create({
-	item: {
-		padding: 16,
-		backgroundColor: colours.shaded,
-		borderRadius: 8,
-		marginBottom: 2,
-	},
-	titleText: {
-		marginBottom: 20,
-		fontSize: 18,
-		fontWeight: "semibold",
-		textAlign: "left",
-	},
-	itemText: {
-		fontSize: 16,
-		textAlign: "left",
-	},
-});
