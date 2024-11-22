@@ -23,12 +23,17 @@ export default function RecordsNoSelection({
 }) {
 	const [modalOpen, setModalOpen] = useState(true);
 
-	function openModal() {
+	function openModal(): void {
 		setModalOpen(true);
 	}
 
-	function closeModal() {
+	function closeModal(): void {
 		setModalOpen(false);
+	}
+
+	function updateRecordsNo(newRecordsNo: RecordNo): void {
+		setCalculateRecordsNo(newRecordsNo);
+		closeModal();
 	}
 
 	return (
@@ -47,12 +52,17 @@ export default function RecordsNoSelection({
 							<Text style={styles.titleText}>Calculate from Previous Records</Text>
 							<FlatList
 								data={options}
-								renderItem={({ item, index }: { item: Option; index: number }) => (
-									<TouchableOpacity style={styles.item}>
+								renderItem={({ item }: { item: Option; index: number }) => (
+									<TouchableOpacity
+										style={styles.item}
+										onPress={() => {
+											updateRecordsNo(item.value);
+										}}
+									>
 										<Text style={styles.itemText}>{item.label}</Text>
 									</TouchableOpacity>
 								)}
-								keyExtractor={(item: Option) => item.label}
+								keyExtractor={(item: Option) => item.value.toString()}
 								ListEmptyComponent={<Text style={{ textAlign: "center" }}>No Records Yet</Text>}
 							/>
 						</View>

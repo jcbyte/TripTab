@@ -14,7 +14,6 @@ import "react-native-get-random-values";
 import RecordsNoSelection from "./components/RecordsNoSelection";
 import useCachedRecords from "./hooks/useCachedRecords";
 
-// todo main box select past 10/100/all etc
 // todo edit incl delete
 // todo force first element to be a mileage type
 // todo scroll
