@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 
 import { v4 as uuidv4 } from "uuid";
@@ -11,6 +11,7 @@ import Record from "./types/Record";
 
 import { Feather } from "@expo/vector-icons";
 import "react-native-get-random-values";
+import RecordsNoSelection from "./components/RecordsNoSelection";
 import useCachedRecords from "./hooks/useCachedRecords";
 
 // todo main box select past 10/100/all etc
@@ -19,6 +20,8 @@ import useCachedRecords from "./hooks/useCachedRecords";
 // todo scroll
 // todo settings page miles/km, currency
 // todo settings page export, import
+
+export type RecordNo = "all" | number;
 
 export default function App() {
 	// List of records
@@ -31,6 +34,8 @@ export default function App() {
 
 	const { modalOpen, record: modalRecord, setRecord: setModalRecord, openModal, closeModal } = useRecordModal();
 
+	const [calculateRecordsNo, setCalculateRecordsNo] = useState<RecordNo>("all");
+
 	return (
 		<>
 			<SafeAreaView style={globalStyles.body}>
@@ -42,16 +47,13 @@ export default function App() {
 						</TouchableOpacity>
 
 						{/* Calculated Records No */}
-						<TouchableOpacity activeOpacity={0.6} style={globalStyles.blankButton}>
-							<Feather name="chevron-down" color={globalStyles.blankButtonText.color} size={18} />
-							<Text style={globalStyles.blankButtonText}>100</Text>
-						</TouchableOpacity>
+						<RecordsNoSelection calculateRecordsNo={calculateRecordsNo} setCalculateRecordsNo={setCalculateRecordsNo} />
 					</View>
 
 					{/* Milage Box */}
 					<MileageBox
 						cachedRecordTransitions={cachedRecordTransitions}
-						calculateRecordsNo={100}
+						calculateRecordsNo={calculateRecordsNo}
 						openModal={() =>
 							openModal({ id: null, type: "record", mileage: records.length > 0 ? records[0].mileage : 0, cost: 0 })
 						}

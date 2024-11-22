@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { RecordNo } from "../App";
 import { CachedRecordTransition } from "../hooks/useCachedRecords";
 import { colours, styles as globalStyles } from "../styles";
 import { formatMileageCost } from "../utils";
@@ -10,12 +11,15 @@ export default function MileageBox({
 	openModal,
 }: {
 	cachedRecordTransitions: CachedRecordTransition[];
-	calculateRecordsNo: number;
+	calculateRecordsNo: RecordNo;
 	openModal: () => void;
 }) {
 	function calculateCost(): number {
 		// Get the number of records to scan through, making sure we don't go over the array
-		let recordsNo: number = Math.min(calculateRecordsNo, cachedRecordTransitions.length);
+		let recordsNo: number =
+			calculateRecordsNo === "all"
+				? cachedRecordTransitions.length
+				: Math.min(calculateRecordsNo, cachedRecordTransitions.length);
 
 		// If no records then return 0, else we will get zero division error
 		if (recordsNo === 0) {
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.1,
 		shadowRadius: 4,
-		elevation: 3,
+		elevation: 1,
 	},
 	titleText: {
 		fontSize: 24,

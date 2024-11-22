@@ -29,6 +29,15 @@ const genericStyles = StyleSheet.create({
 		borderRadius: 8,
 		paddingHorizontal: 12,
 	},
+	modalBackground: {
+		flex: 1,
+		backgroundColor: "#0000007f",
+	},
+	modalContent: {
+		padding: 20,
+		backgroundColor: colours.light,
+		borderRadius: 8,
+	},
 });
 
 export const styles = StyleSheet.create({
@@ -56,15 +65,19 @@ export const styles = StyleSheet.create({
 		...genericStyles.input,
 		borderColor: "#ccc",
 	},
-	modalBackground: {
-		flex: 1,
+	centerModalBackground: {
+		...genericStyles.modalBackground,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#0000007f",
 	},
-	modalContent: {
-		padding: 20,
-		backgroundColor: colours.light,
-		borderRadius: 8,
+	centerModalContent: {
+		...genericStyles.modalContent,
+	},
+	bottomModalBackground: {
+		...genericStyles.modalBackground,
+		justifyContent: "flex-end",
+	},
+	bottomModalContent: {
+		...genericStyles.modalContent,
 	},
 });

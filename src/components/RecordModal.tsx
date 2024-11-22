@@ -30,8 +30,8 @@ export default function RecordModal({
 	return (
 		<Modal visible={modalOpen} animationType="fade" transparent={true}>
 			<TouchableWithoutFeedback onPress={closeModal}>
-				<BlurView intensity={60} style={globalStyles.modalBackground}>
-					<View style={{ ...globalStyles.modalContent, minWidth: 300 }}>
+				<BlurView intensity={60} style={globalStyles.centerModalBackground}>
+					<View style={{ ...globalStyles.centerModalContent, minWidth: 300 }}>
 						<Text style={styles.titleText}>Add New Record</Text>
 
 						<View style={{ marginVertical: 20, display: "flex", flexDirection: "column", gap: 10 }}>
