@@ -18,6 +18,7 @@ import useCachedRecords from "./hooks/useCachedRecords";
 // todo settings page miles/km, currency
 // todo settings page export, import
 // todo dark theme
+// todo save
 
 export type RecordNo = "all" | number;
 
@@ -27,7 +28,23 @@ export default function App() {
 		{ id: uuidv4(), type: "record", mileage: 65531, cost: 38.97 },
 		{ id: uuidv4(), type: "record", mileage: 65286, cost: 14.5 },
 		{ id: uuidv4(), type: "record", mileage: 65187, cost: 28.96 },
-		{ id: uuidv4(), type: "mileage", mileage: 65003 },
+		{ id: uuidv4(), type: "record", mileage: 65003, cost: 38.42 },
+		{ id: uuidv4(), type: "record", mileage: 64774, cost: 37.6 },
+		{ id: uuidv4(), type: "record", mileage: 64414, cost: 12.41 },
+		{ id: uuidv4(), type: "record", mileage: 64333, cost: 36.18 },
+		{ id: uuidv4(), type: "record", mileage: 64062, cost: 16.55 },
+		{ id: uuidv4(), type: "record", mileage: 63913, cost: 14.99 },
+		{ id: uuidv4(), type: "record", mileage: 63783, cost: 18.27 },
+		{ id: uuidv4(), type: "record", mileage: 3662, cost: 40.52 },
+		{ id: uuidv4(), type: "record", mileage: 63321, cost: 29.5 },
+		{ id: uuidv4(), type: "record", mileage: 63103, cost: 24.5 },
+		{ id: uuidv4(), type: "record", mileage: 62929, cost: 39.83 },
+		{ id: uuidv4(), type: "record", mileage: 62634, cost: 52.19 },
+		{ id: uuidv4(), type: "record", mileage: 62205, cost: 47 },
+		{ id: uuidv4(), type: "mileage", mileage: 61880 },
+		{ id: uuidv4(), type: "record", mileage: 61119, cost: 47.39 },
+		{ id: uuidv4(), type: "record", mileage: 60792, cost: 40.74 },
+		{ id: uuidv4(), type: "mileage", mileage: 60449 },
 	]);
 
 	const { modalOpen, record: modalRecord, setRecord: setModalRecord, openModal, closeModal } = useRecordModal();
