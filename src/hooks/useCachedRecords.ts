@@ -44,11 +44,21 @@ export default function useCachedRecords(initialRecords: Record[]): {
 		if (records[index].type === "record") {
 			// Calculate the cached data based on this and the next record
 			let record = records[index];
-			let prevRecord = records[index + 1];
+			// If there is no next record imagine it is a 0 milage record
+			let prevRecord = index + 1 >= records.length ? { id: "0", type: "mileage", mileage: 0 } : records[index + 1];
 			let miles = record.mileage - prevRecord.mileage;
 			let cost = normalisedMileageCost(miles, record.cost);
 			transition = { miles: miles, cost: cost };
 		}
+
+		// if (records[index].type === "record") {
+		// 	// Calculate the cached data based on this and the next record
+		// 	let record = records[index];
+		// 	let prevRecord = records[index + 1];
+		// 	let miles = record.mileage - prevRecord.mileage;
+		// 	let cost = normalisedMileageCost(miles, record.cost);
+		// 	transition = { miles: miles, cost: cost };
+		// }
 
 		// Update the transitions array in place
 		recordTransitions[index] = transition;
@@ -70,11 +80,6 @@ export default function useCachedRecords(initialRecords: Record[]): {
 		record: Record,
 		index: number
 	) {
-		// Check that if this is a first record it is a milage record
-		if (records.length === 0 && record.type !== "mileage") {
-			throw new Error("First record must be a mileage record");
-		}
-
 		// Add the record
 		records.splice(index, 0, record);
 
