@@ -2,6 +2,7 @@ import { StatusBar, StyleSheet } from "react-native";
 
 export const colours = {
 	primary: "#7a6fe1",
+	danger: "#e14f4f",
 	light: "#fff",
 	shaded: "#f9f9f9",
 	dark: "#000",
@@ -50,6 +51,14 @@ export const styles = StyleSheet.create({
 		backgroundColor: colours.primary,
 	},
 	primaryButtonText: {
+		...genericStyles.buttonText,
+		color: colours.textLight,
+	},
+	dangerButton: {
+		...genericStyles.button,
+		backgroundColor: colours.danger,
+	},
+	dangerButtonText: {
 		...genericStyles.buttonText,
 		color: colours.textLight,
 	},

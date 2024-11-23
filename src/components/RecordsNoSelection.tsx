@@ -21,7 +21,7 @@ export default function RecordsNoSelection({
 	calculateRecordsNo: RecordNo;
 	setCalculateRecordsNo: useStateSetter<RecordNo>;
 }) {
-	const [slideOpen, setSlideOpen] = useState(true);
+	const [slideOpen, setSlideOpen] = useState(false);
 
 	function openSlide(): void {
 		setSlideOpen(true);

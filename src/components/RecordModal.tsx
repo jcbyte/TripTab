@@ -32,7 +32,7 @@ export default function RecordModal({
 			<TouchableWithoutFeedback onPress={closeModal}>
 				<BlurView intensity={60} style={globalStyles.centerModalBackground}>
 					<View style={{ ...globalStyles.centerModalContent, minWidth: 300 }}>
-						<Text style={styles.titleText}>Add New Record</Text>
+						<Text style={styles.titleText}>{record.id ? "Edit Record" : "Add New Record"}</Text>
 
 						<View style={{ marginVertical: 20, display: "flex", flexDirection: "column", gap: 10 }}>
 							<TextInput
@@ -67,16 +67,30 @@ export default function RecordModal({
 							</View>
 						</View>
 
-						<TouchableOpacity
-							activeOpacity={0.6}
-							style={globalStyles.primaryButton}
-							onPress={() => {
-								updateRecords(record);
-								closeModal();
-							}}
-						>
-							<Text style={globalStyles.primaryButtonText}>Save</Text>
-						</TouchableOpacity>
+						<View style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+							<TouchableOpacity
+								activeOpacity={0.6}
+								style={globalStyles.primaryButton}
+								onPress={() => {
+									updateRecords(record);
+									closeModal();
+								}}
+							>
+								<Text style={globalStyles.primaryButtonText}>Save</Text>
+							</TouchableOpacity>
+							{record.id && (
+								<TouchableOpacity
+									activeOpacity={0.6}
+									style={globalStyles.dangerButton}
+									onPress={() => {
+										// todo delete record
+										closeModal();
+									}}
+								>
+									<Text style={globalStyles.dangerButtonText}>Delete</Text>
+								</TouchableOpacity>
+							)}
+						</View>
 					</View>
 				</BlurView>
 			</TouchableWithoutFeedback>

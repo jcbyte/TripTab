@@ -14,11 +14,11 @@ import "react-native-get-random-values";
 import RecordsNoSelection from "./components/RecordsNoSelection";
 import useCachedRecords from "./hooks/useCachedRecords";
 
-// todo edit incl delete
 // todo force first element to be a mileage type
 // todo scroll
 // todo settings page miles/km, currency
 // todo settings page export, import
+// todo dark theme
 
 export type RecordNo = "all" | number;
 
