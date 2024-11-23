@@ -24,7 +24,7 @@ export type RecordNo = "all" | number;
 
 export default function App() {
 	// List of records
-	const { records, cachedRecordTransitions, updateRecords } = useCachedRecords([
+	const { records, cachedRecordTransitions, updateRecord, removeRecord } = useCachedRecords([
 		{ id: uuidv4(), type: "record", mileage: 65531, cost: 38.97 },
 		{ id: uuidv4(), type: "record", mileage: 65286, cost: 14.5 },
 		{ id: uuidv4(), type: "record", mileage: 65187, cost: 28.96 },
@@ -79,7 +79,8 @@ export default function App() {
 				record={modalRecord}
 				setRecord={setModalRecord}
 				closeModal={closeModal}
-				updateRecords={updateRecords}
+				updateRecord={updateRecord}
+				removeRecord={removeRecord}
 			/>
 		</>
 	);

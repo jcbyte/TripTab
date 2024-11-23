@@ -10,7 +10,12 @@ export type CachedRecordTransition = null | {
 
 const DEFAULT_CACHED_RECORD_TRANSITION: CachedRecordTransition = { miles: 0, cost: 0 };
 
-export default function useCachedRecords(initialRecords: Record[]) {
+export default function useCachedRecords(initialRecords: Record[]): {
+	records: Record[];
+	cachedRecordTransitions: CachedRecordTransition[];
+	updateRecord: (record: Record) => void;
+	removeRecord: (record: Record) => void;
+} {
 	const [records, setRecords] = useState<Record[]>(toSortedRecords(initialRecords));
 	const [cachedRecordTransitions, setCachedRecordTransitions] = useState<CachedRecordTransition[]>(
 		getCachedCosts(toSortedRecords(initialRecords))
@@ -24,12 +29,12 @@ export default function useCachedRecords(initialRecords: Record[]) {
 		let recordTransitions: CachedRecordTransition[] = [];
 		for (let i = 0; i < records.length; i++) {
 			recordTransitions.push(DEFAULT_CACHED_RECORD_TRANSITION);
-			updateRecordTransition(records, recordTransitions, i);
+			localUpdateRecordTransition(records, recordTransitions, i);
 		}
 		return recordTransitions;
 	}
 
-	function updateRecordTransition(records: Record[], recordTransitions: CachedRecordTransition[], index: number) {
+	function localUpdateRecordTransition(records: Record[], recordTransitions: CachedRecordTransition[], index: number) {
 		// If this index is out of bounds then do not update
 		if (index < 0 || index >= records.length) return;
 
@@ -49,17 +54,22 @@ export default function useCachedRecords(initialRecords: Record[]) {
 		recordTransitions[index] = transition;
 	}
 
-	function removeRecord(records: Record[], recordTransitions: CachedRecordTransition[], index: number) {
+	function localRemoveRecord(records: Record[], recordTransitions: CachedRecordTransition[], index: number) {
 		// Remove the record
 		records.splice(index, 1);
 
 		// Remove the cached transition data
 		recordTransitions.splice(index, 1);
 		// Update the cached data of item before as this will have changed
-		updateRecordTransition(records, recordTransitions, index - 1);
+		localUpdateRecordTransition(records, recordTransitions, index - 1);
 	}
 
-	function addRecord(records: Record[], recordTransitions: CachedRecordTransition[], record: Record, index: number) {
+	function localAddRecord(
+		records: Record[],
+		recordTransitions: CachedRecordTransition[],
+		record: Record,
+		index: number
+	) {
 		// Check that if this is a first record it is a milage record
 		if (records.length === 0 && record.type !== "mileage") {
 			throw new Error("First record must be a mileage record");
@@ -70,13 +80,13 @@ export default function useCachedRecords(initialRecords: Record[]) {
 
 		// Create and calculate the transition data for this record
 		recordTransitions.splice(index, 0, DEFAULT_CACHED_RECORD_TRANSITION);
-		updateRecordTransition(records, recordTransitions, index);
+		localUpdateRecordTransition(records, recordTransitions, index);
 		// Update the cached data of item before as this will have changed
-		updateRecordTransition(records, recordTransitions, index - 1);
+		localUpdateRecordTransition(records, recordTransitions, index - 1);
 	}
 
 	// Add or update a record
-	function updateRecords(record: Record): void {
+	function updateRecord(record: Record): void {
 		let newRecords: Record[] = [...records];
 		let newTransitions: CachedRecordTransition[] = [...cachedRecordTransitions];
 
@@ -86,7 +96,7 @@ export default function useCachedRecords(initialRecords: Record[]) {
 				(existingRecord: Record) => existingRecord.id === record.id
 			);
 			// Remove the record from the array (as it may need to placed in a different location)
-			removeRecord(newRecords, newTransitions, existingRecordIndex);
+			localRemoveRecord(newRecords, newTransitions, existingRecordIndex);
 		} else {
 			// This is a new record so give it an id
 			record.id = uuidv4();
@@ -100,12 +110,25 @@ export default function useCachedRecords(initialRecords: Record[]) {
 		}
 
 		// Insert the record at the correct position
-		addRecord(newRecords, newTransitions, record, newRecordIndex);
+		localAddRecord(newRecords, newTransitions, record, newRecordIndex);
 
 		// Update the state variables
 		setRecords(newRecords);
 		setCachedRecordTransitions(newTransitions);
 	}
 
-	return { records, cachedRecordTransitions, updateRecords };
+	// Remove a record (only uses id, so other attributes can have been modified)
+	function removeRecord(record: Record): void {
+		let newRecords: Record[] = [...records];
+		let newTransitions: CachedRecordTransition[] = [...cachedRecordTransitions];
+
+		let recordIndex: number = newRecords.findIndex((existingRecord: Record) => existingRecord.id === record.id);
+		localRemoveRecord(newRecords, newTransitions, recordIndex);
+
+		// Update the state variables
+		setRecords(newRecords);
+		setCachedRecordTransitions(newTransitions);
+	}
+
+	return { records, cachedRecordTransitions, updateRecord, removeRecord };
 }

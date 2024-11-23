@@ -19,13 +19,15 @@ export default function RecordModal({
 	record,
 	setRecord,
 	closeModal,
-	updateRecords,
+	updateRecord,
+	removeRecord,
 }: {
 	modalOpen: boolean;
 	record: Record;
 	setRecord: useStateSetter<Record>;
 	closeModal: () => void;
-	updateRecords: (record: Record) => void;
+	updateRecord: (record: Record) => void;
+	removeRecord: (record: Record) => void;
 }) {
 	return (
 		<Modal visible={modalOpen} animationType="fade" transparent={true}>
@@ -72,7 +74,7 @@ export default function RecordModal({
 								activeOpacity={0.6}
 								style={globalStyles.primaryButton}
 								onPress={() => {
-									updateRecords(record);
+									updateRecord(record);
 									closeModal();
 								}}
 							>
@@ -83,7 +85,7 @@ export default function RecordModal({
 									activeOpacity={0.6}
 									style={globalStyles.dangerButton}
 									onPress={() => {
-										// todo delete record
+										removeRecord(record);
 										closeModal();
 									}}
 								>
