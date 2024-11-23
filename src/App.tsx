@@ -14,7 +14,6 @@ import "react-native-get-random-values";
 import RecordsNoSelection from "./components/RecordsNoSelection";
 import useCachedRecords from "./hooks/useCachedRecords";
 
-// todo scroll
 // todo settings page miles/km, currency
 // todo settings page export, import
 // todo dark theme
@@ -35,7 +34,7 @@ export default function App() {
 		{ id: uuidv4(), type: "record", mileage: 64062, cost: 16.55 },
 		{ id: uuidv4(), type: "record", mileage: 63913, cost: 14.99 },
 		{ id: uuidv4(), type: "record", mileage: 63783, cost: 18.27 },
-		{ id: uuidv4(), type: "record", mileage: 3662, cost: 40.52 },
+		{ id: uuidv4(), type: "record", mileage: 63662, cost: 40.52 },
 		{ id: uuidv4(), type: "record", mileage: 63321, cost: 29.5 },
 		{ id: uuidv4(), type: "record", mileage: 63103, cost: 24.5 },
 		{ id: uuidv4(), type: "record", mileage: 62929, cost: 39.83 },
@@ -54,7 +53,7 @@ export default function App() {
 	return (
 		<>
 			<SafeAreaView style={globalStyles.body}>
-				<View style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+				<View style={{ display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
 					<View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
 						{/* Settings Button */}
 						<TouchableOpacity activeOpacity={0.6} style={globalStyles.blankButton}>
@@ -76,6 +75,7 @@ export default function App() {
 
 					{/* List of records */}
 					<FlatList
+						style={{ borderRadius: 8 }}
 						data={records}
 						renderItem={({ item, index }: { item: Record; index: number }) => (
 							<ListItem
