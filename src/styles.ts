@@ -43,8 +43,7 @@ const genericStyles = StyleSheet.create({
 
 export const styles = StyleSheet.create({
 	body: {
-		paddingHorizontal: 20,
-		paddingTop: (StatusBar.currentHeight ?? 10) + 10,
+		paddingTop: StatusBar.currentHeight ?? 10,
 		flex: 1,
 	},
 	primaryButton: {

@@ -2,19 +2,21 @@ import React, { useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { NavigationContainer, ParamListBase, RouteProp } from "@react-navigation/native";
+import { DefaultTheme, NavigationContainer, ParamListBase, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { SafeAreaView } from "react-native";
 import "react-native-get-random-values";
 import UserSettingsContext from "./contexts/userSettingsContext";
 import useCachedRecords from "./hooks/useCachedRecords";
 import AppScreen from "./screens/AppScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import { colours, styles as globalStyles } from "./styles";
 import UserSettings, { DEFAULT as DEFAULT_USER_SETTINGS } from "./types/UserSettings";
 
 // todo settings page miles/km, currency
 // todo settings page export, import
 // todo dark theme
-// todo save
+// todo save records + settings
 
 type RootStackParamList = {
 	App: undefined;
@@ -56,30 +58,34 @@ export default function App() {
 		{ id: uuidv4(), type: "mileage", mileage: 60449 },
 	]);
 
+	// User settings
 	const [userSettings, setUserSettings] = useState<UserSettings>({ ...DEFAULT_USER_SETTINGS });
 
+	// Navigation stack
 	const Stack = createNativeStackNavigator();
 
 	return (
-		<UserSettingsContext.Provider value={{ userSettings: userSettings, setUserSettings: setUserSettings }}>
-			<NavigationContainer>
-				<Stack.Navigator initialRouteName="App" screenOptions={{ headerShown: false }}>
-					<Stack.Screen name="App">
-						{(props: ScreenProps<"App">) => (
-							<AppScreen
-								{...props}
-								cachedRecordTransitions={cachedRecordTransitions}
-								records={records}
-								updateRecord={updateRecord}
-								removeRecord={removeRecord}
-							/>
-						)}
-					</Stack.Screen>
-					<Stack.Screen name="Settings">
-						{(props: ScreenProps<"Settings">) => <SettingsScreen {...props} />}
-					</Stack.Screen>
-				</Stack.Navigator>
-			</NavigationContainer>
-		</UserSettingsContext.Provider>
+		<SafeAreaView style={globalStyles.body}>
+			<UserSettingsContext.Provider value={{ userSettings: userSettings, setUserSettings: setUserSettings }}>
+				<NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: colours.light } }}>
+					<Stack.Navigator initialRouteName="App" screenOptions={{ headerShown: false }}>
+						<Stack.Screen name="App">
+							{(props: ScreenProps<"App">) => (
+								<AppScreen
+									{...props}
+									cachedRecordTransitions={cachedRecordTransitions}
+									records={records}
+									updateRecord={updateRecord}
+									removeRecord={removeRecord}
+								/>
+							)}
+						</Stack.Screen>
+						<Stack.Screen name="Settings">
+							{(props: ScreenProps<"Settings">) => <SettingsScreen {...props} />}
+						</Stack.Screen>
+					</Stack.Navigator>
+				</NavigationContainer>
+			</UserSettingsContext.Provider>
+		</SafeAreaView>
 	);
 }
