@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
-import { NavigationProp, RecordNo } from "../App";
+import { NavigationProp } from "../App";
 import ListItem from "../components/ListItem";
 import MileageBox from "../components/MileageBox";
 import RecordModal from "../components/RecordModal";
@@ -10,6 +10,7 @@ import { CachedRecordTransition } from "../hooks/useCachedRecords";
 import useRecordModal from "../hooks/useRecordModal";
 import { styles as globalStyles } from "../styles";
 import Record from "../types/Record";
+import RecordNo from "../types/RecordNo";
 import { useStateSetter } from "../types/utils";
 
 export default function AppScreen({

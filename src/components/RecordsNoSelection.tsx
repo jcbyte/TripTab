@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import { Feather } from "@expo/vector-icons";
 import { Text, TouchableOpacity } from "react-native";
-import { RecordNo } from "../App";
 import { styles as globalStyles } from "../styles";
+import RecordNo from "../types/RecordNo";
 import { useStateSetter } from "../types/utils";
 import SlideUpSelection, { Option } from "./SlideUpSelection";
 

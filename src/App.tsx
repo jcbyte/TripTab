@@ -8,13 +8,12 @@ import "react-native-get-random-values";
 import useCachedRecords from "./hooks/useCachedRecords";
 import AppScreen from "./screens/AppScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import RecordNo from "./types/RecordNo";
 
 // todo settings page miles/km, currency
 // todo settings page export, import
 // todo dark theme
 // todo save
-
-export type RecordNo = "all" | number;
 
 type RootStackParamList = {
 	App: undefined;
