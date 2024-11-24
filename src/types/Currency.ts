@@ -1,7 +1,7 @@
 type Currency = "GBP" | "USD" | "EUR";
 export default Currency;
 
-interface CurrencyInfo {
+export interface CurrencyInfo {
 	symbol: string;
 	name: string;
 }
