@@ -1,10 +1,10 @@
 import { Feather } from "@expo/vector-icons";
 import React, { useContext } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { NavigationProp } from "../App";
 import SelectSetting from "../components/SelectSetting";
 import UserSettingsContext from "../contexts/userSettingsContext";
-import { styles as globalStyles } from "../styles";
+import { colours, styles as globalStyles } from "../styles";
 import Currency, { CurrencyInfo, currencyMap } from "../types/Currency";
 import Distance, { DistanceInfo, distanceMap } from "../types/Distance";
 import UserSettings from "../types/UserSettings";
@@ -35,6 +35,7 @@ export default function SettingsScreen({ navigation }: { navigation: NavigationP
 				}}
 			/>
 
+			{/* Distance Units Selection */}
 			<SelectSetting
 				title="Distance Units"
 				value={distanceMap[userSettings.distance].name.plural}
@@ -47,6 +48,18 @@ export default function SettingsScreen({ navigation }: { navigation: NavigationP
 					});
 				}}
 			/>
+
+			{/* Import/Export */}
+			<View style={{ display: "flex", flexDirection: "row", gap: 10, height: 60 }}>
+				<TouchableOpacity activeOpacity={0.6} style={{ ...globalStyles.blankButton, flex: 1 }} onPress={() => {}}>
+					<Feather name="download" color={globalStyles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
+					<Text>Import</Text>
+				</TouchableOpacity>
+				<TouchableOpacity activeOpacity={0.6} style={{ ...globalStyles.blankButton, flex: 1 }} onPress={() => {}}>
+					<Feather name="upload" color={globalStyles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
+					<Text>Export</Text>
+				</TouchableOpacity>
+			</View>
 		</View>
 	);
 }
@@ -56,6 +69,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 20,
 		paddingTop: 10,
 		flex: 1,
-		backgroundColor: "white",
+		backgroundColor: colours.light,
 	},
 });

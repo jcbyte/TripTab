@@ -8,7 +8,7 @@ import RecordModal from "../components/RecordModal";
 import RecordsNoSelection from "../components/RecordsNoSelection";
 import { CachedRecordTransition } from "../hooks/useCachedRecords";
 import useRecordModal from "../hooks/useRecordModal";
-import { styles as globalStyles } from "../styles";
+import { colours, styles as globalStyles } from "../styles";
 import Record from "../types/Record";
 
 export default function AppScreen({
@@ -80,6 +80,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 20,
 		paddingTop: 10,
 		flex: 1,
-		backgroundColor: "white",
+		backgroundColor: colours.light,
 	},
 });
