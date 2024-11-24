@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { Feather } from "@expo/vector-icons";
 import { Text, TouchableOpacity } from "react-native";
+import UserSettingsContext from "../contexts/userSettingsContext";
 import { styles as globalStyles } from "../styles";
 import RecordNo from "../types/RecordNo";
-import { useStateSetter } from "../types/utils";
+import UserSettings from "../types/UserSettings";
 import SlideUpSelection, { Option } from "./SlideUpSelection";
 
 const options: Option<RecordNo>[] = [
@@ -14,13 +15,7 @@ const options: Option<RecordNo>[] = [
 	{ label: "All", key: "all", value: "all" },
 ];
 
-export default function RecordsNoSelection({
-	calculateRecordsNo,
-	setCalculateRecordsNo,
-}: {
-	calculateRecordsNo: RecordNo;
-	setCalculateRecordsNo: useStateSetter<RecordNo>;
-}) {
+export default function RecordsNoSelection() {
 	const [slideOpen, setSlideOpen] = useState(false);
 
 	function openSlide(): void {
@@ -31,12 +26,14 @@ export default function RecordsNoSelection({
 		setSlideOpen(false);
 	}
 
+	const { userSettings, setUserSettings } = useContext(UserSettingsContext);
+
 	return (
 		<>
 			<TouchableOpacity activeOpacity={0.6} style={globalStyles.blankButton} onPress={openSlide}>
 				<Feather name="chevron-down" color={globalStyles.blankButtonText.color} size={18} />
 				<Text style={globalStyles.blankButtonText}>
-					{calculateRecordsNo === "all" ? "All" : calculateRecordsNo.toString()}
+					{userSettings.calculateRecordsNo === "all" ? "All" : userSettings.calculateRecordsNo.toString()}
 				</Text>
 			</TouchableOpacity>
 
@@ -45,7 +42,9 @@ export default function RecordsNoSelection({
 				isOpen={slideOpen}
 				close={closeSlide}
 				itemSelected={(selectedItem: RecordNo) => {
-					setCalculateRecordsNo(selectedItem);
+					setUserSettings((prev: UserSettings) => {
+						return { ...prev, calculateRecordsNo: selectedItem };
+					});
 				}}
 			/>
 		</>

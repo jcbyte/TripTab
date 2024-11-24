@@ -1,25 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { RecordNo } from "../App";
+import UserSettingsContext from "../contexts/userSettingsContext";
 import { CachedRecordTransition } from "../hooks/useCachedRecords";
 import { colours, styles as globalStyles } from "../styles";
 import { formatMileageCost } from "../utils";
 
 export default function MileageBox({
 	cachedRecordTransitions,
-	calculateRecordsNo,
 	openModal,
 }: {
 	cachedRecordTransitions: CachedRecordTransition[];
-	calculateRecordsNo: RecordNo;
 	openModal: () => void;
 }) {
+	const { userSettings, setUserSettings } = useContext(UserSettingsContext);
+
 	function calculateCost(): number {
 		// Get the number of records to scan through, making sure we don't go over the array
 		let recordsNo: number =
-			calculateRecordsNo === "all"
+			userSettings.calculateRecordsNo === "all"
 				? cachedRecordTransitions.length
-				: Math.min(calculateRecordsNo, cachedRecordTransitions.length);
+				: Math.min(userSettings.calculateRecordsNo, cachedRecordTransitions.length);
 
 		// If no records then return 0, else we will get zero division error
 		if (recordsNo === 0) {

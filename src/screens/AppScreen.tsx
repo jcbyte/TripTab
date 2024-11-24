@@ -10,21 +10,15 @@ import { CachedRecordTransition } from "../hooks/useCachedRecords";
 import useRecordModal from "../hooks/useRecordModal";
 import { styles as globalStyles } from "../styles";
 import Record from "../types/Record";
-import RecordNo from "../types/RecordNo";
-import { useStateSetter } from "../types/utils";
 
 export default function AppScreen({
 	navigation,
-	calculateRecordsNo,
-	setCalculateRecordsNo,
 	cachedRecordTransitions,
 	records,
 	updateRecord,
 	removeRecord,
 }: {
 	navigation: NavigationProp<"App">;
-	calculateRecordsNo: RecordNo;
-	setCalculateRecordsNo: useStateSetter<RecordNo>;
 	cachedRecordTransitions: CachedRecordTransition[];
 	records: Record[];
 	updateRecord: (record: Record) => void;
@@ -47,13 +41,12 @@ export default function AppScreen({
 						</TouchableOpacity>
 
 						{/* Calculated Records No */}
-						<RecordsNoSelection calculateRecordsNo={calculateRecordsNo} setCalculateRecordsNo={setCalculateRecordsNo} />
+						<RecordsNoSelection />
 					</View>
 
 					{/* Milage Box */}
 					<MileageBox
 						cachedRecordTransitions={cachedRecordTransitions}
-						calculateRecordsNo={calculateRecordsNo}
 						openModal={() =>
 							openModal({ id: null, type: "record", mileage: records.length > 0 ? records[0].mileage : 0, cost: 0 })
 						}
