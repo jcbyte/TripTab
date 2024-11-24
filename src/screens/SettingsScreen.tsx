@@ -1,16 +1,36 @@
 import { Feather } from "@expo/vector-icons";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
 import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { NavigationProp } from "../App";
 import SelectSetting from "../components/SelectSetting";
-import UserSettingsContext from "../contexts/userSettingsContext";
+import UserSettingsContext from "../contexts/UserSettingsContext";
 import { colours, styles as globalStyles } from "../styles";
 import Currency, { CurrencyInfo, currencyMap } from "../types/Currency";
 import Distance, { DistanceInfo, distanceMap } from "../types/Distance";
+import Record from "../types/Record";
 import UserSettings from "../types/UserSettings";
 
-export default function SettingsScreen({ navigation }: { navigation: NavigationProp<"Settings"> }) {
+export default function SettingsScreen({
+	navigation,
+	records,
+}: {
+	navigation: NavigationProp<"Settings">;
+	records: Record[];
+}) {
 	const { userSettings, setUserSettings } = useContext(UserSettingsContext);
+
+	async function exportRecords() {
+		let filename = `triptab-${Date.now().toString()}.json`;
+		let fileUri = FileSystem.documentDirectory + filename;
+
+		let strippedRecords = records.map(({ id: _, ...rest }: Record) => rest);
+		let fileContent = JSON.stringify(strippedRecords);
+
+		await FileSystem.writeAsStringAsync(fileUri, fileContent);
+		await Sharing.shareAsync(fileUri);
+	}
 
 	return (
 		<View style={{ ...styles.body, display: "flex", flexDirection: "column", gap: 10 }}>
@@ -55,7 +75,7 @@ export default function SettingsScreen({ navigation }: { navigation: NavigationP
 					<Feather name="download" color={globalStyles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
 					<Text>Import</Text>
 				</TouchableOpacity>
-				<TouchableOpacity activeOpacity={0.6} style={{ ...globalStyles.blankButton, flex: 1 }} onPress={() => {}}>
+				<TouchableOpacity activeOpacity={0.6} style={{ ...globalStyles.blankButton, flex: 1 }} onPress={exportRecords}>
 					<Feather name="upload" color={globalStyles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
 					<Text>Export</Text>
 				</TouchableOpacity>

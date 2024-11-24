@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 
 import { Feather } from "@expo/vector-icons";
 import { Text, TouchableOpacity } from "react-native";
-import UserSettingsContext from "../contexts/userSettingsContext";
+import UserSettingsContext from "../contexts/UserSettingsContext";
 import { styles as globalStyles } from "../styles";
 import RecordNo from "../types/RecordNo";
 import UserSettings from "../types/UserSettings";

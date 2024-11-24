@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import UserSettingsContext from "../contexts/userSettingsContext";
+import UserSettingsContext from "../contexts/UserSettingsContext";
 import { CachedRecordTransition } from "../hooks/CachedRecordsHook";
 import { colours } from "../styles";
 import { distanceMap } from "../types/Distance";

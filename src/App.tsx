@@ -6,14 +6,14 @@ import { DefaultTheme, NavigationContainer, ParamListBase, RouteProp } from "@re
 import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native";
 import "react-native-get-random-values";
-import UserSettingsContext from "./contexts/userSettingsContext";
+import UserSettingsContext from "./contexts/UserSettingsContext";
 import useCachedRecords from "./hooks/CachedRecordsHook";
 import AppScreen from "./screens/AppScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import { colours, styles as globalStyles } from "./styles";
 import UserSettings, { DEFAULT as DEFAULT_USER_SETTINGS } from "./types/UserSettings";
 
-// todo import/export
+// todo import
 // todo dark theme
 // todo save records + settings
 
@@ -80,7 +80,7 @@ export default function App() {
 							)}
 						</Stack.Screen>
 						<Stack.Screen name="Settings">
-							{(props: ScreenProps<"Settings">) => <SettingsScreen {...props} />}
+							{(props: ScreenProps<"Settings">) => <SettingsScreen {...props} records={records} />}
 						</Stack.Screen>
 					</Stack.Navigator>
 				</NavigationContainer>
