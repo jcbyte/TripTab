@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
-import { RecordNo } from "../App";
+import { NavigationProp, RecordNo } from "../App";
 import ListItem from "../components/ListItem";
 import MileageBox from "../components/MileageBox";
 import RecordModal from "../components/RecordModal";
@@ -21,7 +21,7 @@ export default function AppScreen({
 	updateRecord,
 	removeRecord,
 }: {
-	navigation: any; // todo work out type
+	navigation: NavigationProp<"App">;
 	calculateRecordsNo: RecordNo;
 	setCalculateRecordsNo: useStateSetter<RecordNo>;
 	cachedRecordTransitions: CachedRecordTransition[];

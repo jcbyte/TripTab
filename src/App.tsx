@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer, ParamListBase, RouteProp } from "@react-navigation/native";
+import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack";
 import "react-native-get-random-values";
 import useCachedRecords from "./hooks/useCachedRecords";
 import AppScreen from "./screens/AppScreen";
@@ -15,6 +15,21 @@ import SettingsScreen from "./screens/SettingsScreen";
 // todo save
 
 export type RecordNo = "all" | number;
+
+type RootStackParamList = {
+	App: undefined;
+	Settings: undefined;
+};
+
+export type NavigationProp<RouteName extends keyof RootStackParamList> = NativeStackNavigationProp<
+	RootStackParamList,
+	RouteName
+>;
+
+interface ScreenProps<RouteName extends keyof RootStackParamList> {
+	route: RouteProp<ParamListBase, RouteName>;
+	navigation: NavigationProp<RouteName>;
+}
 
 export default function App() {
 	// List of records
@@ -49,11 +64,8 @@ export default function App() {
 		<>
 			<NavigationContainer>
 				<Stack.Navigator initialRouteName="App" screenOptions={{ headerShown: false }}>
-					<Stack.Screen
-						name="App"
-						component={(
-							props: any // todo work out type
-						) => (
+					<Stack.Screen name="App">
+						{(props: ScreenProps<"App">) => (
 							<AppScreen
 								{...props}
 								calculateRecordsNo={calculateRecordsNo}
@@ -64,24 +76,12 @@ export default function App() {
 								removeRecord={removeRecord}
 							/>
 						)}
-					/>
-					<Stack.Screen
-						name="Settings"
-						component={(
-							props: any // todo work out type
-						) => <SettingsScreen {...props} />}
-					/>
+					</Stack.Screen>
+					<Stack.Screen name="Settings">
+						{(props: ScreenProps<"Settings">) => <SettingsScreen {...props} />}
+					</Stack.Screen>
 				</Stack.Navigator>
 			</NavigationContainer>
-
-			{/* <Main
-					calculateRecordsNo={calculateRecordsNo}
-					setCalculateRecordsNo={setCalculateRecordsNo}
-					cachedRecordTransitions={cachedRecordTransitions}
-					records={records}
-					updateRecord={updateRecord}
-					removeRecord={removeRecord}
-				/> */}
 		</>
 	);
 }
