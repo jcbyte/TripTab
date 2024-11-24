@@ -16,21 +16,13 @@ const options: Option<RecordNo>[] = [
 ];
 
 export default function RecordsNoSelection() {
-	const [slideOpen, setSlideOpen] = useState(false);
-
-	function openSlide(): void {
-		setSlideOpen(true);
-	}
-
-	function closeSlide(): void {
-		setSlideOpen(false);
-	}
-
 	const { userSettings, setUserSettings } = useContext(UserSettingsContext);
+
+	const [slideOpen, setSlideOpen] = useState(false);
 
 	return (
 		<>
-			<TouchableOpacity activeOpacity={0.6} style={globalStyles.blankButton} onPress={openSlide}>
+			<TouchableOpacity activeOpacity={0.6} style={globalStyles.blankButton} onPress={() => setSlideOpen(true)}>
 				<Feather name="chevron-down" color={globalStyles.blankButtonText.color} size={18} />
 				<Text style={globalStyles.blankButtonText}>
 					{userSettings.calculateRecordsNo === "all" ? "All" : userSettings.calculateRecordsNo.toString()}
@@ -38,10 +30,11 @@ export default function RecordsNoSelection() {
 			</TouchableOpacity>
 
 			<SlideUpSelection
+				title="Calculate from Previous Records"
 				options={options}
 				isOpen={slideOpen}
-				close={closeSlide}
-				itemSelected={(selectedItem: RecordNo) => {
+				close={() => setSlideOpen(false)}
+				onSelect={(selectedItem: RecordNo) => {
 					setUserSettings((prev: UserSettings) => {
 						return { ...prev, calculateRecordsNo: selectedItem };
 					});

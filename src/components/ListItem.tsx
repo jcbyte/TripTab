@@ -17,12 +17,12 @@ export default function ListItem({
 	return (
 		<TouchableOpacity style={styles.item} onPress={openModal}>
 			<View style={{ display: "flex", flexDirection: "column" }}>
-				<View style={{ display: "flex", flexDirection: "row" }}>
-					{item.type === "record" && <Text style={{ ...styles.text, flex: 1 }}>{cachedTransition!.miles} Miles</Text>}
+				<View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+					{item.type === "record" && <Text style={styles.text}>{cachedTransition!.miles} Miles</Text>}
 					{item.type === "record" && <Text style={styles.text}>{formatCost(item.cost)}</Text>}
 				</View>
-				<View style={{ display: "flex", flexDirection: "row" }}>
-					<Text style={{ ...styles.secondaryText, flex: 1 }}>{item.mileage}</Text>
+				<View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+					<Text style={styles.secondaryText}>{item.mileage}</Text>
 					{item.type === "record" && (
 						<Text style={styles.secondaryText}>{formatMileageCost(cachedTransition!.cost)}</Text>
 					)}

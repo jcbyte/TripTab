@@ -4,29 +4,31 @@ import { colours, styles as globalStyles } from "../styles";
 export type Option<T> = { label: string; key: string; value: T };
 
 export default function SlideUpSelection<T>({
+	title,
 	options,
 	isOpen,
 	close,
-	itemSelected,
+	onSelect,
 }: {
+	title?: string;
 	options: Option<T>[];
 	isOpen: boolean;
 	close: () => void;
-	itemSelected: (selectedItem: T) => void;
+	onSelect: (selectedItem: T) => void;
 }) {
 	return (
 		<Modal visible={isOpen} animationType="slide" transparent={true}>
 			<TouchableWithoutFeedback onPress={close}>
 				<View style={globalStyles.bottomModalBackground}>
 					<View style={globalStyles.bottomModalContent}>
-						<Text style={styles.titleText}>Calculate from Previous Records</Text>
+						{title && <Text style={styles.titleText}>{title}</Text>}
 						<FlatList
 							data={options}
 							renderItem={({ item }: { item: Option<T> }) => (
 								<TouchableOpacity
 									style={styles.item}
 									onPress={() => {
-										itemSelected(item.value);
+										onSelect(item.value);
 										close();
 									}}
 								>
@@ -34,7 +36,6 @@ export default function SlideUpSelection<T>({
 								</TouchableOpacity>
 							)}
 							keyExtractor={(item: Option<T>) => item.key}
-							ListEmptyComponent={<Text style={{ textAlign: "center" }}>No Records Yet</Text>}
 						/>
 					</View>
 				</View>
