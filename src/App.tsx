@@ -13,8 +13,7 @@ import SettingsScreen from "./screens/SettingsScreen";
 import { colours, styles as globalStyles } from "./styles";
 import UserSettings, { DEFAULT as DEFAULT_USER_SETTINGS } from "./types/UserSettings";
 
-// todo settings page miles/km, currency
-// todo settings page export, import
+// todo apply settings
 // todo dark theme
 // todo save records + settings
 

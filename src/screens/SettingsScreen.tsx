@@ -6,11 +6,8 @@ import SelectSetting from "../components/SelectSetting";
 import UserSettingsContext from "../contexts/userSettingsContext";
 import { styles as globalStyles } from "../styles";
 import Currency, { CurrencyInfo, currencyMap } from "../types/Currency";
+import Distance, { DistanceInfo, distanceMap } from "../types/Distance";
 import UserSettings from "../types/UserSettings";
-
-// todo back button
-// todo settings
-// todo export / import button
 
 export default function SettingsScreen({ navigation }: { navigation: NavigationProp<"Settings"> }) {
 	const { userSettings, setUserSettings } = useContext(UserSettingsContext);
@@ -34,6 +31,19 @@ export default function SettingsScreen({ navigation }: { navigation: NavigationP
 				onSelect={(selected: Currency) => {
 					setUserSettings((prev: UserSettings) => {
 						return { ...prev, currency: selected };
+					});
+				}}
+			/>
+
+			<SelectSetting
+				title="Distance Units"
+				value={distanceMap[userSettings.distance].name}
+				options={(Object.entries(distanceMap) as [Distance, DistanceInfo][]).map(([distance, { name }]) => {
+					return { label: name, key: distance, value: distance };
+				})}
+				onSelect={(selected: Distance) => {
+					setUserSettings((prev: UserSettings) => {
+						return { ...prev, distance: selected };
 					});
 				}}
 			/>

@@ -1,7 +1,7 @@
 type Distance = "miles" | "kilometers";
 export default Distance;
 
-interface DistanceInfo {
+export interface DistanceInfo {
 	symbol: string;
 	name: string;
 }
