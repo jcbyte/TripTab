@@ -1,3 +1,6 @@
+import Currency, { currencyMap } from "./types/Currency";
+import Distance, { distanceMap } from "./types/Distance";
+
 export function normalisedMileageCost(milage: number, cost: number): number {
 	return cost / milage;
 }
@@ -6,10 +9,10 @@ export function mileageCost(endMilage: number, startMilage: number, cost: number
 	return normalisedMileageCost(endMilage - startMilage, cost);
 }
 
-export function formatMileageCost(mileageCost: number): string {
-	return "£" + mileageCost.toFixed(3) + "/mi";
+export function formatMileageCost(mileageCost: number, currency: Currency, distance: Distance): string {
+	return currencyMap[currency].symbol + mileageCost.toFixed(3) + "/" + distanceMap[distance].symbol;
 }
 
-export function formatCost(cost: number): string {
-	return "£" + cost.toFixed(2);
+export function formatCost(cost: number, currency: Currency): string {
+	return currencyMap[currency].symbol + cost.toFixed(2);
 }

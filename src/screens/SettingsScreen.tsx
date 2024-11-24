@@ -24,9 +24,9 @@ export default function SettingsScreen({ navigation }: { navigation: NavigationP
 			{/* Currency Selection */}
 			<SelectSetting
 				title="Currency"
-				value={currencyMap[userSettings.currency].name}
+				value={currencyMap[userSettings.currency].name.plural}
 				options={(Object.entries(currencyMap) as [Currency, CurrencyInfo][]).map(([currency, { name }]) => {
-					return { label: name, key: currency, value: currency };
+					return { label: name.plural, key: currency, value: currency };
 				})}
 				onSelect={(selected: Currency) => {
 					setUserSettings((prev: UserSettings) => {
@@ -37,9 +37,9 @@ export default function SettingsScreen({ navigation }: { navigation: NavigationP
 
 			<SelectSetting
 				title="Distance Units"
-				value={distanceMap[userSettings.distance].name}
+				value={distanceMap[userSettings.distance].name.plural}
 				options={(Object.entries(distanceMap) as [Distance, DistanceInfo][]).map(([distance, { name }]) => {
-					return { label: name, key: distance, value: distance };
+					return { label: name.plural, key: distance, value: distance };
 				})}
 				onSelect={(selected: Distance) => {
 					setUserSettings((prev: UserSettings) => {

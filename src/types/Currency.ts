@@ -3,11 +3,11 @@ export default Currency;
 
 export interface CurrencyInfo {
 	symbol: string;
-	name: string;
+	name: { singular: string; plural: string };
 }
 
 export const currencyMap: Record<Currency, CurrencyInfo> = {
-	GBP: { symbol: "£", name: "British Pounds" },
-	EUR: { symbol: "€", name: "Euros" },
-	USD: { symbol: "$", name: "US Dollars" },
+	GBP: { symbol: "£", name: { singular: "British Pound", plural: "British Pounds" } },
+	EUR: { symbol: "€", name: { singular: "Euro", plural: "Euros" } },
+	USD: { symbol: "$", name: { singular: "US Dollar", plural: "US Dollars" } },
 };
