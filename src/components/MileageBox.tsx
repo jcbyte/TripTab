@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import UserSettingsContext from "../contexts/userSettingsContext";
 import { CachedRecordTransition } from "../hooks/useCachedRecords";
 import { colours, styles as globalStyles } from "../styles";
+import { distanceMap } from "../types/Distance";
 import { formatMileageCost } from "../utils";
 
 export default function MileageBox({
@@ -12,7 +13,7 @@ export default function MileageBox({
 	cachedRecordTransitions: CachedRecordTransition[];
 	openModal: () => void;
 }) {
-	const { userSettings, setUserSettings } = useContext(UserSettingsContext);
+	const { userSettings } = useContext(UserSettingsContext);
 
 	function calculateCost(): number {
 		// Get the number of records to scan through, making sure we don't go over the array
@@ -43,9 +44,11 @@ export default function MileageBox({
 
 	return (
 		<View style={styles.box}>
-			<Text style={styles.titleText}>Cost per Mile</Text>
+			<Text style={styles.titleText}>Cost per {distanceMap[userSettings.distance].name.singular}</Text>
 			<View style={{ display: "flex", flexDirection: "row" }}>
-				<Text style={{ ...styles.mileageText, flex: 1 }}>{formatMileageCost(calculateCost())}</Text>
+				<Text style={{ ...styles.mileageText, flex: 1 }}>
+					{formatMileageCost(calculateCost(), userSettings.currency, userSettings.distance)}
+				</Text>
 				<TouchableOpacity activeOpacity={0.6} style={globalStyles.primaryButton} onPress={openModal}>
 					<Text style={globalStyles.primaryButtonText}>New Record</Text>
 				</TouchableOpacity>

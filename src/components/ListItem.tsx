@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import UserSettingsContext from "../contexts/userSettingsContext";
 import { CachedRecordTransition } from "../hooks/useCachedRecords";
 import { colours } from "../styles";
+import { distanceMap } from "../types/Distance";
 import Record from "../types/Record";
 import { formatCost, formatMileageCost } from "../utils";
 
@@ -21,7 +22,13 @@ export default function ListItem({
 		<TouchableOpacity style={styles.item} onPress={openModal}>
 			<View style={{ display: "flex", flexDirection: "column" }}>
 				<View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-					{item.type === "record" && <Text style={styles.text}>{cachedTransition!.miles} Miles</Text>}
+					{item.type === "record" && (
+						<Text style={styles.text}>
+							{cachedTransition!.miles +
+								" " +
+								distanceMap[userSettings.distance].name[cachedTransition!.miles > 1 ? "plural" : "singular"]}
+						</Text>
+					)}
 					{item.type === "record" && <Text style={styles.text}>{formatCost(item.cost, userSettings.currency)}</Text>}
 				</View>
 				<View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
