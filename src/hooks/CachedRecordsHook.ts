@@ -51,15 +51,6 @@ export default function useCachedRecords(initialRecords: Record[]): {
 			transition = { miles: miles, cost: cost };
 		}
 
-		// if (records[index].type === "record") {
-		// 	// Calculate the cached data based on this and the next record
-		// 	let record = records[index];
-		// 	let prevRecord = records[index + 1];
-		// 	let miles = record.mileage - prevRecord.mileage;
-		// 	let cost = normalisedMileageCost(miles, record.cost);
-		// 	transition = { miles: miles, cost: cost };
-		// }
-
 		// Update the transitions array in place
 		recordTransitions[index] = transition;
 	}

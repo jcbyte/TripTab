@@ -6,8 +6,8 @@ import ListItem from "../components/ListItem";
 import MileageBox from "../components/MileageBox";
 import RecordModal from "../components/RecordModal";
 import RecordsNoSelection from "../components/RecordsNoSelection";
-import { CachedRecordTransition } from "../hooks/useCachedRecords";
-import useRecordModal from "../hooks/useRecordModal";
+import { CachedRecordTransition } from "../hooks/CachedRecordsHook";
+import useRecordModal from "../hooks/RecordModalHook";
 import { colours, styles as globalStyles } from "../styles";
 import Record from "../types/Record";
 

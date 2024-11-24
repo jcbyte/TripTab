@@ -7,7 +7,7 @@ import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-na
 import { SafeAreaView } from "react-native";
 import "react-native-get-random-values";
 import UserSettingsContext from "./contexts/userSettingsContext";
-import useCachedRecords from "./hooks/useCachedRecords";
+import useCachedRecords from "./hooks/CachedRecordsHook";
 import AppScreen from "./screens/AppScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import { colours, styles as globalStyles } from "./styles";

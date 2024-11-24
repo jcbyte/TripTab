@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import UserSettingsContext from "../contexts/userSettingsContext";
-import { CachedRecordTransition } from "../hooks/useCachedRecords";
+import { CachedRecordTransition } from "../hooks/CachedRecordsHook";
 import { colours, styles as globalStyles } from "../styles";
 import { distanceMap } from "../types/Distance";
 import { formatMileageCost } from "../utils";
