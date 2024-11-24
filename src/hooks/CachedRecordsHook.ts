@@ -15,6 +15,7 @@ export default function useCachedRecords(initialRecords: Record[]): {
 	cachedRecordTransitions: CachedRecordTransition[];
 	updateRecord: (record: Record) => void;
 	removeRecord: (record: Record) => void;
+	replaceRecords: (records: Record[]) => void;
 } {
 	const [records, setRecords] = useState<Record[]>(toSortedRecords(initialRecords));
 	const [cachedRecordTransitions, setCachedRecordTransitions] = useState<CachedRecordTransition[]>(
@@ -32,6 +33,14 @@ export default function useCachedRecords(initialRecords: Record[]): {
 			localUpdateRecordTransition(records, recordTransitions, i);
 		}
 		return recordTransitions;
+	}
+
+	function replaceRecords(records: Record[]) {
+		let newRecords: Record[] = toSortedRecords(records);
+		let newTransitions = getCachedCosts(newRecords);
+
+		setRecords(newRecords);
+		setCachedRecordTransitions(newTransitions);
 	}
 
 	function localUpdateRecordTransition(records: Record[], recordTransitions: CachedRecordTransition[], index: number) {
@@ -126,5 +135,5 @@ export default function useCachedRecords(initialRecords: Record[]): {
 		setCachedRecordTransitions(newTransitions);
 	}
 
-	return { records, cachedRecordTransitions, updateRecord, removeRecord };
+	return { records, cachedRecordTransitions, updateRecord, removeRecord, replaceRecords };
 }
