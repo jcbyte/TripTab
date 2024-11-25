@@ -27,33 +27,45 @@ export default function SettingsScreen({
 	const { openAlert } = useAlert();
 
 	async function importRecords() {
-		let result: DocumentPicker.DocumentPickerResult = await DocumentPicker.getDocumentAsync({
-			type: "application/json",
-			copyToCacheDirectory: true,
-			multiple: false,
-		});
+		try {
+			let result: DocumentPicker.DocumentPickerResult = await DocumentPicker.getDocumentAsync({
+				type: "application/json",
+				copyToCacheDirectory: true,
+				multiple: false,
+			});
 
-		if (result.canceled) return;
+			if (result.canceled) {
+				return;
+			}
 
-		let fileUri: string = result.assets[0].uri;
-		let fileContent: string = await FileSystem.readAsStringAsync(fileUri);
-		let strippedRecords: StrippedRecord[] = JSON.parse(fileContent) as StrippedRecord[];
+			let fileUri: string = result.assets[0].uri;
+			let fileContent: string = await FileSystem.readAsStringAsync(fileUri);
+			let strippedRecords: StrippedRecord[] = JSON.parse(fileContent) as StrippedRecord[];
 
-		let newRecords: Record[] = strippedRecords.map((strippedRecord) => rehydrateRecord(strippedRecord));
-		replaceRecords(newRecords);
+			let newRecords: Record[] = strippedRecords.map((strippedRecord) => rehydrateRecord(strippedRecord));
+			replaceRecords(newRecords);
+
+			openAlert({ text: "Imported Records", type: "success" });
+		} catch (e) {
+			openAlert({ text: `Failed Record Import${e instanceof Error && `: ${e.message}`}`, type: "danger" });
+		}
 	}
 
 	async function exportRecords() {
-		let filename: string = `triptab-${Date.now().toString()}.json`;
-		let fileUri: string = FileSystem.documentDirectory + filename;
+		try {
+			let filename: string = `triptab-${Date.now().toString()}.json`;
+			let fileUri: string = FileSystem.documentDirectory + filename;
 
-		let strippedRecords: StrippedRecord[] = records.map((record: Record) => stripRecord(record));
-		let fileContent: string = JSON.stringify(strippedRecords);
+			let strippedRecords: StrippedRecord[] = records.map((record: Record) => stripRecord(record));
+			let fileContent: string = JSON.stringify(strippedRecords);
 
-		await FileSystem.writeAsStringAsync(fileUri, fileContent);
-		await Sharing.shareAsync(fileUri);
+			await FileSystem.writeAsStringAsync(fileUri, fileContent);
+			await Sharing.shareAsync(fileUri);
 
-		openAlert({ text: "yay", type: "info" });
+			openAlert({ text: "Exported Records", type: "success" });
+		} catch (e) {
+			openAlert({ text: `Failed Record Export${e instanceof Error && `: ${e.message}`}`, type: "danger" });
+		}
 	}
 
 	return (

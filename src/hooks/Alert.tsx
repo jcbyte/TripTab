@@ -7,10 +7,10 @@ export interface AlertConfig {
 	type: "success" | "danger" | "info";
 }
 
-const colourMap: Record<AlertConfig["type"], string> = {
-	success: colours.success,
-	danger: colours.danger,
-	info: colours.shadedDark,
+const colourMap: Record<AlertConfig["type"], { box: string; text: string }> = {
+	success: { box: colours.success, text: colours.textDark },
+	danger: { box: colours.danger, text: colours.textDark },
+	info: { box: colours.shadedDark, text: colours.textDark },
 };
 
 const AlertContext = createContext<{
@@ -48,10 +48,10 @@ export function AlertProvider({ children }: { children?: ReactNode }) {
 			{open && (
 				<TouchableOpacity
 					activeOpacity={0.85}
-					style={{ ...styles.box, backgroundColor: colourMap[config.type] }}
+					style={{ ...styles.box, backgroundColor: colourMap[config.type].box }}
 					onPress={closeAlert}
 				>
-					<Text style={{ flex: 1 }}>{config.text}</Text>
+					<Text style={{ flex: 1, color: colourMap[config.type].text }}>{config.text}</Text>
 				</TouchableOpacity>
 			)}
 		</AlertContext.Provider>
