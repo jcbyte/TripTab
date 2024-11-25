@@ -5,7 +5,7 @@ import { CachedRecordTransition } from "../hooks/CachedRecordsHook";
 import { Theme, useTheme } from "../hooks/Theme";
 import { distanceMap } from "../types/Distance";
 import Record from "../types/Record";
-import { formatCost, formatMileageCost } from "../utils";
+import { formatCost, formatMileageCost } from "../utils/formatUtils";
 
 export default function ListItem({
 	item,

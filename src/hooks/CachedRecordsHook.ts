@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Record from "../types/Record";
-import { normalisedMileageCost } from "../utils";
+import { normalisedMileageCost } from "../utils/costUtils";
 
 export type CachedRecordTransition = null | {
 	miles: number;

@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { getStyles, themes } from "../styles";
-import { getTextColor } from "../utils";
+import { getTextColor } from "../utils/colourUtils";
 
 export interface GivenTheme {
 	name: string;
@@ -12,6 +12,7 @@ export interface GivenTheme {
 		element2: string;
 		background: string;
 		shaded: string;
+		disabled: string;
 	};
 	text: {
 		light: string;
@@ -38,6 +39,7 @@ const DEFAULT: Theme = {
 			element2: "#e9e9e9",
 			background: "#ffffff",
 			shaded: "#777777",
+			disabled: "#cecece",
 		}).map(([key, colour]: [string, string]) => [
 			key as keyof GivenTheme["colours"],
 			{ colour: colour, text: getTextColor(colour) == "light" ? "#ffffff" : "#000000" } as ThemeColour,
@@ -63,7 +65,7 @@ export function ThemeProvider({ children }: { children?: ReactNode }) {
 	const [styles, setStyles] = useState<any>(getStyles(DEFAULT)); // todo type
 
 	useEffect(() => {
-		updateTheme(themes.dark);
+		updateTheme(themes.light);
 	}, []);
 
 	function updateTheme(givenTheme: GivenTheme) {

@@ -13,6 +13,7 @@ import {
 import { Theme, useTheme } from "../hooks/Theme";
 import Record from "../types/Record";
 import { useStateSetter } from "../types/utils";
+import { adjustColour } from "../utils/colourUtils";
 
 export default function RecordModal({
 	modalOpen,
@@ -61,10 +62,13 @@ export default function RecordModal({
 							<View
 								style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
 							>
-								<Text style={myStyles.labelText}>Mileage Record</Text>
+								<Text style={myStyles.labelText} /* e1d8f1 */>Mileage Record</Text>
 								<Switch
-									thumbColor={record.type === "mileage" ? theme.primary.colour : undefined} // todo entire switch theming
-									trackColor={{ true: "#e1d8f1" }} // todo
+									thumbColor={record.type === "mileage" ? theme.primary.colour : theme.disabled.colour}
+									trackColor={{
+										true: adjustColour(theme.primary.colour, -0.25),
+										false: adjustColour(theme.disabled.colour, -0.25),
+									}}
 									value={record.type === "mileage"}
 									onValueChange={(value) => {
 										setRecord({

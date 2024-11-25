@@ -13,6 +13,7 @@ export const themes: { [s: string]: GivenTheme } = {
 			element2: "#e9e9e9",
 			background: "#ffffff",
 			shaded: "#777777",
+			disabled: "#cecece",
 		},
 		text: { light: "#ffffff", dark: "#000000" },
 	},
@@ -26,6 +27,7 @@ export const themes: { [s: string]: GivenTheme } = {
 			element2: "#e9e9e9", // todo
 			background: "#181818",
 			shaded: "#999999",
+			disabled: "#7e7e7e",
 		},
 		text: { light: "#ffffff", dark: "#000000" },
 	},

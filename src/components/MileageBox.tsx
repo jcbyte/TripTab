@@ -4,7 +4,7 @@ import UserSettingsContext from "../contexts/UserSettingsContext";
 import { CachedRecordTransition } from "../hooks/CachedRecordsHook";
 import { Theme, useTheme } from "../hooks/Theme";
 import { distanceMap } from "../types/Distance";
-import { formatMileageCost } from "../utils";
+import { formatMileageCost } from "../utils/formatUtils";
 
 export default function MileageBox({
 	cachedRecordTransitions,
