@@ -20,7 +20,7 @@ export const themes: { [s: string]: GivenTheme } = {
 		name: "Dark",
 		colours: {
 			primary: "#6258B4",
-			success: "#b2e0a1", // todo
+			success: "#8cb27d",
 			danger: "#b43f3f",
 			element: "#2e2e2e",
 			background: "#181818",

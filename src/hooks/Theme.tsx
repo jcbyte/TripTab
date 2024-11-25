@@ -63,7 +63,7 @@ export function ThemeProvider({ children }: { children?: ReactNode }) {
 	const [styles, setStyles] = useState<any>(getStyles(DEFAULT)); // todo type
 
 	useEffect(() => {
-		updateTheme(themes.light);
+		updateTheme(themes.dark);
 	}, []);
 
 	function updateTheme(givenTheme: GivenTheme) {
