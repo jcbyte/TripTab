@@ -4,7 +4,7 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { NavigationProp } from "../ThemedApp";
+import { NavigationProp } from "../App";
 import SelectSetting from "../components/SelectSetting";
 import UserSettingsContext from "../contexts/UserSettingsContext";
 import { useAlert } from "../hooks/Alert";

@@ -1,19 +1,116 @@
-import React from "react";
-import { useColorScheme } from "react-native";
-import ThemedApp from "./ThemedApp";
-import { ThemeProvider } from "./hooks/Theme";
-import { themes } from "./styles";
+import React, { useEffect, useState } from "react";
 
-// todo save records + settings
-// todo save theme to settings
-// todo readme
+import { v4 as uuidv4 } from "uuid";
 
-export default function App() {
-	const scheme = useColorScheme();
+import { DefaultTheme, NavigationContainer, ParamListBase, RouteProp } from "@react-navigation/native";
+import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { SafeAreaView, View } from "react-native";
+import "react-native-get-random-values";
+import UserSettingsContext from "./contexts/UserSettingsContext";
+import { AlertProvider } from "./hooks/Alert";
+import useCachedRecords from "./hooks/CachedRecordsHook";
+import { useTheme } from "./hooks/Theme";
+import AppScreen from "./screens/AppScreen";
+import SettingsScreen from "./screens/SettingsScreen";
+import Record from "./types/Record";
+import UserSettings from "./types/UserSettings";
+import { saveRecords, saveUserSettings } from "./utils/storeUtils";
+
+type RootStackParamList = {
+	App: undefined;
+	Settings: undefined;
+};
+
+export type NavigationProp<RouteName extends keyof RootStackParamList> = NativeStackNavigationProp<
+	RootStackParamList,
+	RouteName
+>;
+
+interface ScreenProps<RouteName extends keyof RootStackParamList> {
+	route: RouteProp<ParamListBase, RouteName>;
+	navigation: NavigationProp<RouteName>;
+}
+
+const initialRecords: Record[] = [
+	{ id: uuidv4(), type: "record", mileage: 65531, cost: 38.97 },
+	{ id: uuidv4(), type: "record", mileage: 65286, cost: 14.5 },
+	{ id: uuidv4(), type: "record", mileage: 65187, cost: 28.96 },
+	{ id: uuidv4(), type: "record", mileage: 65003, cost: 38.42 },
+	{ id: uuidv4(), type: "record", mileage: 64774, cost: 37.6 },
+	{ id: uuidv4(), type: "record", mileage: 64414, cost: 12.41 },
+	{ id: uuidv4(), type: "record", mileage: 64333, cost: 36.18 },
+	{ id: uuidv4(), type: "record", mileage: 64062, cost: 16.55 },
+	{ id: uuidv4(), type: "record", mileage: 63913, cost: 14.99 },
+	{ id: uuidv4(), type: "record", mileage: 63783, cost: 18.27 },
+	{ id: uuidv4(), type: "record", mileage: 63662, cost: 40.52 },
+	{ id: uuidv4(), type: "record", mileage: 63321, cost: 29.5 },
+	{ id: uuidv4(), type: "record", mileage: 63103, cost: 24.5 },
+	{ id: uuidv4(), type: "record", mileage: 62929, cost: 39.83 },
+	{ id: uuidv4(), type: "record", mileage: 62634, cost: 52.19 },
+	{ id: uuidv4(), type: "record", mileage: 62205, cost: 47 },
+	{ id: uuidv4(), type: "mileage", mileage: 61880 },
+	{ id: uuidv4(), type: "record", mileage: 61119, cost: 47.39 },
+	{ id: uuidv4(), type: "record", mileage: 60792, cost: 40.74 },
+	{ id: uuidv4(), type: "mileage", mileage: 60449 },
+];
+
+export default function App({
+	retrievedRecords,
+	retrievedUserSettings,
+}: {
+	retrievedRecords: Record[];
+	retrievedUserSettings: UserSettings;
+}) {
+	const { theme, styles } = useTheme();
+
+	// List of records
+	const { records, cachedRecordTransitions, updateRecord, removeRecord, replaceRecords } =
+		useCachedRecords(retrievedRecords);
+
+	// User settings
+	const [userSettings, setUserSettings] = useState<UserSettings>(retrievedUserSettings);
+
+	useEffect(() => {
+		saveRecords(records);
+	}, [records]);
+
+	useEffect(() => {
+		saveUserSettings(userSettings);
+	}, [userSettings]);
+
+	// Navigation stack
+	const Stack = createNativeStackNavigator();
 
 	return (
-		<ThemeProvider initialTheme={scheme === "dark" ? themes.dark : themes.light}>
-			<ThemedApp />
-		</ThemeProvider>
+		<UserSettingsContext.Provider value={{ userSettings: userSettings, setUserSettings: setUserSettings }}>
+			<SafeAreaView style={styles.body}>
+				<View style={{ position: "relative", flex: 1 }}>
+					<AlertProvider>
+						<NavigationContainer
+							theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: theme.background.colour } }}
+						>
+							<Stack.Navigator initialRouteName="App" screenOptions={{ headerShown: false }}>
+								<Stack.Screen name="App">
+									{(props: ScreenProps<"App">) => (
+										<AppScreen
+											{...props}
+											cachedRecordTransitions={cachedRecordTransitions}
+											records={records}
+											updateRecord={updateRecord}
+											removeRecord={removeRecord}
+										/>
+									)}
+								</Stack.Screen>
+								<Stack.Screen name="Settings">
+									{(props: ScreenProps<"Settings">) => (
+										<SettingsScreen {...props} records={records} replaceRecords={replaceRecords} />
+									)}
+								</Stack.Screen>
+							</Stack.Navigator>
+						</NavigationContainer>
+					</AlertProvider>
+				</View>
+			</SafeAreaView>
+		</UserSettingsContext.Provider>
 	);
 }

@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { NavigationProp } from "../ThemedApp";
+import { NavigationProp } from "../App";
 import ListItem from "../components/ListItem";
 import MileageBox from "../components/MileageBox";
 import RecordModal from "../components/RecordModal";
