@@ -8,7 +8,8 @@ import { NavigationProp } from "../ThemedApp";
 import SelectSetting from "../components/SelectSetting";
 import UserSettingsContext from "../contexts/UserSettingsContext";
 import { useAlert } from "../hooks/Alert";
-import { Theme, useTheme } from "../hooks/Theme";
+import { GivenTheme, Theme, useTheme } from "../hooks/Theme";
+import { themes } from "../styles";
 import Currency, { CurrencyInfo, currencyMap } from "../types/Currency";
 import Distance, { DistanceInfo, distanceMap } from "../types/Distance";
 import Record, { rehydrateRecord, StrippedRecord, stripRecord } from "../types/Record";
@@ -23,7 +24,7 @@ export default function SettingsScreen({
 	records: Record[];
 	replaceRecords: (records: Record[]) => void;
 }) {
-	const { theme, styles } = useTheme();
+	const { theme, styles, setTheme } = useTheme();
 	const myStyles = getMyStyles(theme);
 
 	const { userSettings, setUserSettings } = useContext(UserSettingsContext);
@@ -79,6 +80,18 @@ export default function SettingsScreen({
 					<Feather name="chevron-left" color={styles.blankButtonText.color} size={18} />
 				</TouchableOpacity>
 			</View>
+
+			{/* Theme Selection */}
+			<SelectSetting
+				title="Theme"
+				value={theme.name}
+				options={(Object.entries(themes) as [string, GivenTheme][]).map(([key, theme]) => {
+					return { label: theme.name, key: key, value: theme };
+				})}
+				onSelect={(selected: GivenTheme) => {
+					setTheme(selected);
+				}}
+			/>
 
 			{/* Currency Selection */}
 			<SelectSetting
