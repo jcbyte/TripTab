@@ -7,8 +7,6 @@ import Record from "./types/Record";
 import UserSettings from "./types/UserSettings";
 import { retrieveRecords, retrieveUserSettings } from "./utils/storeUtils";
 
-// todo readme
-
 export default function AppEntry() {
 	const scheme = useColorScheme();
 	const [ready, setReady] = useState<boolean>(false);
