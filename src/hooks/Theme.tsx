@@ -9,7 +9,6 @@ export interface GivenTheme {
 		success: string;
 		danger: string;
 		element: string;
-		element2: string;
 		background: string;
 		shaded: string;
 		disabled: string;
@@ -36,7 +35,6 @@ const DEFAULT: Theme = {
 			success: "#b2e0a1",
 			danger: "#e14f4f",
 			element: "#f9f9f9",
-			element2: "#e9e9e9",
 			background: "#ffffff",
 			shaded: "#777777",
 			disabled: "#cecece",

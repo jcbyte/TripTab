@@ -10,7 +10,6 @@ export const themes: { [s: string]: GivenTheme } = {
 			success: "#b2e0a1",
 			danger: "#e14f4f",
 			element: "#f9f9f9",
-			element2: "#e9e9e9",
 			background: "#ffffff",
 			shaded: "#777777",
 			disabled: "#cecece",
@@ -24,7 +23,6 @@ export const themes: { [s: string]: GivenTheme } = {
 			success: "#b2e0a1", // todo
 			danger: "#b43f3f",
 			element: "#2e2e2e",
-			element2: "#e9e9e9", // todo
 			background: "#181818",
 			shaded: "#999999",
 			disabled: "#7e7e7e",

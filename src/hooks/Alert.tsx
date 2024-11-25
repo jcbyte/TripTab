@@ -4,7 +4,7 @@ import { Theme, ThemeColour, useTheme } from "./Theme";
 
 export interface AlertConfig {
 	text: string;
-	type: "success" | "danger" | "info";
+	type: "success" | "danger";
 }
 
 const AlertContext = createContext<{
@@ -22,11 +22,10 @@ export function AlertProvider({ children }: { children?: ReactNode }) {
 	const colourMap: Record<AlertConfig["type"], ThemeColour> = {
 		success: theme.success,
 		danger: theme.danger,
-		info: theme.element2,
 	};
 
 	const [open, setOpen] = useState<boolean>(false);
-	const [config, setConfig] = useState<AlertConfig>({ text: "Alert", type: "info" });
+	const [config, setConfig] = useState<AlertConfig>({ text: "Alert", type: "success" });
 	const closeRef = useRef<NodeJS.Timeout>();
 
 	function openAlert(config: AlertConfig, duration: number = 3000) {
