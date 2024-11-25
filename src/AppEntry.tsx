@@ -7,7 +7,6 @@ import Record from "./types/Record";
 import UserSettings from "./types/UserSettings";
 import { retrieveRecords, retrieveUserSettings } from "./utils/storeUtils";
 
-// todo load saved theme from settings
 // todo readme
 
 export default function AppEntry() {
@@ -20,7 +19,9 @@ export default function AppEntry() {
 	useEffect(() => {
 		const loadData = async () => {
 			loadedRecordsRef.current = await retrieveRecords();
-			loadedUserSettingsRef.current = await retrieveUserSettings();
+			loadedUserSettingsRef.current = await retrieveUserSettings().then((res: UserSettings) =>
+				res.theme ? res : { ...res, theme: scheme === "dark" ? "dark" : "light" }
+			);
 			setReady(true);
 		};
 		loadData();
@@ -29,7 +30,7 @@ export default function AppEntry() {
 	return (
 		<>
 			{ready ? (
-				<ThemeProvider initialTheme={scheme === "dark" ? themes.dark : themes.light}>
+				<ThemeProvider initialTheme={themes[loadedUserSettingsRef.current!.theme!]}>
 					<App retrievedRecords={loadedRecordsRef.current!} retrievedUserSettings={loadedUserSettingsRef.current!} />
 				</ThemeProvider>
 			) : (
