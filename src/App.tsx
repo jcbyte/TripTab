@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -60,40 +60,36 @@ export default function App() {
 	// User settings
 	const [userSettings, setUserSettings] = useState<UserSettings>({ ...DEFAULT_USER_SETTINGS });
 
-	function PageNavigation(): ReactNode {
-		// Navigation stack
-		const Stack = createNativeStackNavigator();
-
-		return (
-			<NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: colours.light } }}>
-				<Stack.Navigator initialRouteName="App" screenOptions={{ headerShown: false }}>
-					<Stack.Screen name="App">
-						{(props: ScreenProps<"App">) => (
-							<AppScreen
-								{...props}
-								cachedRecordTransitions={cachedRecordTransitions}
-								records={records}
-								updateRecord={updateRecord}
-								removeRecord={removeRecord}
-							/>
-						)}
-					</Stack.Screen>
-					<Stack.Screen name="Settings">
-						{(props: ScreenProps<"Settings">) => (
-							<SettingsScreen {...props} records={records} replaceRecords={replaceRecords} />
-						)}
-					</Stack.Screen>
-				</Stack.Navigator>
-			</NavigationContainer>
-		);
-	}
+	// Navigation stack
+	const Stack = createNativeStackNavigator();
 
 	return (
 		<UserSettingsContext.Provider value={{ userSettings: userSettings, setUserSettings: setUserSettings }}>
 			<SafeAreaView style={globalStyles.body}>
 				<View style={{ position: "relative", flex: 1 }}>
 					<AlertProvider>
-						<PageNavigation />
+						<NavigationContainer
+							theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: colours.light } }}
+						>
+							<Stack.Navigator initialRouteName="App" screenOptions={{ headerShown: false }}>
+								<Stack.Screen name="App">
+									{(props: ScreenProps<"App">) => (
+										<AppScreen
+											{...props}
+											cachedRecordTransitions={cachedRecordTransitions}
+											records={records}
+											updateRecord={updateRecord}
+											removeRecord={removeRecord}
+										/>
+									)}
+								</Stack.Screen>
+								<Stack.Screen name="Settings">
+									{(props: ScreenProps<"Settings">) => (
+										<SettingsScreen {...props} records={records} replaceRecords={replaceRecords} />
+									)}
+								</Stack.Screen>
+							</Stack.Navigator>
+						</NavigationContainer>
 					</AlertProvider>
 				</View>
 			</SafeAreaView>
