@@ -7,6 +7,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { NavigationProp } from "../App";
 import SelectSetting from "../components/SelectSetting";
 import UserSettingsContext from "../contexts/UserSettingsContext";
+import { useAlert } from "../hooks/Alert";
 import { colours, styles as globalStyles } from "../styles";
 import Currency, { CurrencyInfo, currencyMap } from "../types/Currency";
 import Distance, { DistanceInfo, distanceMap } from "../types/Distance";
@@ -23,6 +24,7 @@ export default function SettingsScreen({
 	replaceRecords: (records: Record[]) => void;
 }) {
 	const { userSettings, setUserSettings } = useContext(UserSettingsContext);
+	const { openAlert } = useAlert();
 
 	async function importRecords() {
 		let result: DocumentPicker.DocumentPickerResult = await DocumentPicker.getDocumentAsync({
@@ -50,6 +52,8 @@ export default function SettingsScreen({
 
 		await FileSystem.writeAsStringAsync(fileUri, fileContent);
 		await Sharing.shareAsync(fileUri);
+
+		openAlert({ text: "yay", type: "info" });
 	}
 
 	return (

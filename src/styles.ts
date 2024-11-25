@@ -3,8 +3,10 @@ import { StatusBar, StyleSheet } from "react-native";
 export const colours = {
 	primary: "#7a6fe1",
 	danger: "#e14f4f",
+	success: "#b2e0a1",
 	light: "#fff",
 	shaded: "#f9f9f9",
+	shadedDark: "#e9e9e9",
 	dark: "#000",
 	textLight: "#fff",
 	shadedText: "#777",

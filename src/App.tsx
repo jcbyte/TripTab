@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
 import { DefaultTheme, NavigationContainer, ParamListBase, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import "react-native-get-random-values";
 import UserSettingsContext from "./contexts/UserSettingsContext";
+import { AlertProvider } from "./hooks/Alert";
 import useCachedRecords from "./hooks/CachedRecordsHook";
 import AppScreen from "./screens/AppScreen";
 import SettingsScreen from "./screens/SettingsScreen";
@@ -60,33 +61,43 @@ export default function App() {
 	// User settings
 	const [userSettings, setUserSettings] = useState<UserSettings>({ ...DEFAULT_USER_SETTINGS });
 
-	// Navigation stack
-	const Stack = createNativeStackNavigator();
+	function PageNavigation(): ReactNode {
+		// Navigation stack
+		const Stack = createNativeStackNavigator();
+
+		return (
+			<NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: colours.light } }}>
+				<Stack.Navigator initialRouteName="App" screenOptions={{ headerShown: false }}>
+					<Stack.Screen name="App">
+						{(props: ScreenProps<"App">) => (
+							<AppScreen
+								{...props}
+								cachedRecordTransitions={cachedRecordTransitions}
+								records={records}
+								updateRecord={updateRecord}
+								removeRecord={removeRecord}
+							/>
+						)}
+					</Stack.Screen>
+					<Stack.Screen name="Settings">
+						{(props: ScreenProps<"Settings">) => (
+							<SettingsScreen {...props} records={records} replaceRecords={replaceRecords} />
+						)}
+					</Stack.Screen>
+				</Stack.Navigator>
+			</NavigationContainer>
+		);
+	}
 
 	return (
-		<SafeAreaView style={globalStyles.body}>
-			<UserSettingsContext.Provider value={{ userSettings: userSettings, setUserSettings: setUserSettings }}>
-				<NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: colours.light } }}>
-					<Stack.Navigator initialRouteName="App" screenOptions={{ headerShown: false }}>
-						<Stack.Screen name="App">
-							{(props: ScreenProps<"App">) => (
-								<AppScreen
-									{...props}
-									cachedRecordTransitions={cachedRecordTransitions}
-									records={records}
-									updateRecord={updateRecord}
-									removeRecord={removeRecord}
-								/>
-							)}
-						</Stack.Screen>
-						<Stack.Screen name="Settings">
-							{(props: ScreenProps<"Settings">) => (
-								<SettingsScreen {...props} records={records} replaceRecords={replaceRecords} />
-							)}
-						</Stack.Screen>
-					</Stack.Navigator>
-				</NavigationContainer>
-			</UserSettingsContext.Provider>
-		</SafeAreaView>
+		<UserSettingsContext.Provider value={{ userSettings: userSettings, setUserSettings: setUserSettings }}>
+			<SafeAreaView style={globalStyles.body}>
+				<View style={{ position: "relative", flex: 1 }}>
+					<AlertProvider>
+						<PageNavigation />
+					</AlertProvider>
+				</View>
+			</SafeAreaView>
+		</UserSettingsContext.Provider>
 	);
 }
