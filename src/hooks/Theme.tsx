@@ -46,21 +46,23 @@ const DEFAULT: Theme = {
 	name: "Default",
 } as Theme;
 
+type Styles = ReturnType<typeof getStyles>;
+
 const ThemeContext = createContext<{
 	theme: Theme;
 	setTheme: (theme: GivenTheme) => void;
-	styles: any; // todo type
+	styles: Styles;
 }>({
 	theme: DEFAULT,
 	setTheme: () => {},
-	styles: {},
+	styles: getStyles(DEFAULT),
 });
 
 // todo initial load
 
 export function ThemeProvider({ children }: { children?: ReactNode }) {
 	const [theme, setTheme] = useState<Theme>(DEFAULT);
-	const [styles, setStyles] = useState<any>(getStyles(DEFAULT)); // todo type
+	const [styles, setStyles] = useState<Styles>(getStyles(DEFAULT));
 
 	useEffect(() => {
 		updateTheme(themes.dark);
