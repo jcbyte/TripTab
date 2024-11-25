@@ -6,10 +6,11 @@ import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { NavigationProp } from "../App";
 import SelectSetting from "../components/SelectSetting";
+import { Option } from "../components/SlideUpSelection";
 import UserSettingsContext from "../contexts/UserSettingsContext";
 import { useAlert } from "../hooks/Alert";
 import { GivenTheme, Theme, useTheme } from "../hooks/Theme";
-import { themes } from "../styles";
+import { ThemeName, themes } from "../styles";
 import Currency, { CurrencyInfo, currencyMap } from "../types/Currency";
 import Distance, { DistanceInfo, distanceMap } from "../types/Distance";
 import Record, { rehydrateRecord, StrippedRecord, stripRecord } from "../types/Record";
@@ -85,10 +86,13 @@ export default function SettingsScreen({
 			<SelectSetting
 				title="Theme"
 				value={theme.name}
-				options={(Object.entries(themes) as [string, GivenTheme][]).map(([key, theme]) => {
+				options={(Object.entries(themes) as [ThemeName, GivenTheme][]).map(([key, theme]) => {
 					return { label: theme.name, key: key, value: theme };
 				})}
-				onSelect={(selected: GivenTheme) => {
+				onSelect={({ value: selected, key: themeName }: Option<GivenTheme>) => {
+					setUserSettings((prev: UserSettings) => {
+						return { ...prev, theme: themeName as ThemeName };
+					});
 					setTheme(selected);
 				}}
 			/>
@@ -100,7 +104,7 @@ export default function SettingsScreen({
 				options={(Object.entries(currencyMap) as [Currency, CurrencyInfo][]).map(([currency, { name }]) => {
 					return { label: name.plural, key: currency, value: currency };
 				})}
-				onSelect={(selected: Currency) => {
+				onSelect={({ value: selected }: Option<Currency>) => {
 					setUserSettings((prev: UserSettings) => {
 						return { ...prev, currency: selected };
 					});
@@ -114,7 +118,7 @@ export default function SettingsScreen({
 				options={(Object.entries(distanceMap) as [Distance, DistanceInfo][]).map(([distance, { name }]) => {
 					return { label: name.plural, key: distance, value: distance };
 				})}
-				onSelect={(selected: Distance) => {
+				onSelect={({ value: selected }: Option<Distance>) => {
 					setUserSettings((prev: UserSettings) => {
 						return { ...prev, distance: selected };
 					});

@@ -14,7 +14,7 @@ export default function SlideUpSelection<T>({
 	options: Option<T>[];
 	isOpen: boolean;
 	close: () => void;
-	onSelect: (selectedItem: T) => void;
+	onSelect: (selectedItem: Option<T>) => void;
 }) {
 	const { theme, styles } = useTheme();
 	const myStyles = getMyStyles(theme);
@@ -31,7 +31,7 @@ export default function SlideUpSelection<T>({
 								<TouchableOpacity
 									style={myStyles.item}
 									onPress={() => {
-										onSelect(item.value);
+										onSelect(item);
 										close();
 									}}
 								>

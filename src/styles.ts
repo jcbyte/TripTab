@@ -1,7 +1,8 @@
 import { StatusBar, StyleSheet } from "react-native";
 import { GivenTheme, Theme } from "./hooks/Theme";
 
-export const themes: { [s: string]: GivenTheme } = {
+export type ThemeName = "light" | "dark";
+export const themes: Record<ThemeName, GivenTheme> = {
 	light: {
 		name: "Light",
 		colours: {

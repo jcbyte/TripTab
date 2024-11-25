@@ -12,7 +12,7 @@ export default function SelectSetting<T>({
 	title: string;
 	value: string;
 	options: Option<T>[];
-	onSelect: (selected: T) => void;
+	onSelect: (selected: Option<T>) => void;
 }) {
 	const { theme, styles } = useTheme();
 	const myStyles = getMyStyles(theme);

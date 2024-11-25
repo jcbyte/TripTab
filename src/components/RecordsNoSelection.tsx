@@ -36,7 +36,7 @@ export default function RecordsNoSelection() {
 				options={options}
 				isOpen={slideOpen}
 				close={() => setSlideOpen(false)}
-				onSelect={(selectedItem: RecordNo) => {
+				onSelect={({ value: selectedItem }: Option<RecordNo>) => {
 					setUserSettings((prev: UserSettings) => {
 						return { ...prev, calculateRecordsNo: selectedItem };
 					});
