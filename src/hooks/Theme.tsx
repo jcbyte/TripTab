@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { getStyles, themes } from "../styles";
+import { getStyles } from "../styles";
 import { getTextColor } from "../utils/colourUtils";
 
 export interface GivenTheme {
@@ -58,15 +58,15 @@ const ThemeContext = createContext<{
 	styles: getStyles(DEFAULT),
 });
 
-// todo initial load
-
-export function ThemeProvider({ children }: { children?: ReactNode }) {
+export function ThemeProvider({ children, initialTheme }: { children?: ReactNode; initialTheme?: GivenTheme }) {
 	const [theme, setTheme] = useState<Theme>(DEFAULT);
 	const [styles, setStyles] = useState<Styles>(getStyles(DEFAULT));
 
 	useEffect(() => {
-		updateTheme(themes.dark);
-	}, []);
+		if (initialTheme) {
+			updateTheme(initialTheme);
+		}
+	}, [initialTheme]);
 
 	function updateTheme(givenTheme: GivenTheme) {
 		let newTheme: Theme = {

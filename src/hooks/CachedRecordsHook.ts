@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Record from "../types/Record";
 import { normalisedMileageCost } from "../utils/costUtils";
@@ -10,17 +10,21 @@ export type CachedRecordTransition = null | {
 
 const DEFAULT_CACHED_RECORD_TRANSITION: CachedRecordTransition = { miles: 0, cost: 0 };
 
-export default function useCachedRecords(initialRecords: Record[]): {
+export default function useCachedRecords(initialRecords?: Record[]): {
 	records: Record[];
 	cachedRecordTransitions: CachedRecordTransition[];
 	updateRecord: (record: Record) => void;
 	removeRecord: (record: Record) => void;
 	replaceRecords: (records: Record[]) => void;
 } {
-	const [records, setRecords] = useState<Record[]>(toSortedRecords(initialRecords));
-	const [cachedRecordTransitions, setCachedRecordTransitions] = useState<CachedRecordTransition[]>(
-		getCachedCosts(toSortedRecords(initialRecords))
-	);
+	const [records, setRecords] = useState<Record[]>([]);
+	const [cachedRecordTransitions, setCachedRecordTransitions] = useState<CachedRecordTransition[]>([]);
+
+	useEffect(() => {
+		if (initialRecords) {
+			replaceRecords(initialRecords);
+		}
+	}, [initialRecords]);
 
 	function toSortedRecords(records: Record[]): Record[] {
 		return [...records].sort((a: Record, b: Record) => b.mileage - a.mileage);
