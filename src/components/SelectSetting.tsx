@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colours } from "../styles";
 import SlideUpSelection, { Option } from "./SlideUpSelection";
 
@@ -30,7 +30,7 @@ export default function SelectSetting<T>({
 	);
 }
 
-const styles = {
+const styles = StyleSheet.create({
 	block: {
 		padding: 16,
 		backgroundColor: colours.shaded,
@@ -44,4 +44,4 @@ const styles = {
 		fontSize: 12,
 		color: colours.shadedText,
 	},
-};
+});

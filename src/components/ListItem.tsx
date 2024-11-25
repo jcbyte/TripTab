@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import UserSettingsContext from "../contexts/UserSettingsContext";
 import { CachedRecordTransition } from "../hooks/CachedRecordsHook";
 import { colours } from "../styles";
@@ -44,7 +44,7 @@ export default function ListItem({
 	);
 }
 
-const styles = {
+const styles = StyleSheet.create({
 	item: {
 		padding: 16,
 		backgroundColor: colours.shaded,
@@ -58,4 +58,4 @@ const styles = {
 		fontSize: 12,
 		color: colours.shadedText,
 	},
-};
+});
