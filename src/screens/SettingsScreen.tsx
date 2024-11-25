@@ -4,11 +4,11 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { NavigationProp } from "../App";
+import { NavigationProp } from "../ThemedApp";
 import SelectSetting from "../components/SelectSetting";
 import UserSettingsContext from "../contexts/UserSettingsContext";
 import { useAlert } from "../hooks/Alert";
-import { colours, styles as globalStyles } from "../styles";
+import { Theme, useTheme } from "../hooks/Theme";
 import Currency, { CurrencyInfo, currencyMap } from "../types/Currency";
 import Distance, { DistanceInfo, distanceMap } from "../types/Distance";
 import Record, { rehydrateRecord, StrippedRecord, stripRecord } from "../types/Record";
@@ -23,6 +23,9 @@ export default function SettingsScreen({
 	records: Record[];
 	replaceRecords: (records: Record[]) => void;
 }) {
+	const { theme, styles } = useTheme();
+	const myStyles = getMyStyles(theme);
+
 	const { userSettings, setUserSettings } = useContext(UserSettingsContext);
 	const { openAlert } = useAlert();
 
@@ -69,11 +72,11 @@ export default function SettingsScreen({
 	}
 
 	return (
-		<View style={{ ...styles.body, display: "flex", flexDirection: "column", gap: 10 }}>
+		<View style={{ ...myStyles.body, display: "flex", flexDirection: "column", gap: 10 }}>
 			<View style={{ display: "flex", flexDirection: "row" }}>
 				{/* Back Button */}
-				<TouchableOpacity activeOpacity={0.6} style={globalStyles.blankButton} onPress={navigation.goBack}>
-					<Feather name="chevron-left" color={globalStyles.blankButtonText.color} size={18} />
+				<TouchableOpacity activeOpacity={0.6} style={styles.blankButton} onPress={navigation.goBack}>
+					<Feather name="chevron-left" color={styles.blankButtonText.color} size={18} />
 				</TouchableOpacity>
 			</View>
 
@@ -107,12 +110,12 @@ export default function SettingsScreen({
 
 			{/* Import/Export */}
 			<View style={{ display: "flex", flexDirection: "row", gap: 10, height: 60 }}>
-				<TouchableOpacity activeOpacity={0.6} style={{ ...globalStyles.blankButton, flex: 1 }} onPress={importRecords}>
-					<Feather name="download" color={globalStyles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
+				<TouchableOpacity activeOpacity={0.6} style={{ ...styles.blankButton, flex: 1 }} onPress={importRecords}>
+					<Feather name="download" color={styles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
 					<Text>Import</Text>
 				</TouchableOpacity>
-				<TouchableOpacity activeOpacity={0.6} style={{ ...globalStyles.blankButton, flex: 1 }} onPress={exportRecords}>
-					<Feather name="upload" color={globalStyles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
+				<TouchableOpacity activeOpacity={0.6} style={{ ...styles.blankButton, flex: 1 }} onPress={exportRecords}>
+					<Feather name="upload" color={styles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
 					<Text>Export</Text>
 				</TouchableOpacity>
 			</View>
@@ -120,11 +123,12 @@ export default function SettingsScreen({
 	);
 }
 
-const styles = StyleSheet.create({
-	body: {
-		paddingHorizontal: 20,
-		paddingTop: 10,
-		flex: 1,
-		backgroundColor: colours.light,
-	},
-});
+const getMyStyles = (theme: Theme) =>
+	StyleSheet.create({
+		body: {
+			paddingHorizontal: 20,
+			paddingTop: 10,
+			flex: 1,
+			backgroundColor: theme.background.colour,
+		},
+	});

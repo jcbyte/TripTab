@@ -1,14 +1,14 @@
 import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { NavigationProp } from "../App";
+import { NavigationProp } from "../ThemedApp";
 import ListItem from "../components/ListItem";
 import MileageBox from "../components/MileageBox";
 import RecordModal from "../components/RecordModal";
 import RecordsNoSelection from "../components/RecordsNoSelection";
 import { CachedRecordTransition } from "../hooks/CachedRecordsHook";
 import useRecordModal from "../hooks/RecordModalHook";
-import { colours, styles as globalStyles } from "../styles";
+import { Theme, useTheme } from "../hooks/Theme";
 import Record from "../types/Record";
 
 export default function AppScreen({
@@ -24,19 +24,22 @@ export default function AppScreen({
 	updateRecord: (record: Record) => void;
 	removeRecord: (record: Record) => void;
 }) {
+	const { theme, styles } = useTheme();
+	const myStyles = getMyStyles(theme);
+
 	const { modalOpen, record: modalRecord, setRecord: setModalRecord, openModal, closeModal } = useRecordModal();
 
 	return (
 		<>
-			<View style={{ ...styles.body, display: "flex", flexDirection: "column", gap: 10 }}>
+			<View style={{ ...myStyles.body, display: "flex", flexDirection: "column", gap: 10 }}>
 				<View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
 					{/* Settings Button */}
 					<TouchableOpacity
 						activeOpacity={0.6}
-						style={globalStyles.blankButton}
+						style={styles.blankButton}
 						onPress={() => navigation.navigate("Settings")}
 					>
-						<Feather name="settings" color={globalStyles.blankButtonText.color} size={18} />
+						<Feather name="settings" color={styles.blankButtonText.color} size={18} />
 					</TouchableOpacity>
 
 					{/* Calculated Records No */}
@@ -75,11 +78,12 @@ export default function AppScreen({
 	);
 }
 
-const styles = StyleSheet.create({
-	body: {
-		paddingHorizontal: 20,
-		paddingTop: 10,
-		flex: 1,
-		backgroundColor: colours.light,
-	},
-});
+const getMyStyles = (theme: Theme) =>
+	StyleSheet.create({
+		body: {
+			paddingHorizontal: 20,
+			paddingTop: 10,
+			flex: 1,
+			backgroundColor: theme.background.colour,
+		},
+	});

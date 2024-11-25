@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import UserSettingsContext from "../contexts/UserSettingsContext";
 import { CachedRecordTransition } from "../hooks/CachedRecordsHook";
-import { colours, styles as globalStyles } from "../styles";
+import { Theme, useTheme } from "../hooks/Theme";
 import { distanceMap } from "../types/Distance";
 import { formatMileageCost } from "../utils";
 
@@ -13,6 +13,9 @@ export default function MileageBox({
 	cachedRecordTransitions: CachedRecordTransition[];
 	openModal: () => void;
 }) {
+	const { theme, styles } = useTheme();
+	const myStyles = getMyStyles(theme);
+
 	const { userSettings } = useContext(UserSettingsContext);
 
 	function calculateCost(): number {
@@ -43,39 +46,40 @@ export default function MileageBox({
 	}
 
 	return (
-		<View style={styles.box}>
-			<Text style={styles.titleText}>Cost per {distanceMap[userSettings.distance].name.singular}</Text>
+		<View style={myStyles.box}>
+			<Text style={myStyles.titleText}>Cost per {distanceMap[userSettings.distance].name.singular}</Text>
 			<View style={{ display: "flex", flexDirection: "row" }}>
-				<Text style={{ ...styles.mileageText, flex: 1 }}>
+				<Text style={{ ...myStyles.mileageText, flex: 1 }}>
 					{formatMileageCost(calculateCost(), userSettings.currency, userSettings.distance)}
 				</Text>
-				<TouchableOpacity activeOpacity={0.6} style={globalStyles.primaryButton} onPress={openModal}>
-					<Text style={globalStyles.primaryButtonText}>New Record</Text>
+				<TouchableOpacity activeOpacity={0.6} style={styles.primaryButton} onPress={openModal}>
+					<Text style={styles.primaryButtonText}>New Record</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
 	);
 }
 
-const styles = StyleSheet.create({
-	box: {
-		padding: 16,
-		backgroundColor: colours.shaded,
-		borderRadius: 8,
-		shadowColor: "#000",
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.1,
-		shadowRadius: 4,
-		elevation: 1,
-	},
-	titleText: {
-		fontSize: 24,
-		fontWeight: "semibold",
-		textAlign: "left",
-	},
-	mileageText: {
-		fontSize: 28,
-		fontWeight: "bold",
-		textAlign: "left",
-	},
-});
+const getMyStyles = (theme: Theme) =>
+	StyleSheet.create({
+		box: {
+			padding: 16,
+			backgroundColor: theme.element.colour,
+			borderRadius: 8,
+			shadowColor: "#000",
+			shadowOffset: { width: 0, height: 2 },
+			shadowOpacity: 0.1,
+			shadowRadius: 4,
+			elevation: 1,
+		},
+		titleText: {
+			fontSize: 24,
+			fontWeight: "semibold",
+			textAlign: "left",
+		},
+		mileageText: {
+			fontSize: 28,
+			fontWeight: "bold",
+			textAlign: "left",
+		},
+	});

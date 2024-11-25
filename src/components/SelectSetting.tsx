@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { colours } from "../styles";
+import { Theme, useTheme } from "../hooks/Theme";
 import SlideUpSelection, { Option } from "./SlideUpSelection";
 
 export default function SelectSetting<T>({
@@ -14,14 +14,17 @@ export default function SelectSetting<T>({
 	options: Option<T>[];
 	onSelect: (selected: T) => void;
 }) {
+	const { theme, styles } = useTheme();
+	const myStyles = getMyStyles(theme);
+
 	const [slideOpen, setSlideOpen] = useState(false);
 
 	return (
 		<>
-			<TouchableOpacity style={styles.block} onPress={() => setSlideOpen(true)}>
+			<TouchableOpacity style={myStyles.block} onPress={() => setSlideOpen(true)}>
 				<View style={{ display: "flex", flexDirection: "column" }}>
-					<Text style={{ ...styles.secondaryText }}>{title}</Text>
-					<Text style={{ ...styles.text }}>{value}</Text>
+					<Text style={{ ...myStyles.secondaryText }}>{title}</Text>
+					<Text style={{ ...myStyles.text }}>{value}</Text>
 				</View>
 			</TouchableOpacity>
 
@@ -30,18 +33,19 @@ export default function SelectSetting<T>({
 	);
 }
 
-const styles = StyleSheet.create({
-	block: {
-		padding: 16,
-		backgroundColor: colours.shaded,
-		borderRadius: 8,
-		marginBottom: 10,
-	},
-	text: {
-		fontSize: 18,
-	},
-	secondaryText: {
-		fontSize: 12,
-		color: colours.shadedText,
-	},
-});
+const getMyStyles = (theme: Theme) =>
+	StyleSheet.create({
+		block: {
+			padding: 16,
+			backgroundColor: theme.element.colour,
+			borderRadius: 8,
+			marginBottom: 10,
+		},
+		text: {
+			fontSize: 18,
+		},
+		secondaryText: {
+			fontSize: 12,
+			color: "#777", // todo
+		},
+	});

@@ -1,4 +1,5 @@
 import { StatusBar, StyleSheet } from "react-native";
+import { Theme } from "./hooks/Theme";
 
 export const colours = {
 	primary: "#7a6fe1",
@@ -38,57 +39,59 @@ const genericStyles = StyleSheet.create({
 	},
 	modalContent: {
 		padding: 20,
-		backgroundColor: colours.light,
 		borderRadius: 8,
 	},
 });
 
-export const styles = StyleSheet.create({
-	body: {
-		paddingTop: StatusBar.currentHeight ?? 10,
-		flex: 1,
-	},
-	primaryButton: {
-		...genericStyles.button,
-		backgroundColor: colours.primary,
-	},
-	primaryButtonText: {
-		...genericStyles.buttonText,
-		color: colours.textLight,
-	},
-	dangerButton: {
-		...genericStyles.button,
-		backgroundColor: colours.danger,
-	},
-	dangerButtonText: {
-		...genericStyles.buttonText,
-		color: colours.textLight,
-	},
-	blankButton: {
-		...genericStyles.button,
-		backgroundColor: colours.shaded,
-	},
-	blankButtonText: {
-		...genericStyles.buttonText,
-		color: colours.textDark,
-	},
-	blankInput: {
-		...genericStyles.input,
-		borderColor: "#ccc",
-	},
-	centerModalBackground: {
-		...genericStyles.modalBackground,
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	centerModalContent: {
-		...genericStyles.modalContent,
-	},
-	bottomModalBackground: {
-		...genericStyles.modalBackground,
-		justifyContent: "flex-end",
-	},
-	bottomModalContent: {
-		...genericStyles.modalContent,
-	},
-});
+export const getStyles = (theme: Theme) =>
+	StyleSheet.create({
+		body: {
+			paddingTop: StatusBar.currentHeight ?? 10,
+			flex: 1,
+		},
+		primaryButton: {
+			...genericStyles.button,
+			backgroundColor: theme.primary.colour,
+		},
+		primaryButtonText: {
+			...genericStyles.buttonText,
+			color: theme.primary.text,
+		},
+		dangerButton: {
+			...genericStyles.button,
+			backgroundColor: theme.danger.colour,
+		},
+		dangerButtonText: {
+			...genericStyles.buttonText,
+			color: theme.danger.text,
+		},
+		blankButton: {
+			...genericStyles.button,
+			backgroundColor: theme.element.colour,
+		},
+		blankButtonText: {
+			...genericStyles.buttonText,
+			color: theme.element.colour,
+		},
+		blankInput: {
+			...genericStyles.input,
+			borderColor: "#ccc", // todo
+		},
+		centerModalBackground: {
+			...genericStyles.modalBackground,
+			justifyContent: "center",
+			alignItems: "center",
+		},
+		centerModalContent: {
+			...genericStyles.modalContent,
+			backgroundColor: theme.background.colour,
+		},
+		bottomModalBackground: {
+			...genericStyles.modalBackground,
+			justifyContent: "flex-end",
+		},
+		bottomModalContent: {
+			...genericStyles.modalContent,
+			backgroundColor: theme.background.colour,
+		},
+	});

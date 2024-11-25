@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { Text, TouchableOpacity } from "react-native";
 import UserSettingsContext from "../contexts/UserSettingsContext";
-import { styles as globalStyles } from "../styles";
+import { useTheme } from "../hooks/Theme";
 import RecordNo from "../types/RecordNo";
 import UserSettings from "../types/UserSettings";
 import SlideUpSelection, { Option } from "./SlideUpSelection";
@@ -16,15 +16,17 @@ const options: Option<RecordNo>[] = [
 ];
 
 export default function RecordsNoSelection() {
+	const { styles } = useTheme();
+
 	const { userSettings, setUserSettings } = useContext(UserSettingsContext);
 
 	const [slideOpen, setSlideOpen] = useState(false);
 
 	return (
 		<>
-			<TouchableOpacity activeOpacity={0.6} style={globalStyles.blankButton} onPress={() => setSlideOpen(true)}>
-				<Feather name="chevron-down" color={globalStyles.blankButtonText.color} size={18} />
-				<Text style={globalStyles.blankButtonText}>
+			<TouchableOpacity activeOpacity={0.6} style={styles.blankButton} onPress={() => setSlideOpen(true)}>
+				<Feather name="chevron-down" color={styles.blankButtonText.color} size={18} />
+				<Text style={styles.blankButtonText}>
 					{userSettings.calculateRecordsNo === "all" ? "All" : userSettings.calculateRecordsNo.toString()}
 				</Text>
 			</TouchableOpacity>
