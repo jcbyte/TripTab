@@ -71,7 +71,7 @@ export const getStyles = (theme: Theme) =>
 		},
 		blankButtonText: {
 			...genericStyles.buttonText,
-			color: theme.element.colour,
+			color: theme.element.text,
 		},
 		blankInput: {
 			...genericStyles.input,

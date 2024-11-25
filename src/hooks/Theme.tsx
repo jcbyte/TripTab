@@ -1,5 +1,6 @@
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { getStyles } from "../styles";
+import { getTextColor } from "../utils";
 
 export interface GivenTheme {
 	colours: {
@@ -9,6 +10,7 @@ export interface GivenTheme {
 		element: string;
 		element2: string;
 		background: string;
+		shadedText: string;
 	};
 	text: {
 		light: string;
@@ -24,6 +26,7 @@ const lightTheme: GivenTheme = {
 		element: "#f9f9f9",
 		element2: "#e9e9e9",
 		background: "#ffffff",
+		shadedText: "#777777",
 	},
 	text: { light: "#ffffff", dark: "#000000" },
 };
@@ -37,14 +40,20 @@ export type Theme = {
 	[K in keyof GivenTheme["colours"]]: ThemeColour;
 };
 
-const DEFAULT: Theme = {
-	background: { colour: "#fff", text: "#ffffff" },
-	danger: { colour: "#e14f4f", text: "#ffffff" },
-	element: { colour: "#f9f9f9", text: "#000000" },
-	element2: { colour: "#e9e9e9", text: "#000000" },
-	primary: { colour: "#7a6fe1", text: "#ffffff" },
-	success: { colour: "#b2e0a1", text: "#000000" },
-};
+const DEFAULT: Theme = Object.fromEntries(
+	Object.entries({
+		primary: "#7a6fe1",
+		success: "#b2e0a1",
+		danger: "#e14f4f",
+		element: "#f9f9f9",
+		element2: "#e9e9e9",
+		background: "#ffffff",
+		shadedText: "#777777",
+	}).map(([key, colour]: [string, string]) => [
+		key as keyof GivenTheme["colours"],
+		{ colour: colour, text: getTextColor(colour) == "light" ? "#ffffff" : "#000000" } as ThemeColour,
+	])
+) as Theme;
 
 const ThemeContext = createContext<{
 	theme: Theme;
@@ -62,13 +71,9 @@ export function ThemeProvider({ children }: { children?: ReactNode }) {
 	const [theme, setTheme] = useState<Theme>(DEFAULT);
 	const [styles, setStyles] = useState<any>(getStyles(DEFAULT)); // todo type
 
-	function getTextColor(backgroundColor: string): "light" | "dark" {
-		var r = parseInt(backgroundColor.substring(1, 3), 16);
-		var g = parseInt(backgroundColor.substring(3, 5), 16);
-		var b = parseInt(backgroundColor.substring(5, 7), 16);
-		var yiq = (r * 299 + g * 587 + b * 114) / 1000;
-		return yiq >= 128 ? "dark" : "light";
-	}
+	useEffect(() => {
+		updateTheme(lightTheme);
+	}, []);
 
 	function updateTheme(givenTheme: GivenTheme) {
 		let newTheme: Theme = Object.fromEntries(

@@ -46,6 +46,6 @@ const getMyStyles = (theme: Theme) =>
 		},
 		secondaryText: {
 			fontSize: 12,
-			color: "#777", // todo
+			color: theme.shadedText.colour,
 		},
 	});
