@@ -76,10 +76,12 @@ const getMyStyles = (theme: Theme) =>
 			fontSize: 24,
 			fontWeight: "semibold",
 			textAlign: "left",
+			color: theme.element.text,
 		},
 		mileageText: {
 			fontSize: 28,
 			fontWeight: "bold",
 			textAlign: "left",
+			color: theme.element.text,
 		},
 	});

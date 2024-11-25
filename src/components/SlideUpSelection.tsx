@@ -60,9 +60,11 @@ const getMyStyles = (theme: Theme) =>
 			fontSize: 18,
 			fontWeight: "semibold",
 			textAlign: "left",
+			color: theme.background.text,
 		},
 		itemText: {
 			fontSize: 16,
 			textAlign: "left",
+			color: theme.element.text,
 		},
 	});

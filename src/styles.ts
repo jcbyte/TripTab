@@ -19,13 +19,13 @@ export const themes: { [s: string]: GivenTheme } = {
 	dark: {
 		name: "Dark",
 		colours: {
-			primary: "#7a6fe1",
-			success: "#b2e0a1",
-			danger: "#e14f4f",
-			element: "#f9f9f9",
-			element2: "#e9e9e9",
-			background: "#000000",
-			shadedText: "#777777",
+			primary: "#6258B4",
+			success: "#b2e0a1", // todo
+			danger: "#b43f3f",
+			element: "#2e2e2e",
+			element2: "#e9e9e9", // todo
+			background: "#181818",
+			shadedText: "#999999",
 		},
 		text: { light: "#ffffff", dark: "#000000" },
 	},
@@ -92,6 +92,8 @@ export const getStyles = (theme: Theme) =>
 		blankInput: {
 			...genericStyles.input,
 			borderColor: "#ccc", // todo
+			color: "#fff", // todo
+			// todo placeholder colour
 		},
 		centerModalBackground: {
 			...genericStyles.modalBackground,

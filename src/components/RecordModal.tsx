@@ -56,10 +56,12 @@ export default function RecordModal({
 									onChangeText={(text) => setRecord({ ...record, cost: parseFloat(text) })}
 								/>
 							)}
-							<View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-								<Text style={{ flex: 1 }}>Mileage Record</Text>
+							<View
+								style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+							>
+								<Text style={myStyles.labelText}>Mileage Record</Text>
 								<Switch
-									thumbColor={record.type === "mileage" ? theme.primary.colour : undefined}
+									thumbColor={record.type === "mileage" ? theme.primary.colour : undefined} // todo entire switch theming
 									trackColor={{ true: "#e1d8f1" }} // todo
 									value={record.type === "mileage"}
 									onValueChange={(value) => {
@@ -109,5 +111,9 @@ const getMyStyles = (theme: Theme) =>
 			fontSize: 20,
 			fontWeight: "semibold",
 			textAlign: "left",
+			color: theme.background.text,
+		},
+		labelText: {
+			color: theme.background.text,
 		},
 	});

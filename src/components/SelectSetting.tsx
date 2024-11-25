@@ -43,6 +43,7 @@ const getMyStyles = (theme: Theme) =>
 		},
 		text: {
 			fontSize: 18,
+			color: theme.element.text,
 		},
 		secondaryText: {
 			fontSize: 12,

@@ -125,11 +125,11 @@ export default function SettingsScreen({
 			<View style={{ display: "flex", flexDirection: "row", gap: 10, height: 60 }}>
 				<TouchableOpacity activeOpacity={0.6} style={{ ...styles.blankButton, flex: 1 }} onPress={importRecords}>
 					<Feather name="download" color={styles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
-					<Text>Import</Text>
+					<Text style={styles.blankButtonText}>Import</Text>
 				</TouchableOpacity>
 				<TouchableOpacity activeOpacity={0.6} style={{ ...styles.blankButton, flex: 1 }} onPress={exportRecords}>
 					<Feather name="upload" color={styles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
-					<Text>Export</Text>
+					<Text style={styles.blankButtonText}>Export</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

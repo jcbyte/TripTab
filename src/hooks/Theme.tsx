@@ -1,5 +1,5 @@
-import React, { createContext, ReactNode, useContext, useState } from "react";
-import { getStyles } from "../styles";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { getStyles, themes } from "../styles";
 import { getTextColor } from "../utils";
 
 export interface GivenTheme {
@@ -61,6 +61,10 @@ const ThemeContext = createContext<{
 export function ThemeProvider({ children }: { children?: ReactNode }) {
 	const [theme, setTheme] = useState<Theme>(DEFAULT);
 	const [styles, setStyles] = useState<any>(getStyles(DEFAULT)); // todo type
+
+	useEffect(() => {
+		updateTheme(themes.dark);
+	}, []);
 
 	function updateTheme(givenTheme: GivenTheme) {
 		let newTheme: Theme = {
