@@ -42,6 +42,7 @@ export default function RecordModal({
 						<View style={{ marginVertical: 20, display: "flex", flexDirection: "column", gap: 10 }}>
 							<TextInput
 								style={styles.blankInput}
+								placeholderTextColor={theme.shaded.colour}
 								placeholder="Mileage"
 								keyboardType="numeric"
 								value={record.mileage ? record.mileage.toString() : undefined}
@@ -50,6 +51,7 @@ export default function RecordModal({
 							{record.type === "record" && (
 								<TextInput
 									style={styles.blankInput}
+									placeholderTextColor={theme.shaded.colour}
 									placeholder="Cost"
 									keyboardType="numeric"
 									value={record.cost ? record.cost.toString() : undefined}

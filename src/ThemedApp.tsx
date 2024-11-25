@@ -14,9 +14,6 @@ import AppScreen from "./screens/AppScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import UserSettings, { DEFAULT as DEFAULT_USER_SETTINGS } from "./types/UserSettings";
 
-// todo dark theme
-// todo save records + settings
-
 type RootStackParamList = {
 	App: undefined;
 	Settings: undefined;

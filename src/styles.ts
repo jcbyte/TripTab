@@ -12,7 +12,7 @@ export const themes: { [s: string]: GivenTheme } = {
 			element: "#f9f9f9",
 			element2: "#e9e9e9",
 			background: "#ffffff",
-			shadedText: "#777777",
+			shaded: "#777777",
 		},
 		text: { light: "#ffffff", dark: "#000000" },
 	},
@@ -25,7 +25,7 @@ export const themes: { [s: string]: GivenTheme } = {
 			element: "#2e2e2e",
 			element2: "#e9e9e9", // todo
 			background: "#181818",
-			shadedText: "#999999",
+			shaded: "#999999",
 		},
 		text: { light: "#ffffff", dark: "#000000" },
 	},
@@ -91,9 +91,8 @@ export const getStyles = (theme: Theme) =>
 		},
 		blankInput: {
 			...genericStyles.input,
-			borderColor: "#ccc", // todo
-			color: "#fff", // todo
-			// todo placeholder colour
+			borderColor: theme.shaded.colour,
+			color: theme.background.text,
 		},
 		centerModalBackground: {
 			...genericStyles.modalBackground,

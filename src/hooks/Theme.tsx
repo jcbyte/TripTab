@@ -11,7 +11,7 @@ export interface GivenTheme {
 		element: string;
 		element2: string;
 		background: string;
-		shadedText: string;
+		shaded: string;
 	};
 	text: {
 		light: string;
@@ -37,7 +37,7 @@ const DEFAULT: Theme = {
 			element: "#f9f9f9",
 			element2: "#e9e9e9",
 			background: "#ffffff",
-			shadedText: "#777777",
+			shaded: "#777777",
 		}).map(([key, colour]: [string, string]) => [
 			key as keyof GivenTheme["colours"],
 			{ colour: colour, text: getTextColor(colour) == "light" ? "#ffffff" : "#000000" } as ThemeColour,

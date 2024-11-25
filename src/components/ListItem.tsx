@@ -61,6 +61,6 @@ const getMyStyles = (theme: Theme) =>
 		},
 		secondaryText: {
 			fontSize: 12,
-			color: theme.shadedText.colour,
+			color: theme.shaded.colour,
 		},
 	});
