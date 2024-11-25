@@ -22,6 +22,5 @@ export async function retrieveUserSettings(): Promise<UserSettings> {
 }
 
 export async function saveUserSettings(userSettings: UserSettings): Promise<void> {
-	console.log(userSettings);
 	return AsyncStorage.setItem(keyMappings.userSettings, JSON.stringify(userSettings));
 }
