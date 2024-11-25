@@ -1,4 +1,5 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { StatusBar } from "react-native";
 import { getStyles } from "../styles";
 import { getTextColor } from "../utils/colourUtils";
 
@@ -86,6 +87,12 @@ export function ThemeProvider({ children, initialTheme }: { children?: ReactNode
 	return (
 		<ThemeContext.Provider value={{ theme: theme, setTheme: updateTheme, styles: styles }}>
 			{children}
+
+			<StatusBar
+				barStyle={getTextColor(theme.background.colour) === "light" ? "light-content" : "dark-content"}
+				translucent={true}
+				backgroundColor={theme.background.colour}
+			/>
 		</ThemeContext.Provider>
 	);
 }

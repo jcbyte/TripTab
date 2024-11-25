@@ -4,7 +4,6 @@ import ThemedApp from "./ThemedApp";
 import { ThemeProvider } from "./hooks/Theme";
 import { themes } from "./styles";
 
-// todo theme status bar
 // todo save records + settings
 // todo save theme to settings
 // todo readme
