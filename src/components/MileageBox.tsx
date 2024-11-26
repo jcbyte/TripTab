@@ -25,11 +25,6 @@ export default function MileageBox({
 				? cachedRecordTransitions.length
 				: Math.min(userSettings.calculateRecordsNo, cachedRecordTransitions.length);
 
-		// If no records then return 0, else we will get zero division error
-		if (recordsNo === 0) {
-			return 0;
-		}
-
 		let sum: number = 0;
 		let recordCount: number = 0;
 
@@ -40,6 +35,11 @@ export default function MileageBox({
 				sum += transition.cost;
 				recordCount += 1;
 			}
+		}
+
+		// If no records then return 0, else we will get zero division error
+		if (recordCount === 0) {
+			return 0;
 		}
 
 		return sum / recordCount;

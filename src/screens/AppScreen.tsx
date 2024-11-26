@@ -62,7 +62,7 @@ export default function AppScreen({
 						<ListItem item={item} cachedTransition={cachedRecordTransitions[index]} openModal={() => openModal(item)} />
 					)}
 					keyExtractor={(item: Record) => item.id!}
-					ListEmptyComponent={<Text style={{ textAlign: "center" }}>No Records Yet</Text>}
+					ListEmptyComponent={<Text style={{ ...myStyles.text, textAlign: "center" }}>No Records Yet</Text>}
 				/>
 			</View>
 
@@ -85,5 +85,8 @@ const getMyStyles = (theme: Theme) =>
 			paddingTop: 10,
 			flex: 1,
 			backgroundColor: theme.background.colour,
+		},
+		text: {
+			color: theme.background.text,
 		},
 	});
