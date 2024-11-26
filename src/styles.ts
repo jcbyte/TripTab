@@ -48,6 +48,8 @@ const genericStyles = StyleSheet.create({
 		borderWidth: 1,
 		borderRadius: 8,
 		paddingHorizontal: 12,
+		fontSize: 14,
+		height: 50,
 	},
 	modalBackground: {
 		flex: 1,

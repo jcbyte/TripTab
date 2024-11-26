@@ -7,7 +7,6 @@ import Record from "./types/Record";
 import UserSettings from "./types/UserSettings";
 import { retrieveRecords, retrieveUserSettings } from "./utils/storeUtils";
 
-// todo fix input boxes
 // todo icon
 
 export default function AppEntry() {
