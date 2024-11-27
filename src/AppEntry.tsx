@@ -7,6 +7,9 @@ import Record from "./types/Record";
 import UserSettings from "./types/UserSettings";
 import { retrieveRecords, retrieveUserSettings } from "./utils/storeUtils";
 
+// todo icon proper
+// todo github cli on tag release
+
 export default function AppEntry() {
 	const scheme = useColorScheme();
 	const [ready, setReady] = useState<boolean>(false);

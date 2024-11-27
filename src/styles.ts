@@ -65,6 +65,7 @@ export const getStyles = (theme: Theme) =>
 	StyleSheet.create({
 		body: {
 			paddingTop: StatusBar.currentHeight ?? 10,
+			backgroundColor: theme.background.colour,
 			flex: 1,
 		},
 		primaryButton: {
