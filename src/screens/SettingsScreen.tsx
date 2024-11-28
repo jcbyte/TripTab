@@ -6,6 +6,7 @@ import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { NavigationProp } from "../App";
 import SelectSetting from "../components/SelectSetting";
+import Signature from "../components/Signature";
 import { Option } from "../components/SlideUpSelection";
 import UserSettingsContext from "../contexts/UserSettingsContext";
 import { useAlert } from "../hooks/Alert";
@@ -74,69 +75,73 @@ export default function SettingsScreen({
 	}
 
 	return (
-		<View style={{ ...myStyles.body, display: "flex", flexDirection: "column", gap: 10 }}>
-			<View style={{ display: "flex", flexDirection: "row" }}>
-				{/* Back Button */}
-				<TouchableOpacity activeOpacity={0.6} style={styles.blankButton} onPress={navigation.goBack}>
-					<Feather name="chevron-left" color={styles.blankButtonText.color} size={18} />
-				</TouchableOpacity>
+		<>
+			<View style={{ ...myStyles.body, display: "flex", flexDirection: "column", gap: 10 }}>
+				<View style={{ display: "flex", flexDirection: "row" }}>
+					{/* Back Button */}
+					<TouchableOpacity activeOpacity={0.6} style={styles.blankButton} onPress={navigation.goBack}>
+						<Feather name="chevron-left" color={styles.blankButtonText.color} size={18} />
+					</TouchableOpacity>
+				</View>
+
+				{/* Theme Selection */}
+				<SelectSetting
+					title="Theme"
+					value={theme.name}
+					options={(Object.entries(themes) as [ThemeName, GivenTheme][]).map(([key, theme]) => {
+						return { label: theme.name, key: key, value: theme };
+					})}
+					onSelect={({ value: selected, key: themeName }: Option<GivenTheme>) => {
+						setUserSettings((prev: UserSettings) => {
+							return { ...prev, theme: themeName as ThemeName };
+						});
+						setTheme(selected);
+					}}
+				/>
+
+				{/* Currency Selection */}
+				<SelectSetting
+					title="Currency"
+					value={currencyMap[userSettings.currency].name.plural}
+					options={(Object.entries(currencyMap) as [Currency, CurrencyInfo][]).map(([currency, { name }]) => {
+						return { label: name.plural, key: currency, value: currency };
+					})}
+					onSelect={({ value: selected }: Option<Currency>) => {
+						setUserSettings((prev: UserSettings) => {
+							return { ...prev, currency: selected };
+						});
+					}}
+				/>
+
+				{/* Distance Units Selection */}
+				<SelectSetting
+					title="Distance Units"
+					value={distanceMap[userSettings.distance].name.plural}
+					options={(Object.entries(distanceMap) as [Distance, DistanceInfo][]).map(([distance, { name }]) => {
+						return { label: name.plural, key: distance, value: distance };
+					})}
+					onSelect={({ value: selected }: Option<Distance>) => {
+						setUserSettings((prev: UserSettings) => {
+							return { ...prev, distance: selected };
+						});
+					}}
+				/>
+
+				{/* Import/Export */}
+				<View style={{ display: "flex", flexDirection: "row", gap: 10, height: 60 }}>
+					<TouchableOpacity activeOpacity={0.6} style={{ ...styles.blankButton, flex: 1 }} onPress={importRecords}>
+						<Feather name="download" color={styles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
+						<Text style={styles.blankButtonText}>Import</Text>
+					</TouchableOpacity>
+					<TouchableOpacity activeOpacity={0.6} style={{ ...styles.blankButton, flex: 1 }} onPress={exportRecords}>
+						<Feather name="upload" color={styles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
+						<Text style={styles.blankButtonText}>Export</Text>
+					</TouchableOpacity>
+				</View>
 			</View>
 
-			{/* Theme Selection */}
-			<SelectSetting
-				title="Theme"
-				value={theme.name}
-				options={(Object.entries(themes) as [ThemeName, GivenTheme][]).map(([key, theme]) => {
-					return { label: theme.name, key: key, value: theme };
-				})}
-				onSelect={({ value: selected, key: themeName }: Option<GivenTheme>) => {
-					setUserSettings((prev: UserSettings) => {
-						return { ...prev, theme: themeName as ThemeName };
-					});
-					setTheme(selected);
-				}}
-			/>
-
-			{/* Currency Selection */}
-			<SelectSetting
-				title="Currency"
-				value={currencyMap[userSettings.currency].name.plural}
-				options={(Object.entries(currencyMap) as [Currency, CurrencyInfo][]).map(([currency, { name }]) => {
-					return { label: name.plural, key: currency, value: currency };
-				})}
-				onSelect={({ value: selected }: Option<Currency>) => {
-					setUserSettings((prev: UserSettings) => {
-						return { ...prev, currency: selected };
-					});
-				}}
-			/>
-
-			{/* Distance Units Selection */}
-			<SelectSetting
-				title="Distance Units"
-				value={distanceMap[userSettings.distance].name.plural}
-				options={(Object.entries(distanceMap) as [Distance, DistanceInfo][]).map(([distance, { name }]) => {
-					return { label: name.plural, key: distance, value: distance };
-				})}
-				onSelect={({ value: selected }: Option<Distance>) => {
-					setUserSettings((prev: UserSettings) => {
-						return { ...prev, distance: selected };
-					});
-				}}
-			/>
-
-			{/* Import/Export */}
-			<View style={{ display: "flex", flexDirection: "row", gap: 10, height: 60 }}>
-				<TouchableOpacity activeOpacity={0.6} style={{ ...styles.blankButton, flex: 1 }} onPress={importRecords}>
-					<Feather name="download" color={styles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
-					<Text style={styles.blankButtonText}>Import</Text>
-				</TouchableOpacity>
-				<TouchableOpacity activeOpacity={0.6} style={{ ...styles.blankButton, flex: 1 }} onPress={exportRecords}>
-					<Feather name="upload" color={styles.blankButtonText.color} size={18} style={{ marginRight: 5 }} />
-					<Text style={styles.blankButtonText}>Export</Text>
-				</TouchableOpacity>
-			</View>
-		</View>
+			<Signature />
+		</>
 	);
 }
 
