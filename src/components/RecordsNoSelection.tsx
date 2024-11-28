@@ -9,9 +9,13 @@ import UserSettings from "../types/UserSettings";
 import SlideUpSelection, { Option } from "./SlideUpSelection";
 
 const options: Option<RecordNo>[] = [
+	{ label: "1", key: "1", value: 1 },
+	{ label: "5", key: "5", value: 5 },
 	{ label: "10", key: "10", value: 10 },
+	{ label: "25", key: "25", value: 25 },
 	{ label: "50", key: "50", value: 50 },
 	{ label: "100", key: "100", value: 100 },
+	{ label: "200", key: "200", value: 200 },
 	{ label: "All", key: "all", value: "all" },
 ];
 
