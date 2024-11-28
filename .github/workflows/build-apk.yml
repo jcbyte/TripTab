@@ -46,6 +46,7 @@ jobs:
           path: ${{ github.workspace }}/triptab-release.apk
 
       - name: Create Release
+        id: create-release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ github.ref_name }}
