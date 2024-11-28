@@ -12,8 +12,8 @@ import {
 } from "react-native";
 import { Theme, useTheme } from "../hooks/Theme";
 import Record from "../types/Record";
-import { useStateSetter } from "../types/utils";
 import { adjustColour } from "../utils/colourUtils";
+import { useStateSetter } from "../utils/typeUtils";
 
 export default function RecordModal({
 	modalOpen,
