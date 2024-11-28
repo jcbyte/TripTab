@@ -63,3 +63,5 @@ jobs:
           asset_path: ${{ github.workspace }}/triptab-release.apk
           asset_name: triptab-release.apk
           asset_content_type: application/vnd.android.package-archive
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
