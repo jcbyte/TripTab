@@ -1,5 +1,5 @@
 import { BlurView } from "expo-blur";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Modal,
 	StyleSheet,
@@ -33,6 +33,21 @@ export default function RecordModal({
 	const { theme, styles } = useTheme();
 	const myStyles = getMyStyles(theme);
 
+	const [costInput, setCostInput] = useState<string>("");
+
+	useEffect(() => {
+		if (modalOpen) {
+			setCostInput(record.type == "record" && record.cost ? record.cost.toString() : "");
+		}
+	}, [modalOpen]);
+
+	function updateCost(costInput: string) {
+		setCostInput(costInput);
+		if (record.type == "record") {
+			setRecord({ ...record, cost: parseFloat(costInput) });
+		}
+	}
+
 	return (
 		<Modal visible={modalOpen} animationType="fade" transparent={true}>
 			<TouchableWithoutFeedback onPress={closeModal}>
@@ -55,8 +70,8 @@ export default function RecordModal({
 									placeholderTextColor={theme.shaded.colour}
 									placeholder="Cost"
 									keyboardType="numeric"
-									value={record.cost ? record.cost.toString() : undefined}
-									onChangeText={(text) => setRecord({ ...record, cost: parseFloat(text) })}
+									value={costInput}
+									onChangeText={(text) => updateCost(text)}
 								/>
 							)}
 							<View
