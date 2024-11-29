@@ -11,6 +11,7 @@ export default function Signature() {
 		<View style={myStyles.signature}>
 			<Text style={myStyles.text}>TripTab v{Constants.expoConfig?.version ?? "(Unknown Version)"}</Text>
 			<Text style={myStyles.text}>By Joel Cutler</Text>
+			{__DEV__ && <Text style={myStyles.devText}>Dev Build</Text>}
 		</View>
 	);
 }
@@ -19,6 +20,10 @@ const getMyStyles = (theme: Theme) =>
 	StyleSheet.create({
 		text: {
 			color: theme.shaded.colour,
+			textAlign: "right",
+		},
+		devText: {
+			color: "#ff0000",
 			textAlign: "right",
 		},
 		signature: {
