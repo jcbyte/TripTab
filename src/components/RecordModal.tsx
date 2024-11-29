@@ -47,7 +47,7 @@ export default function RecordModal({
 								placeholder="Mileage"
 								keyboardType="numeric"
 								value={record.mileage ? record.mileage.toString() : undefined}
-								onChangeText={(text) => setRecord({ ...record, mileage: parseFloat(text) })}
+								onChangeText={(text) => setRecord({ ...record, mileage: parseInt(text) })}
 							/>
 							{record.type === "record" && (
 								<TextInput
@@ -62,7 +62,7 @@ export default function RecordModal({
 							<View
 								style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
 							>
-								<Text style={myStyles.labelText} /* e1d8f1 */>Mileage Record</Text>
+								<Text style={myStyles.labelText}>Mileage Record</Text>
 								<Switch
 									thumbColor={record.type === "mileage" ? theme.primary.colour : theme.disabled.colour}
 									trackColor={{
