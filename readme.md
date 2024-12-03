@@ -1,6 +1,6 @@
 # <img src="assets/favicon.png" height="40"> &nbsp;TripTab
 
-This app allows you to record your mileage every time you fill up and will calculate your cars efficiency (cost per mile).
+This app allows you to record your mileage every time you fill up and will calculate your car's efficiency (cost per mile).
 
 ## Run Locally
 
