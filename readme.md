@@ -4,13 +4,13 @@ A milage logging app to calculate your vehicles efficiency (cost per mile), for 
 
 ## Run Locally
 
-Install dependencies
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-Start local development server
+Start local development server:
 
 ```bash
 npx expo start
