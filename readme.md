@@ -1,6 +1,6 @@
 # <img src="assets/favicon.png" height="40"> &nbsp;TripTab
 
-This app allows you to record your mileage every time you fill up and will calculate your car's efficiency (cost per mile).
+A milage logging app to calculate your vehicles efficiency (cost per mile), for better fuel expense management.
 
 ## Run Locally
 
