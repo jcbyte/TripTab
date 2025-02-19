@@ -16,10 +16,6 @@ Start local development server
 npx expo start
 ```
 
-## Tech Stack
+## Licence
 
-**Client:** React Native, Typescript, Expo
-
-## Authors
-
-- [@jcbyte](https://www.github.com/jcbyte)
+[Apache License 2.0](LICENSE)
